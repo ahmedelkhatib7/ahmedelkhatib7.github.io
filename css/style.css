@@ -233,6 +233,8 @@ section { padding: 7rem 3rem; }
 .hero-right {
   background: #070d1c;
   position: relative; overflow: hidden;
+  border-radius: 1.5rem;
+  margin: 1.5rem 1.5rem 1.5rem 0;
 }
 
 #particleCanvas {
@@ -334,10 +336,11 @@ section { padding: 7rem 3rem; }
 }
 .about-link:hover { border-color: var(--copper); color: var(--copper); }
 .about-link-icon {
-  font-family: var(--mono); font-size: 0.68rem;
-  background: var(--parchment-d); padding: 0.1rem 0.35rem;
-  border-radius: 4px;
+  display: flex; align-items: center;
+  flex-shrink: 0; opacity: 0.75;
+  transition: opacity 0.2s;
 }
+.about-link:hover .about-link-icon { opacity: 1; }
 
 /* ═══════════════════ SKILLS ═══════════════════ */
 .skills { background: var(--canvas); }
@@ -578,9 +581,7 @@ section { padding: 7rem 3rem; }
   border-top: 1px solid var(--rule);
 }
 .contact-container {
-  max-width: var(--max-w); margin: 0 auto;
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 5rem; align-items: start;
+  max-width: 680px; margin: 0 auto;
 }
 .contact-ctas {
   display: flex; gap: 1rem; flex-wrap: wrap;

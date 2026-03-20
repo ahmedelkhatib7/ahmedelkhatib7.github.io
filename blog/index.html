@@ -174,6 +174,8 @@
 
   .post-title { font-family: var(--serif); font-size: 1.45rem; font-weight: 600; line-height: 1.2; letter-spacing: -0.015em; color: var(--ink); margin-bottom: 10px; transition: color 0.2s; }
   .post-item:hover .post-title { color: var(--copper); }
+  .post-title-link { color: inherit; text-decoration: none; transition: color 0.2s; }
+  .post-item:hover .post-title-link { color: var(--copper); }
 
   .post-excerpt { font-size: 0.88rem; color: var(--ink-mid); line-height: 1.68; font-weight: 300; flex: 1; margin-bottom: 16px; }
 
@@ -302,16 +304,6 @@
       <h1 class="blog-page-title">No fluff.<br><em>Real patterns.</em></h1>
       <p class="blog-page-desc">Enterprise Power Platform delivery from the inside — ALM, integration architecture, and the decisions that actually matter.</p>
     </div>
-    <div class="blog-stats">
-      <div class="blog-stat">
-        <span class="blog-stat-num">1</span>
-        <span class="blog-stat-label">Published</span>
-      </div>
-      <div class="blog-stat">
-        <span class="blog-stat-num">12</span>
-        <span class="blog-stat-label">Series total</span>
-      </div>
-    </div>
   </div>
 </header>
 
@@ -391,12 +383,12 @@
       </div>
       <div class="post-content">
         <div class="post-meta">
-          <span class="post-series">Series · Deployment</span>
+          <span class="post-series">ALM Series</span>
           <span class="post-live-badge">Live</span>
           <span class="post-tag">ALM · Environments</span>
           <span class="post-date">March 2026</span>
         </div>
-        <h2 class="post-title">Before You Write a Single Line of Code, Get Your Environments Right</h2>
+        <h2 class="post-title"><a href="post1-environment-strategy.html" class="post-title-link">Before You Write a Single Line of Code, Get Your Environments Right</a></h2>
         <p class="post-excerpt">Most Power Platform projects fail at deployment — not because of bad code, but because of decisions made in the first five minutes. The wrong URL, no security groups, a skipped toggle. Here's what to get right before anything else.</p>
         <div class="post-footer">
           <span class="post-read-time">~12 min read</span>
@@ -424,7 +416,7 @@
           <div class="about-mini-role">Power Platform Lead</div>
         </div>
       </div>
-      <p class="about-mini-bio">Technical Lead at Trax Group, Saudi Arabia. 8+ years in the Microsoft ecosystem. Available for consultation, conference talks, webinars, and mentoring.</p>
+      <p class="about-mini-bio">Technical Lead at Trax Group, Saudi Arabia. 8+ years in the Microsoft ecosystem. Building things properly in the Power Platform space.</p>
       <a href="../" class="about-mini-link">Back to home →</a>
     </div>
 
