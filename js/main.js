@@ -85,7 +85,7 @@ if (navBrand) {
 }
 
 // ════════════════════════════════════════════════
-// PARTICLE NETWORK CANVAS
+// PARTICLE NETWORK CANVAS — Interactive
 // ════════════════════════════════════════════════
 (function initParticles() {
   const canvas = document.getElementById('particleCanvas');
@@ -93,56 +93,83 @@ if (navBrand) {
 
   const ctx = canvas.getContext('2d');
   let W, H, particles, rafId;
+  let mouse   = { x: -9999, y: -9999 };
+  let ripples = [];
 
+  // ── Full tech stack ──
   const TECH = [
-    { label: 'Power Platform', r: 3.8 },
-    { label: 'Azure',          r: 3.4 },
-    { label: 'Dataverse',      r: 3.2 },
-    { label: 'D365',           r: 2.8 },
-    { label: 'Power Automate', r: 2.6 },
-    { label: 'Copilot Studio', r: 2.6 },
-    { label: 'PCF',            r: 2.2 },
-    { label: 'Logic Apps',     r: 2.2 },
-    { label: 'ALM',            r: 2.2 },
-    { label: 'TypeScript',     r: 2.0 },
-    { label: 'Azure OpenAI',   r: 2.4 },
-    { label: 'Power BI',       r: 2.0 },
+    // Power Platform
+    { label: 'Canvas Apps',     r: 3.8, cat: 'pp'   },
+    { label: 'Model-Driven',    r: 3.4, cat: 'pp'   },
+    { label: 'Power Automate',  r: 3.6, cat: 'pp'   },
+    { label: 'Power Pages',     r: 3.0, cat: 'pp'   },
+    { label: 'Power BI',        r: 3.2, cat: 'pp'   },
+    { label: 'AI Builder',      r: 2.8, cat: 'pp'   },
+    { label: 'Copilot Studio',  r: 3.0, cat: 'pp'   },
+    { label: 'Power Fx',        r: 2.4, cat: 'pp'   },
+    // Dataverse & D365
+    { label: 'Dataverse',       r: 3.8, cat: 'dv'   },
+    { label: 'Dynamics 365 CE', r: 3.4, cat: 'dv'   },
+    { label: 'D365 F&O',        r: 3.0, cat: 'dv'   },
+    { label: 'Custom APIs',     r: 2.6, cat: 'dv'   },
+    { label: 'Plugins',         r: 2.4, cat: 'dv'   },
+    { label: 'Business Events', r: 2.4, cat: 'dv'   },
+    // Pro-code
+    { label: 'PCF Controls',    r: 2.8, cat: 'code' },
+    { label: 'TypeScript',      r: 2.6, cat: 'code' },
+    { label: 'C#',              r: 2.4, cat: 'code' },
+    { label: 'JavaScript',      r: 2.2, cat: 'code' },
+    // Azure
+    { label: 'Azure Functions', r: 3.4, cat: 'az'   },
+    { label: 'Logic Apps',      r: 3.0, cat: 'az'   },
+    { label: 'API Management',  r: 2.8, cat: 'az'   },
+    { label: 'Service Bus',     r: 2.6, cat: 'az'   },
+    { label: 'Azure OpenAI',    r: 3.2, cat: 'az'   },
+    { label: 'Key Vault',       r: 2.4, cat: 'az'   },
+    { label: 'App Insights',    r: 2.4, cat: 'az'   },
+    { label: 'Entra ID',        r: 2.6, cat: 'az'   },
+    // ALM & DevOps
+    { label: 'Azure DevOps',    r: 3.0, cat: 'alm'  },
+    { label: 'ALM',             r: 2.6, cat: 'alm'  },
+    { label: 'Pipelines',       r: 2.4, cat: 'alm'  },
   ];
 
-  const TOTAL    = 72;
-  const MAX_DIST = 120;
-  const SPEED    = 0.26;
+  const CAT_COLORS = {
+    pp:   [  0, 120, 212],  // Power Platform blue
+    dv:   [123,  94, 167],  // Dataverse purple
+    az:   [  0, 145, 178],  // Azure teal
+    code: [196, 122,  74],  // Copper
+    alm:  [ 16, 124,  16],  // DevOps green
+  };
 
-  // Copper / amber colour palette for particles
-  const COLORS = [
-    [196, 122,  74],   // amber copper
-    [212, 150,  90],   // light copper
-    [  0, 120, 212],   // Azure blue
-    [123,  94, 167],   // purple (Dataverse)
-    [  0, 145, 178],   // teal (Azure 2)
-    [ 16, 124,  16],   // green (ALM)
-  ];
+  const TOTAL             = 58;
+  const MAX_DIST          = 130;
+  const BASE_SPEED        = 0.28;
+  const ATTRACT_DIST      = 190;
+  const ATTRACT_FORCE     = 0.013;
+  const MAX_SPEED         = 3.0;
 
   function resize() {
     W = canvas.width  = canvas.offsetWidth;
     H = canvas.height = canvas.offsetHeight;
   }
 
-  function randFrom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
-
   function makeParticle(i) {
     const tl  = i < TECH.length ? TECH[i] : null;
-    const col = COLORS[i % COLORS.length];
+    const cat = tl ? tl.cat : Object.keys(CAT_COLORS)[i % 5];
+    const col = CAT_COLORS[cat];
     return {
-      x:     Math.random() * W,
-      y:     Math.random() * H,
-      vx:    (Math.random() - 0.5) * SPEED,
-      vy:    (Math.random() - 0.5) * SPEED,
-      r:     tl ? tl.r : (Math.random() * 1.4 + 0.7),
-      label: tl ? tl.label : null,
-      a:     Math.random() * 0.45 + 0.2,
-      glow:  tl ? 18 : 8,
+      x:       Math.random() * W,
+      y:       Math.random() * H,
+      vx:      (Math.random() - 0.5) * BASE_SPEED,
+      vy:      (Math.random() - 0.5) * BASE_SPEED,
+      r:       tl ? tl.r : (Math.random() * 1.2 + 0.6),
+      label:   tl ? tl.label : null,
+      a:       Math.random() * 0.35 + 0.25,
+      glow:    tl ? 20 : 7,
       col,
+      pulse:   0,
+      hovered: false,
     };
   }
 
@@ -154,24 +181,47 @@ if (navBrand) {
   function frame() {
     ctx.clearRect(0, 0, W, H);
 
-    // Draw connecting lines between nearby particles
+    // Ripple rings from clicks
+    ripples = ripples.filter(rp => rp.a > 0);
+    ripples.forEach(rp => {
+      ctx.beginPath();
+      ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(196,122,74,${rp.a})`;
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+      rp.r += 4;
+      rp.a -= 0.022;
+    });
+
+    // Find closest labeled particle to mouse (for hover)
+    let hoveredParticle = null;
+    let minDist = 44;
+    particles.forEach(p => {
+      if (!p.label) return;
+      const dx = p.x - mouse.x, dy = p.y - mouse.y;
+      const d  = Math.sqrt(dx * dx + dy * dy);
+      if (d < minDist) { minDist = d; hoveredParticle = p; }
+    });
+    particles.forEach(p => { p.hovered = (p === hoveredParticle); });
+
+    // Connection lines — brighten near cursor
     for (let i = 0; i < particles.length; i++) {
       const pi = particles[i];
       for (let j = i + 1; j < particles.length; j++) {
-        const pj = particles[j];
-        const dx = pi.x - pj.x, dy = pi.y - pj.y;
-        const d  = Math.sqrt(dx * dx + dy * dy);
+        const pj  = particles[j];
+        const dx  = pi.x - pj.x, dy = pi.y - pj.y;
+        const d   = Math.sqrt(dx * dx + dy * dy);
         if (d < MAX_DIST) {
-          // Blend colours of the two connected nodes
           const [r1, g1, b1] = pi.col;
           const [r2, g2, b2] = pj.col;
-          const t = 0.5;
-          const r = r1 * (1-t) + r2 * t;
-          const g = g1 * (1-t) + g2 * t;
-          const b = b1 * (1-t) + b2 * t;
-          const alpha = (1 - d / MAX_DIST) * 0.22;
+          const r = (r1 + r2) / 2, g = (g1 + g2) / 2, b = (b1 + b2) / 2;
+          const base  = (1 - d / MAX_DIST) * 0.22;
+          const mdx   = (pi.x + pj.x) / 2 - mouse.x;
+          const mdy   = (pi.y + pj.y) / 2 - mouse.y;
+          const md    = Math.sqrt(mdx * mdx + mdy * mdy);
+          const boost = md < 110 ? (1 - md / 110) * 0.45 : 0;
           ctx.beginPath();
-          ctx.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
+          ctx.strokeStyle = `rgba(${r},${g},${b},${base + boost})`;
           ctx.lineWidth   = 0.7;
           ctx.moveTo(pi.x, pi.y);
           ctx.lineTo(pj.x, pj.y);
@@ -180,54 +230,108 @@ if (navBrand) {
       }
     }
 
-    // Draw particles
+    // Particles
     particles.forEach(p => {
-      // Move — wrap around edges
+      // Mouse attraction
+      const dxm = mouse.x - p.x, dym = mouse.y - p.y;
+      const dm  = Math.sqrt(dxm * dxm + dym * dym);
+      if (dm < ATTRACT_DIST && dm > 1) {
+        p.vx += (dxm / dm) * ATTRACT_FORCE;
+        p.vy += (dym / dm) * ATTRACT_FORCE;
+      }
+
+      // Speed cap
+      const spd = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+      if (spd > MAX_SPEED) { p.vx *= MAX_SPEED / spd; p.vy *= MAX_SPEED / spd; }
+
+      // Gentle damping when mouse is away
+      if (dm > ATTRACT_DIST) { p.vx *= 0.995; p.vy *= 0.995; }
+
+      // Move — wrap edges
       p.x += p.vx;
       p.y += p.vy;
-      if (p.x < -30)      p.x = W + 30;
-      else if (p.x > W+30) p.x = -30;
-      if (p.y < -30)      p.y = H + 30;
-      else if (p.y > H+30) p.y = -30;
+      if (p.x < -30) p.x = W + 30;
+      else if (p.x > W + 30) p.x = -30;
+      if (p.y < -30) p.y = H + 30;
+      else if (p.y > H + 30) p.y = -30;
 
       const [r, g, b] = p.col;
+      const isHov = p.hovered;
+
+      // Pulse on hover
+      if (isHov) p.pulse += 0.09;
+      else if (p.pulse > 0) p.pulse = Math.max(0, p.pulse - 0.06);
+
+      const scale   = isHov ? 1 + Math.sin(p.pulse) * 0.45 : 1;
+      const drawR   = p.r * scale;
+      const drawGlow = p.glow * (isHov ? 2.2 : 1);
+      const alpha   = isHov ? Math.min(p.a + 0.55, 1) : p.a;
 
       // Glow halo
-      const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.glow);
-      grd.addColorStop(0, `rgba(${r},${g},${b},${p.a * 0.7})`);
+      const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, drawGlow);
+      grd.addColorStop(0, `rgba(${r},${g},${b},${alpha * 0.85})`);
       grd.addColorStop(1, `rgba(${r},${g},${b},0)`);
       ctx.beginPath();
-      ctx.arc(p.x, p.y, p.glow, 0, Math.PI * 2);
+      ctx.arc(p.x, p.y, drawGlow, 0, Math.PI * 2);
       ctx.fillStyle = grd;
       ctx.fill();
 
       // Core dot
       ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${r},${g},${b},${Math.min(p.a + 0.4, 1)})`;
+      ctx.arc(p.x, p.y, drawR, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${r},${g},${b},${Math.min(alpha + 0.4, 1)})`;
       ctx.fill();
 
-      // Tech label
+      // Label
       if (p.label) {
-        ctx.font      = '9.5px "Fira Code", monospace';
-        ctx.fillStyle = `rgba(220,205,185,${p.a + 0.2})`;
-        ctx.fillText(p.label, p.x + p.r + 5, p.y + 3.5);
+        const fontSize   = isHov ? 11 : 9.5;
+        const labelAlpha = isHov ? 1 : (p.a + 0.1);
+        ctx.font      = `${isHov ? '500 ' : ''}${fontSize}px "Fira Code", monospace`;
+        ctx.fillStyle = `rgba(220,205,185,${labelAlpha})`;
+        ctx.fillText(p.label, p.x + drawR + 5, p.y + 3.5);
       }
     });
 
     rafId = requestAnimationFrame(frame);
   }
 
+  // ── Mouse events ──
+  canvas.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+
+  canvas.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+  // Click → repulsion burst + ripple rings
+  canvas.addEventListener('click', e => {
+    const rect = canvas.getBoundingClientRect();
+    const cx = e.clientX - rect.left;
+    const cy = e.clientY - rect.top;
+
+    particles.forEach(p => {
+      const dx = p.x - cx, dy = p.y - cy;
+      const d  = Math.sqrt(dx * dx + dy * dy);
+      if (d < 170 && d > 0) {
+        const force = ((170 - d) / 170) * 2.8;
+        p.vx += (dx / d) * force;
+        p.vy += (dy / d) * force;
+      }
+    });
+
+    // Two staggered ripple rings
+    ripples.push({ x: cx, y: cy, r: 4, a: 0.85 });
+    setTimeout(() => ripples.push({ x: cx, y: cy, r: 4, a: 0.5 }), 120);
+  });
+
+  canvas.style.cursor = 'crosshair';
+
   init();
   frame();
 
-  // Resize observer — restart on container size change
   if (typeof ResizeObserver !== 'undefined') {
-    new ResizeObserver(() => {
-      cancelAnimationFrame(rafId);
-      init();
-      frame();
-    }).observe(canvas.parentElement);
+    new ResizeObserver(() => { cancelAnimationFrame(rafId); init(); frame(); }).observe(canvas.parentElement);
   } else {
     window.addEventListener('resize', () => { cancelAnimationFrame(rafId); init(); frame(); });
   }
