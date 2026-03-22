@@ -42,9 +42,9 @@
 
   /* ── Layout ── */
   .page {
-    max-width: 1200px;
+    max-width: 780px;
     margin: 0 auto;
-    padding: 60px 0 120px;
+    padding: 60px 32px 120px;
   }
 
   /* ── Header ── */
@@ -716,46 +716,6 @@
   .post-breadcrumb a { color: #9C5A2E; text-decoration: none; }
   .post-breadcrumb a:hover { text-decoration: underline; }
   .bc-sep { color: #D4C8B4; }
-
-  /* ── Moved from body: flow animations ── */
-  @keyframes flowPulse { 0% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -40; } }
-  .flow-arrow { stroke-dasharray: 8 6; animation: flowPulse 1.4s linear infinite; }
-  .flow-arrow-slow { stroke-dasharray: 8 6; animation: flowPulse 2s linear infinite; }
-  @media (prefers-reduced-motion: reduce) {
-    .flow-arrow, .flow-arrow-slow { animation: none; stroke-dasharray: none; }
-  }
-
-  /* ── Moved from body: security group pulse ── */
-  @keyframes pulse-warn { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
-  .warn-pulse { animation: pulse-warn 2s ease-in-out infinite; }
-  @media (prefers-reduced-motion: reduce) { .warn-pulse { animation: none; opacity: 0.8; } }
-
-  /* ── Reading rail ── */
-  .post-layout { display: grid; grid-template-columns: 1fr 220px; gap: 4rem; max-width: 1020px; margin: 0 auto; padding: 0 clamp(1.5rem, 4vw, 3rem); align-items: start; }
-  .post-main { min-width: 0; }
-  .rail { position: sticky; top: 80px; display: flex; flex-direction: column; gap: 2rem; opacity: 0; transition: opacity 0.4s ease; }
-  .rail.visible { opacity: 1; }
-  .rail-label { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mid); margin-bottom: 0.75rem; }
-  .rail-nav ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 2px; }
-  .rail-nav a { font-size: 0.78rem; color: var(--ink-mid); text-decoration: none; padding: 4px 0 4px 12px; border-left: 1.5px solid var(--border); display: block; line-height: 1.4; transition: color 0.2s, border-color 0.2s; }
-  .rail-nav a:hover, .rail-nav a.active { color: var(--copper); border-left-color: var(--copper); }
-  .rail-author { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding-top: 1.5rem; border-top: 0.5px solid var(--border); }
-  .rail-author-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; margin-bottom: 4px; border: 0.5px solid var(--border); }
-  .rail-author-name { font-size: 0.85rem; font-weight: 500; color: var(--ink); }
-  .rail-author-role { font-size: 0.72rem; color: var(--ink-mid); margin-bottom: 4px; }
-  .rail-author-linkedin { display: inline-flex; align-items: center; gap: 5px; font-size: 0.7rem; color: var(--ink-mid); text-decoration: none; transition: color 0.2s; }
-  .rail-author-linkedin:hover { color: var(--copper); }
-  .rail-next { padding-top: 1.5rem; border-top: 0.5px solid var(--border); }
-  .rail-next-title { font-size: 0.82rem; font-style: italic; color: var(--ink); line-height: 1.4; margin-bottom: 4px; }
-  .rail-next-status { font-size: 0.68rem; color: var(--ink-mid); letter-spacing: 0.06em; }
-  @media (max-width: 900px) {
-    .post-layout { grid-template-columns: 1fr; padding: 0 clamp(1rem, 4vw, 2rem); }
-    .rail { opacity: 1; position: static; padding-top: 2rem; border-top: 0.5px solid var(--border); flex-direction: row; flex-wrap: wrap; gap: 1.5rem; }
-    .rail-nav, .rail-author, .rail-next { flex: 1; min-width: 160px; }
-    .rail-author { border-top: none; padding-top: 0; }
-    .rail-next { border-top: none; padding-top: 0; }
-  }
-
 </style>
 </head>
 <body>
@@ -786,8 +746,6 @@
 </script>
 
 <div class="page">
-<div class="post-layout">
-<div class="post-main">
 
   <!-- Header -->
   <header class="blog-header">
@@ -821,7 +779,7 @@
     <div class="divider-line"></div>
   </div>
 
-  <h2 id="why-environments">Why Environments Are an Architecture Decision</h2>
+  <h2>Why Environments Are an Architecture Decision</h2>
 
   <p>Most developers treat environments like parking spaces — you just grab one and start. But in Power Platform, <strong>every environment is a deployment boundary, a security boundary, and a licensing boundary all at once.</strong></p>
 
@@ -880,11 +838,19 @@
     <div class="divider-line"></div>
   </div>
 
-  <h2 id="topology">The Environment Topology That Actually Works</h2>
+  <h2>The Environment Topology That Actually Works</h2>
 
   <p>For any serious Power Platform project, here's the minimum environment layout I recommend. Everything to the left is unmanaged — developers work there freely. Everything to the right receives only managed solutions, deployed through pipelines.</p>
 
   <div class="post-figure">
+  <style>
+  @keyframes flowPulse { 0% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -40; } }
+  .flow-arrow { stroke-dasharray: 8 6; animation: flowPulse 1.4s linear infinite; }
+  .flow-arrow-slow { stroke-dasharray: 8 6; animation: flowPulse 2s linear infinite; }
+  @media (prefers-reduced-motion: reduce) {
+    .flow-arrow, .flow-arrow-slow { animation: none; stroke-dasharray: none; }
+  }
+  </style>
   <svg width="100%" viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <marker id="arr-topo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -928,8 +894,6 @@
     <p>Microsoft now automatically enables Managed Environments for any pipeline target that isn't already configured. If you're setting up a new project today, plan for Managed Environments from day one — it's no longer optional for pipeline targets.</p>
   </div>
 
-  <p>The dividing line matters: everything left of it is unmanaged â developers work freely. Everything right receives only managed solutions through a pipeline. That boundary is what makes ALM possible. Without it, you're just moving files between environments and hoping for the best.</p>
-
   <p>For projects integrating with Dynamics 365 F&O, you'll also want a dedicated <strong>Integration / Staging</strong> environment between Dev and Test — a stable target for integration testing that doesn't pollute your main test environment with data sync issues. But that's a topic for a later post in this series.</p>
 
   <div class="divider">
@@ -938,7 +902,7 @@
     <div class="divider-line"></div>
   </div>
 
-  <h2 id="four-mistakes">The Four Mistakes That Will Haunt You</h2>
+  <h2>The Four Mistakes That Will Haunt You</h2>
 
   <p>These aren't theoretical. Every one of these I've seen on real projects — some of them on projects I inherited, some on projects that started without proper guidance. I'm documenting them here so you don't have to learn them the same way.</p>
 
@@ -958,14 +922,12 @@
     <div class="mistake-title">No Security Group on the Environment</div>
     <p>When you create an environment without assigning a security group, <strong>every licensed user in your tenant can access it.</strong> This isn't a hypothetical risk — it means developers can stumble into a UAT environment, users can access a test environment with incomplete configurations, and there's no clear boundary between who belongs where.</p>
 
-    <div class="post-figure post-figure--screenshot">
-      <img src="../assets/screenshots/env-security-group.png"
-           alt="Security group field during environment creation"
-           class="post-screenshot" loading="lazy"/>
-      <p class="figure-caption">The security group field during environment creation. Leave it empty and every licensed user in your tenant has access. 30 seconds to set. No excuse to skip it.</p>
-    </div>
-
     <div class="post-figure">
+    <style>
+    @keyframes pulse-warn { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+    .warn-pulse { animation: pulse-warn 2s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) { .warn-pulse { animation: none; opacity: 0.8; } }
+    </style>
     <svg width="100%" viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <marker id="arr-sec" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -1035,13 +997,6 @@
     <p>When you create an environment, Power Platform auto-generates an organization URL — something like <code>org32737.crm4.dynamics.com</code>. Nobody changes it because nobody notices it. And then it ends up in production, in API calls, in documentation, in client-facing URLs, and in the browser tabs of every user on the project.</p>
     <p>Changing it later requires a Microsoft support request, planned downtime, and updates to every integration that references the URL. On some configurations it can't be changed at all without recreating the environment.</p>
 
-    <div class="post-figure post-figure--screenshot">
-      <img src="../assets/screenshots/env-url-field.png"
-           alt="URL field during environment creation"
-           class="post-screenshot" loading="lazy"/>
-      <p class="figure-caption">Whatever is in that box right now ends up in production forever. Change it before you click Next.</p>
-    </div>
-
     <div class="url-compare">
       <div class="url-box bad">
         <div class="url-box-label">✗ Auto-generated (don't use)</div>
@@ -1063,7 +1018,7 @@
     <div class="divider-line"></div>
   </div>
 
-  <h2 id="checklist">The Pre-Start Checklist</h2>
+  <h2>The Pre-Start Checklist</h2>
 
   <p>Before you create a single environment on your next project, go through this list. It takes less than 30 minutes and prevents the issues above entirely.</p>
 
@@ -1105,7 +1060,7 @@
       </div>
       <div class="cl-item" onclick="clToggle(this)">
         <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div><div class="cl-text">Enable Managed Environments for all non-dev environments</div><div class="cl-note">Required for pipeline targets as of February 2026 — plan for it from day one</div><div class="cl-note">Managed Environments is a premium governance layer. If you’re using Pipelines, it’s now mandatory.</div></div>
+        <div><div class="cl-text">Enable Managed Environments for all non-dev environments</div><div class="cl-note">Required for pipeline targets as of February 2026 — plan for it from day one</div></div>
       </div>
     </div>
 
@@ -1129,11 +1084,11 @@
     <div class="divider-line"></div>
   </div>
 
-  <h2 id="whats-next">What's Next</h2>
+  <h2>What's Next</h2>
 
   <p>Now that your environments are set up correctly, the next question is: what goes inside them? In <strong>Post 2</strong>, we cover solution architecture — one solution or many, how to segment by layer, publisher strategy, and the decisions you can't undo mid-project.</p>
 
-  <p>If you've seen environment setup go wrong in ways I haven't covered here — I'd genuinely like to hear about it. Find me on LinkedIn â genuinely curious to hear if you've seen it go differently.</p>
+  <p>If you've seen environment setup go wrong in ways I haven't covered here — I'd genuinely like to hear about it. Drop a comment or find me on LinkedIn.</p>
 
   <!-- Series Nav -->
   <div class="series-nav">
@@ -1166,41 +1121,7 @@
       <div class="author-title">Power Platform Lead</div>
       <p class="author-bio">Sharing what I know from the field — because I wish someone had written this down when I needed it.</p>
     </div>
-
-  </div><!-- /.post-main -->
-
-  <aside class="rail" id="postRail">
-    <nav class="rail-nav" aria-label="In this post">
-      <div class="rail-label">In this post</div>
-      <ul>
-        <li><a href="#why-environments">Why environments matter</a></li>
-        <li><a href="#topology">The topology that works</a></li>
-        <li><a href="#four-mistakes">The four mistakes</a></li>
-        <li><a href="#checklist">Pre-start checklist</a></li>
-        <li><a href="#whats-next">What's next</a></li>
-      </ul>
-    </nav>
-
-    <div class="rail-author">
-      <img src="../assets/photo.jpg" alt="Ahmed El-Khatib" class="rail-author-img"/>
-      <div class="rail-author-name">Ahmed El-Khatib</div>
-      <div class="rail-author-role">Power Platform Lead</div>
-      <a href="https://linkedin.com/in/ahmed-el-khatib" target="_blank" rel="noopener" class="rail-author-linkedin">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-        </svg>
-        Connect on LinkedIn
-      </a>
-    </div>
-
-    <div class="rail-next">
-      <div class="rail-label">Next in series</div>
-      <div class="rail-next-title">Solution architecture â one solution or many?</div>
-      <div class="rail-next-status">Coming soon</div>
-    </div>
-  </aside>
-
-  </div><!-- /.post-layout -->
+  </div>
 
 </div>
 
@@ -1212,28 +1133,6 @@ function clToggle(el) {
   document.getElementById('cl-bar').style.width = (done / items.length * 100) + '%';
   document.getElementById('cl-count').textContent = done + ' / ' + items.length;
 }
-</script>
-<script>
-(function() {
-  var rail = document.getElementById('postRail');
-  if (!rail) return;
-  window.addEventListener('scroll', function() {
-    if (window.scrollY > 280) rail.classList.add('visible');
-  }, {passive: true});
-  var ids = ['why-environments','topology','four-mistakes','checklist','whats-next'];
-  var headings = ids.map(function(id) { return document.getElementById(id); }).filter(Boolean);
-  var navLinks = ids.map(function(id) { return rail.querySelector('a[href="#'+id+'"]'); });
-  headings.forEach(function(h) {
-    new IntersectionObserver(function(entries) {
-      entries.forEach(function(e) {
-        if (e.isIntersecting) {
-          var i = headings.indexOf(e.target);
-          navLinks.forEach(function(l, j) { if (l) l.classList.toggle('active', i===j); });
-        }
-      });
-    }, {threshold: 0.15}).observe(h);
-  });
-})();
 </script>
 </body>
 </html>

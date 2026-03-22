@@ -110,13 +110,13 @@
     font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em;
     text-transform: uppercase; color: var(--ink-light); white-space: nowrap;
   }
-  .tag-btn {
+  .filter-btn {
     font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.06em;
     padding: 5px 14px; border-radius: 20px; border: 1px solid var(--sand);
     background: transparent; color: var(--ink-mid); cursor: pointer;
     transition: all 0.18s; white-space: nowrap;
   }
-  .tag-btn.active, .tag-btn:hover {
+  .filter-btn.active, .filter-btn:hover {
     background: var(--ink); color: var(--canvas); border-color: var(--ink);
   }
   .results-count {
@@ -355,17 +355,17 @@
   <div class="blog-controls">
     <div class="search-wrap">
       <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="13" height="13" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" id="search-input" class="search-input" placeholder="Search posts…" aria-label="Search posts" autocomplete="off">
+      <input type="text" id="searchInput" class="search-input" placeholder="Search posts…" aria-label="Search posts">
     </div>
     <div class="filter-sep"></div>
     <span class="filter-label">Filter</span>
-    <button class="tag-btn active" data-tag="all">All</button>
-    <button class="tag-btn" data-tag="ALM">ALM</button>
-    <button class="tag-btn" data-tag="Integration">Integration</button>
-    <button class="tag-btn" data-tag="Dataverse">Dataverse</button>
-    <button class="tag-btn" data-tag="Architecture">Architecture</button>
-    <button class="tag-btn" data-tag="AI">AI</button>
-    <span class="results-count" id="results-count">1 post</span>
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="alm">ALM</button>
+    <button class="filter-btn" data-filter="integration">Integration</button>
+    <button class="filter-btn" data-filter="dataverse">Dataverse</button>
+    <button class="filter-btn" data-filter="architecture">Architecture</button>
+    <button class="filter-btn" data-filter="ai">AI</button>
+    <span class="results-count" id="resultsCount">1 post</span>
   </div>
 
   <!-- POST GRID -->
@@ -373,7 +373,7 @@
 
     <!-- Post 01 — featured -->
     <article class="post-card post-card--featured"
-      data-tags="ALM,Architecture"
+      data-tags="alm,architecture"
       data-title="Before You Write a Single Line of Code, Get Your Environments Right"
       data-excerpt="Most Power Platform projects fail at deployment — not because of bad code, but because of decisions made in the first five minutes. The wrong URL, no security groups, a skipped toggle."
       onclick="location.href='post1-environment-strategy.html'"
@@ -474,40 +474,43 @@
   navLinks?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
 
   // ── Filter + Search
-  const cards = Array.from(document.querySelectorAll('.post-card'));
-  const empty = document.getElementById('noPostsMsg');
-  const count = document.getElementById('results-count');
-  const search = document.getElementById('search-input');
-  const tagBtns = document.querySelectorAll('.tag-btn');
-  let tag = 'all', q = '';
+  const filterBtns  = document.querySelectorAll('.filter-btn');
+  const postCards   = document.querySelectorAll('.post-card--featured, .post-card:not(.post-card--featured)');
+  const noPostsMsg  = document.getElementById('noPostsMsg');
+  const searchInput = document.getElementById('searchInput');
+  const resultsCount = document.getElementById('resultsCount');
+  let activeFilter  = 'all';
+  let searchQuery   = '';
 
-  function filter() {
-    let v = 0;
-    cards.forEach(c => {
-      const tags  = (c.dataset.tags || '').split(',');
-      const title = (c.dataset.title || '').toLowerCase();
-      const exc   = (c.dataset.excerpt || '').toLowerCase();
-      const show  = (tag === 'all' || tags.includes(tag)) && (!q || title.includes(q) || exc.includes(q));
-      c.style.display = show ? '' : 'none';
-      if (show) v++;
+  function applyFilters() {
+    let visible = 0;
+    postCards.forEach(card => {
+      const tags    = (card.dataset.tags || '').toLowerCase();
+      const title   = (card.dataset.title || '').toLowerCase();
+      const excerpt = (card.dataset.excerpt || '').toLowerCase();
+      const matchFilter = activeFilter === 'all' || tags.includes(activeFilter);
+      const matchSearch = !searchQuery || title.includes(searchQuery) || excerpt.includes(searchQuery);
+      const show = matchFilter && matchSearch;
+      card.classList.toggle('hidden', !show);
+      if (show) visible++;
     });
-    if (empty) empty.classList.toggle('visible', v === 0);
-    if (count) count.textContent = v === 1 ? '1 post' : v + ' posts';
+    noPostsMsg.classList.toggle('visible', visible === 0);
+    resultsCount.textContent = visible === 1 ? '1 post' : visible + ' posts';
   }
 
-  tagBtns.forEach(b => b.addEventListener('click', () => {
-    tagBtns.forEach(x => x.classList.remove('active'));
-    b.classList.add('active');
-    tag = b.dataset.tag;
-    filter();
-  }));
-
-  if (search) search.addEventListener('input', () => {
-    q = search.value.toLowerCase().trim();
-    filter();
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      applyFilters();
+    });
   });
 
-  filter();
+  searchInput.addEventListener('input', () => {
+    searchQuery = searchInput.value.toLowerCase().trim();
+    applyFilters();
+  });
 
   // ── Sarcastic tip toast
   const sarcasticTips = [
