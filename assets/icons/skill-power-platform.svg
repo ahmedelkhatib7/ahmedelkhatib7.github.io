@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" fill="none">
+  <!-- Power Platform: 2x2 coloured squares, 1px gap, centered in 36x36 -->
+  <rect x="3"  y="3"  width="15" height="15" rx="2" fill="#742774"/>
+  <rect x="19" y="3"  width="15" height="15" rx="2" fill="#00A4EF"/>
+  <rect x="3"  y="19" width="15" height="15" rx="2" fill="#7FBA00"/>
+  <rect x="19" y="19" width="15" height="15" rx="2" fill="#FFB900"/>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" fill="none">
+  <rect width="36" height="36" rx="4" fill="#0078D4"/>
+  <!-- Three vertical bars of increasing height -->
+  <rect x="7"  y="22" width="5" height="8"  rx="1" fill="white"/>
+  <rect x="16" y="16" width="5" height="14" rx="1" fill="white"/>
+  <rect x="25" y="10" width="5" height="20" rx="1" fill="white"/>
+  <!-- Upward trend line crossing bars -->
+  <path d="M7 24 L16 18 L25 12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" fill="none">
+  <!-- Left person (behind) -->
+  <circle cx="8"  cy="13" r="3"   stroke="currentColor" stroke-width="1.5"/>
+  <path d="M3 28 Q3 21 8 21 Q11 21 13 23" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+  <!-- Right person (behind) -->
+  <circle cx="28" cy="13" r="3"   stroke="currentColor" stroke-width="1.5"/>
+  <path d="M23 23 Q25 21 28 21 Q33 21 33 28" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+  <!-- Center lead (front) -->
+  <circle cx="18" cy="11" r="4"   stroke="currentColor" stroke-width="1.5"/>
+  <path d="M10 30 Q10 22 18 22 Q26 22 26 30" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+</svg>

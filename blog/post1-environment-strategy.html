@@ -619,6 +619,43 @@
     .url-compare { grid-template-columns: 1fr; }
   }
 
+  /* ── Post figure / screenshot ── */
+  .post-figure { margin: 2rem 0; }
+  .post-figure--screenshot { margin: 1.5rem 0; }
+  .post-screenshot {
+    width: 100%;
+    border-radius: 8px;
+    border: 0.5px solid var(--border);
+    display: block;
+  }
+  .figure-caption {
+    font-family: 'Fira Code', monospace;
+    font-size: 11.5px;
+    color: var(--ink-light);
+    letter-spacing: .04em;
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+
+  /* ── Interactive checklist ── */
+  .interactive-checklist { margin: 2rem 0; }
+  .cl-progress-row { display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem; }
+  .cl-bar-wrap { flex: 1; height: 4px; background: #e0d9cc; border-radius: 2px; overflow: hidden; }
+  .cl-bar { height: 4px; background: #5a9e72; border-radius: 2px; transition: width 0.3s ease; }
+  .cl-count { font-size: 12px; color: #a89880; min-width: 36px; text-align: right; }
+  .cl-phase { margin-bottom: 1.5rem; }
+  .cl-phase-label { font-size: 11px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: #a89880; padding-bottom: 6px; border-bottom: 0.5px solid #e0d9cc; margin-bottom: 8px; }
+  .cl-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 0.5px solid #e0d9cc; cursor: pointer; transition: opacity 0.2s; }
+  .cl-item:last-child { border-bottom: none; }
+  .cl-item.done { opacity: 0.4; }
+  .cl-item.done .cl-text { text-decoration: line-through; }
+  .cl-box { width: 18px; height: 18px; min-width: 18px; border-radius: 4px; border: 0.5px solid #c8bfb0; background: #fff; display: flex; align-items: center; justify-content: center; margin-top: 2px; transition: background 0.15s; }
+  .cl-item.done .cl-box { background: #e4f0ea; border-color: #5a9e72; color: #3a7a50; }
+  .cl-check { display: none; width: 10px; height: 10px; }
+  .cl-item.done .cl-check { display: block; }
+  .cl-text { font-size: 14px; line-height: 1.5; color: #2c1a0e; }
+  .cl-note { font-size: 12px; color: #a89880; margin-top: 2px; line-height: 1.4; }
+
   .site-nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
@@ -792,34 +829,51 @@
 
   <p>For any serious Power Platform project, here's the minimum environment layout I recommend. Everything to the left is unmanaged — developers work there freely. Everything to the right receives only managed solutions, deployed through pipelines.</p>
 
-  <div class="diagram-wrap">
-    <div class="diagram-title">Fig. 1 — Recommended Environment Topology</div>
-    <div class="env-topology">
-      <div class="env-node highlight">
-        <div class="env-node-name">Dev</div>
-        <div class="env-node-desc">Individual developer sandbox. Unmanaged solutions. Reset freely.</div>
-        <div><span class="env-badge badge-unmanaged">Unmanaged</span></div>
-      </div>
-      <div class="env-arrow">→</div>
-      <div class="env-node">
-        <div class="env-node-name">Test / SIT</div>
-        <div class="env-node-desc">First deployment target. Validates solution import and integration.</div>
-        <div><span class="env-badge badge-managed">Managed</span></div>
-      </div>
-      <div class="env-arrow">→</div>
-      <div class="env-node">
-        <div class="env-node-name">UAT</div>
-        <div class="env-node-desc">Business user testing. Mirrors production data shape and config.</div>
-        <div><span class="env-badge badge-managed">Managed</span></div>
-      </div>
-      <div class="env-arrow">→</div>
-      <div class="env-node highlight">
-        <div class="env-node-name">Production</div>
-        <div class="env-node-desc">Live workloads only. No direct changes. Deployed only via pipeline.</div>
-        <div><span class="env-badge badge-managed">Managed</span></div>
-      </div>
-    </div>
-    <p style="font-size:12px;color:var(--ink-light);text-align:center;margin-top:16px;margin-bottom:0;font-family:'Fira Code',monospace;letter-spacing:.05em;">Deployment flows left → right only. No exceptions.</p>
+  <div class="post-figure">
+  <style>
+  @keyframes flowPulse { 0% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -40; } }
+  .flow-arrow { stroke-dasharray: 8 6; animation: flowPulse 1.4s linear infinite; }
+  .flow-arrow-slow { stroke-dasharray: 8 6; animation: flowPulse 2s linear infinite; }
+  @media (prefers-reduced-motion: reduce) {
+    .flow-arrow, .flow-arrow-slow { animation: none; stroke-dasharray: none; }
+  }
+  </style>
+  <svg width="100%" viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="arr-topo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+    <rect x="40" y="60" width="600" height="200" rx="16" fill="none" stroke="#c8bfb0" stroke-width="0.5" stroke-dasharray="6 4"/>
+    <text x="340" y="48" text-anchor="middle" font-size="12" fill="#a89880" font-family="inherit">Power Platform project environments</text>
+    <rect x="40" y="60" width="290" height="200" rx="16" fill="#faf7f2" stroke="#e0d9cc" stroke-width="0.5"/>
+    <text x="185" y="82" text-anchor="middle" font-size="11" fill="#a89880" font-family="inherit">Unmanaged zone</text>
+    <rect x="350" y="60" width="290" height="200" rx="16" fill="#faf7f2" stroke="#e0d9cc" stroke-width="0.5"/>
+    <text x="495" y="82" text-anchor="middle" font-size="11" fill="#a89880" font-family="inherit">Managed zone</text>
+    <rect x="60" y="96" width="100" height="56" rx="8" fill="#ede8f5" stroke="#9b84cc" stroke-width="0.5"/>
+    <text x="110" y="118" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#4a3580" font-family="inherit">Dev</text>
+    <text x="110" y="138" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#7a68aa" font-family="inherit">Unmanaged solutions</text>
+    <rect x="185" y="96" width="120" height="56" rx="8" fill="#f1eeea" stroke="#c8bfb0" stroke-width="0.5"/>
+    <text x="245" y="118" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#4a3d30" font-family="inherit">Test / SIT</text>
+    <text x="245" y="138" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#8a7060" font-family="inherit">First import target</text>
+    <rect x="370" y="96" width="100" height="56" rx="8" fill="#f1eeea" stroke="#c8bfb0" stroke-width="0.5"/>
+    <text x="420" y="118" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#4a3d30" font-family="inherit">UAT</text>
+    <text x="420" y="138" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#8a7060" font-family="inherit">Business testing</text>
+    <rect x="500" y="96" width="120" height="56" rx="8" fill="#e4f0ea" stroke="#5a9e72" stroke-width="0.5"/>
+    <text x="560" y="118" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#1e5c35" font-family="inherit">Production</text>
+    <text x="560" y="138" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#3a7a50" font-family="inherit">No direct changes</text>
+    <line class="flow-arrow" x1="162" y1="124" x2="183" y2="124" stroke="#9b84cc" stroke-width="1.5" marker-end="url(#arr-topo)" fill="none"/>
+    <line class="flow-arrow-slow" x1="307" y1="124" x2="368" y2="124" stroke="#c8bfb0" stroke-width="1.5" marker-end="url(#arr-topo)" fill="none"/>
+    <line class="flow-arrow" x1="472" y1="124" x2="498" y2="124" stroke="#c8bfb0" stroke-width="1.5" marker-end="url(#arr-topo)" fill="none"/>
+    <line x1="330" y1="72" x2="330" y2="248" stroke="#c8bfb0" stroke-width="0.5" stroke-dasharray="3 3"/>
+    <rect x="185" y="190" width="120" height="48" rx="8" fill="#fef3e2" stroke="#e6a830" stroke-width="0.5"/>
+    <text x="245" y="208" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#7a4f00" font-family="inherit">Integration</text>
+    <text x="245" y="226" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#a06800" font-family="inherit">F&amp;O projects only</text>
+    <path d="M245 152 L245 188" fill="none" stroke="#e6a830" stroke-width="0.5" stroke-dasharray="4 3" marker-end="url(#arr-topo)"/>
+    <text x="60" y="290" font-size="11" fill="#a89880" font-family="inherit">Deployment flows left to right only — no exceptions</text>
+    <text x="60" y="308" font-size="11" fill="#a89880" font-family="inherit">Amber = optional, only needed when F&amp;O integration is in scope</text>
+  </svg>
+  <p class="figure-caption">Fig. 1 — Recommended environment topology. Arrows animate left to right to reinforce the one-way deployment rule.</p>
   </div>
 
   <div class="callout warn">
@@ -855,29 +909,43 @@
     <div class="mistake-title">No Security Group on the Environment</div>
     <p>When you create an environment without assigning a security group, <strong>every licensed user in your tenant can access it.</strong> This isn't a hypothetical risk — it means developers can stumble into a UAT environment, users can access a test environment with incomplete configurations, and there's no clear boundary between who belongs where.</p>
 
-    <div class="diagram-wrap" style="margin:20px 0;">
-      <div class="diagram-title">Fig. 2 — Security Group Assignment Per Environment</div>
-      <div class="sg-diagram">
-        <div class="sg-env">
-          <div class="sg-env-name">✓ Dev Environment</div>
-          <div class="sg-group"><span class="sg-icon">👥</span> PP-Dev-Developers</div>
-          <div class="sg-group"><span class="sg-icon">👤</span> PP-Dev-Admins</div>
-        </div>
-        <div class="sg-env">
-          <div class="sg-env-name">✓ UAT Environment</div>
-          <div class="sg-group"><span class="sg-icon">👥</span> PP-UAT-BusinessUsers</div>
-          <div class="sg-group"><span class="sg-icon">👤</span> PP-UAT-Admins</div>
-        </div>
-        <div class="sg-env">
-          <div class="sg-env-name">✓ Production</div>
-          <div class="sg-group"><span class="sg-icon">👥</span> PP-Prod-EndUsers</div>
-          <div class="sg-group"><span class="sg-icon">👤</span> PP-Prod-Admins</div>
-        </div>
-        <div class="sg-env" style="border-color:var(--warn-border);background:var(--warn-bg)">
-          <div class="sg-env-name" style="color:#B87333">✗ No Security Group</div>
-          <div class="sg-no-group"><span class="sg-icon">⚠️</span> All tenant users can access</div>
-        </div>
-      </div>
+    <div class="post-figure">
+    <style>
+    @keyframes pulse-warn { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+    .warn-pulse { animation: pulse-warn 2s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) { .warn-pulse { animation: none; opacity: 0.8; } }
+    </style>
+    <svg width="100%" viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr-sec" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+      <text x="168" y="28" text-anchor="middle" font-size="11" fill="#a89880" font-family="inherit">Correctly configured</text>
+      <text x="520" y="28" text-anchor="middle" font-size="11" fill="#a89880" font-family="inherit">No security group assigned</text>
+      <rect x="40" y="44" width="256" height="220" rx="12" fill="#e4f0ea" stroke="#5a9e72" stroke-width="0.5"/>
+      <text x="168" y="68" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#1e5c35" font-family="inherit">Production</text>
+      <rect x="60" y="88" width="216" height="44" rx="6" fill="#c8e4d0" stroke="#5a9e72" stroke-width="0.5"/>
+      <text x="168" y="106" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#1e5c35" font-family="inherit">PP-Prod-EndUsers</text>
+      <text x="168" y="122" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#3a7a50" font-family="inherit">42 licensed members</text>
+      <rect x="60" y="144" width="216" height="44" rx="6" fill="#c8e4d0" stroke="#5a9e72" stroke-width="0.5"/>
+      <text x="168" y="162" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#1e5c35" font-family="inherit">PP-Prod-Admins</text>
+      <text x="168" y="178" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#3a7a50" font-family="inherit">3 admins only</text>
+      <text x="168" y="238" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#3a7a50" font-family="inherit">Only group members can access</text>
+      <rect x="384" y="44" width="256" height="220" rx="12" fill="#fef0f0" stroke="#d9534f" stroke-width="0.5"/>
+      <text x="512" y="68" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#8b1a1a" font-family="inherit">Test / UAT</text>
+      <rect class="warn-pulse" x="404" y="88" width="216" height="88" rx="6" fill="#fde8e8" stroke="#d9534f" stroke-width="0.5"/>
+      <text x="512" y="120" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#8b1a1a" font-family="inherit">No security group</text>
+      <text x="512" y="140" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#b03030" font-family="inherit">All licensed tenant users</text>
+      <text x="512" y="156" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#b03030" font-family="inherit">can access this environment</text>
+      <text x="512" y="210" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#b03030" font-family="inherit">Developers, business users,</text>
+      <text x="512" y="226" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#b03030" font-family="inherit">admins — no boundary at all</text>
+      <text x="512" y="252" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#8b1a1a" font-family="inherit">Set the group at creation time</text>
+      <line x1="300" y1="154" x2="380" y2="154" stroke="#c8bfb0" stroke-width="0.5" stroke-dasharray="4 3"/>
+      <text x="40" y="298" font-size="11" fill="#a89880" font-family="inherit">Name groups consistently: PP-[Project]-[Env]-[Role]</text>
+      <text x="40" y="316" font-size="11" fill="#a89880" font-family="inherit">Create groups in Entra ID before creating the environment — not after</text>
+    </svg>
+    <p class="figure-caption">Fig. 2 — The pulsing red zone illustrates that without a security group, the environment boundary does not exist.</p>
     </div>
 
     <div class="fix-label">✓ The fix</div>
@@ -891,6 +959,19 @@
     <div class="mistake-title">Skipping the "Enable Dynamics 365 Apps" Toggle</div>
     <p>This is the irreversible one. When creating a Dataverse environment, there's a toggle to enable Dynamics 365 apps. Most people skip it because they're "just building a Power App." Then six months later, the client wants to add Dynamics 365 Sales, or integrate with F&O, or install a Dynamics-dependent solution.</p>
     <p><strong>You cannot enable Dynamics 365 apps on an existing environment that was created without this option.</strong> You have to create a new environment, migrate everything, and update every integration. I've seen projects delayed by weeks because of this single skipped toggle.</p>
+
+    <div class="post-figure post-figure--screenshot">
+      <div class="screenshot-placeholder">
+        <img
+          src="../assets/screenshots/env-d365-toggle.png"
+          alt="Power Platform Admin Center — Enable Dynamics 365 apps toggle shown in the OFF state during environment creation"
+          class="post-screenshot"
+          loading="lazy"
+        />
+        <p class="figure-caption">The toggle is off by default and cannot be changed after environment creation. Admin Center → Environments → New → scroll to "Enable Dynamics 365 apps".</p>
+      </div>
+    </div>
+
     <div class="fix-label">✓ The fix</div>
     <p>If there is any chance — any chance at all — that Dynamics 365 apps will be needed in the future, enable this toggle at creation time. The cost is zero. The cost of not enabling it when you need it is enormous.</p>
 
@@ -928,36 +1009,54 @@
 
   <p>Before you create a single environment on your next project, go through this list. It takes less than 30 minutes and prevents the issues above entirely.</p>
 
-  <div class="checklist">
-    <div class="checklist-title">Environment Setup Checklist</div>
+  <div class="interactive-checklist">
+    <div class="cl-progress-row">
+      <div class="cl-bar-wrap"><div class="cl-bar" id="cl-bar" style="width:0%"></div></div>
+      <div class="cl-count" id="cl-count">0 / 7</div>
+    </div>
 
-    <div class="checklist-item">
-      <div class="check-box">□</div>
-      <div>Define your environment topology — Dev, Test, UAT, Prod at minimum. Add Integration/Staging if you have F&O in scope.</div>
+    <div class="cl-phase">
+      <div class="cl-phase-label">Planning</div>
+      <div class="cl-item" onclick="clToggle(this)">
+        <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div><div class="cl-text">Define your environment topology before any work starts</div><div class="cl-note">Dev, Test, UAT, Prod at minimum — add Integration/Staging if F&amp;O is in scope</div></div>
+      </div>
+      <div class="cl-item" onclick="clToggle(this)">
+        <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div><div class="cl-text">Decide upfront if Dynamics 365 apps will ever be needed</div><div class="cl-note">If any doubt — enable it. You cannot turn it on after environment creation</div></div>
+      </div>
+      <div class="cl-item" onclick="clToggle(this)">
+        <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div><div class="cl-text">Agree on the org URL naming convention before creating anything</div><div class="cl-note">Use [client]-[env] — e.g. masheed-dev, masheed-uat, masheed-prod</div></div>
+      </div>
     </div>
-    <div class="checklist-item">
-      <div class="check-box">□</div>
-      <div>Create Entra ID security groups before creating any environment. One group per environment per role.</div>
+
+    <div class="cl-phase">
+      <div class="cl-phase-label">Security — do this before creating any environment</div>
+      <div class="cl-item" onclick="clToggle(this)">
+        <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div><div class="cl-text">Create Entra ID security groups — one per environment per role</div><div class="cl-note">Naming: PP-[Project]-[Env]-[Role] — e.g. PP-Masheed-Prod-Admins</div></div>
+      </div>
     </div>
-    <div class="checklist-item">
-      <div class="check-box">□</div>
-      <div>Decide on the organization URL naming convention upfront. Use <code>[client]-[env]</code> consistently.</div>
+
+    <div class="cl-phase">
+      <div class="cl-phase-label">Configuration — at environment creation time</div>
+      <div class="cl-item" onclick="clToggle(this)">
+        <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div><div class="cl-text">Assign the security group at environment creation — not after</div><div class="cl-note">No security group means every licensed tenant user can access the environment</div></div>
+      </div>
+      <div class="cl-item" onclick="clToggle(this)">
+        <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div><div class="cl-text">Enable Managed Environments for all non-dev environments</div><div class="cl-note">Required for pipeline targets as of February 2026 — plan for it from day one</div></div>
+      </div>
     </div>
-    <div class="checklist-item">
-      <div class="check-box">□</div>
-      <div>Decide upfront whether Dynamics 365 apps will ever be needed. If there's any doubt — enable it.</div>
-    </div>
-    <div class="checklist-item">
-      <div class="check-box">□</div>
-      <div>Enable Managed Environments for all non-dev environments. Required for pipeline targets as of February 2026.</div>
-    </div>
-    <div class="checklist-item">
-      <div class="check-box">□</div>
-      <div>Document all environment details — URL, region, purpose, security group, Dataverse capacity — in your project wiki before development begins.</div>
-    </div>
-    <div class="checklist-item">
-      <div class="check-box">□</div>
-      <div>Never use the default environment for project work. Enforce this with a DLP policy if you're the admin.</div>
+
+    <div class="cl-phase">
+      <div class="cl-phase-label">Documentation — before development begins</div>
+      <div class="cl-item" onclick="clToggle(this)">
+        <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div><div class="cl-text">Document all environment details in your project wiki</div><div class="cl-note">URL, region, purpose, security group, Dataverse capacity — all of it, before a line of code</div></div>
+      </div>
     </div>
   </div>
 
@@ -1001,5 +1100,15 @@
   </div>
 
 </div>
+
+<script>
+function clToggle(el) {
+  el.classList.toggle('done');
+  const items = document.querySelectorAll('.cl-item');
+  const done = document.querySelectorAll('.cl-item.done').length;
+  document.getElementById('cl-bar').style.width = (done / items.length * 100) + '%';
+  document.getElementById('cl-count').textContent = done + ' / ' + items.length;
+}
+</script>
 </body>
 </html>
