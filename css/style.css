@@ -1032,6 +1032,9 @@ i.skill-svg-icon { width: auto; height: auto; font-size: 28px; line-height: 1; }
   display: block;
   border-radius: 4px;
 }
+@media (max-width: 400px) {
+  .cert-badge-sm { width: 44px; height: 44px; }
+}
 
 .skill-icon-cluster {
   display: flex;
@@ -1069,6 +1072,7 @@ i.skill-svg-icon { width: auto; height: auto; font-size: 28px; line-height: 1; }
   align-items: center;
   gap: 12px;
   margin-bottom: 10px;
+  flex-wrap: wrap;
 }
 
 .skill-icon {
