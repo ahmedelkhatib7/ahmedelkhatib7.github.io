@@ -961,6 +961,16 @@
     <p class="figure-caption">Fig. 2 — The pulsing red zone illustrates that without a security group, the environment boundary does not exist.</p>
     </div>
 
+    <figure class="post-figure post-figure--screenshot">
+      <img
+        src="../assets/screenshots/security-group.png"
+        alt="Power Platform Admin Center — Security group field during environment creation"
+        class="post-screenshot"
+        loading="lazy"
+      />
+      <p class="figure-caption">Fig. 3 — The security group field in Admin Center. Create the group in Entra ID first, then assign it here at creation time.</p>
+    </figure>
+
     <div class="fix-label">✓ The fix</div>
     <p>Before you create the environment, create the security groups in Entra ID. Name them consistently — something like <code>PP-[Project]-[Env]-[Role]</code>. Assign them at environment creation time. This takes five extra minutes and saves hours of access cleanup later.</p>
 
@@ -973,17 +983,15 @@
     <p>This is the irreversible one. When creating a Dataverse environment, there's a toggle to enable Dynamics 365 apps. Most people skip it because they're "just building a Power App." Then six months later, the client wants to add Dynamics 365 Sales, or integrate with F&O, or install a Dynamics-dependent solution.</p>
     <p><strong>You cannot enable Dynamics 365 apps on an existing environment that was created without this option.</strong> You have to create a new environment, migrate everything, and update every integration. I've seen projects delayed by weeks because of this single skipped toggle.</p>
 
-    <div class="post-figure post-figure--screenshot">
-      <div class="screenshot-placeholder">
-        <img
-          src="../assets/screenshots/env-d365-toggle.png"
-          alt="Power Platform Admin Center — Enable Dynamics 365 apps toggle shown in the OFF state during environment creation"
-          class="post-screenshot"
-          loading="lazy"
-        />
-        <p class="figure-caption">The toggle is off by default and cannot be changed after environment creation. Admin Center → Environments → New → scroll to "Enable Dynamics 365 apps".</p>
-      </div>
-    </div>
+    <figure class="post-figure post-figure--screenshot">
+      <img
+        src="../assets/screenshots/enable-dynamics-apps.png"
+        alt="Power Platform Admin Center — Enable Dynamics 365 apps toggle during environment creation"
+        class="post-screenshot"
+        loading="lazy"
+      />
+      <p class="figure-caption">Fig. 4 — The toggle is off by default and cannot be changed after environment creation. Admin Center → Environments → New → scroll to "Enable Dynamics 365 apps".</p>
+    </figure>
 
     <div class="fix-label">✓ The fix</div>
     <p>If there is any chance — any chance at all — that Dynamics 365 apps will be needed in the future, enable this toggle at creation time. The cost is zero. The cost of not enabling it when you need it is enormous.</p>
@@ -1007,6 +1015,16 @@
         <div class="url-value">masheed-prod.crm4.dynamics.com</div>
       </div>
     </div>
+
+    <figure class="post-figure post-figure--screenshot">
+      <img
+        src="../assets/screenshots/org-url.png"
+        alt="Power Platform Admin Center — Organization URL field during environment creation"
+        class="post-screenshot"
+        loading="lazy"
+      />
+      <p class="figure-caption">Fig. 5 — The org URL field in Admin Center. Set it manually at creation time — it cannot be changed later without a support request.</p>
+    </figure>
 
     <div class="fix-label">✓ The fix</div>
     <p>Always set the URL manually at creation time. Use a consistent naming convention: <code>[client]-[env]</code> — e.g. <code>masheed-dev</code>, <code>masheed-uat</code>, <code>masheed-prod</code>. Two minutes of work, permanent benefit.</p>
