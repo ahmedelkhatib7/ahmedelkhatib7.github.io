@@ -351,65 +351,69 @@ if (navBrand) {
   const backdrop   = document.getElementById('sardonicBackdrop');
 
   const tips = [
-    "🎰 Built your entire app in the Default environment? Bold strategy. Everyone in your tenant can now see it. Congratulations on the world's most public POC.",
-    "📛 org8372649.crm4.dynamics.com is not a URL. It's a cry for help. Set your org URL at creation time. It cannot be changed later. You've been warned. Twice.",
-    "🔐 No security group on your environment means every licensed user in the tenant can walk in. It's not an environment, it's a public park.",
-    "☑️ Skipped the Enable Dynamics 365 Apps toggle because you're 'just building a Canvas App'? The client will ask for D365 Sales in 3... 2... 1...",
-    "🧱 A solution named 'Default Solution' is not a solution. It's a red flag with a publisher prefix nobody set.",
-    "🚢 Shipping directly to Production because 'it's just a small change'? Bold. Unhinged. Deeply relatable. Still wrong.",
-    "💡 Power Automate is not a database. Stop storing state in flow variables across runs. Dataverse exists. Use it.",
-    "🧨 'It works in my Dev environment' is the Power Platform equivalent of 'it works on my machine.' Managed solutions exist for a reason.",
-    "📦 One solution for everything is not an architecture. It's a time bomb with a version number.",
-    "🔄 Triggering a flow on every record update without a change detection condition is not automation. It's a cloud bill waiting to happen.",
-    "👤 Using a personal account as your service account is completely fine — until that person leaves and 47 flows die overnight.",
-    "🏷️ 'New_field' is a field name. 'khatib_EnvironmentSetupStatus' is an architecture decision. Naming conventions aren't optional.",
-    "🔁 Copy-pasting the same 15 actions across 8 flows instead of building a child flow is not efficiency. It's technical debt in bulk.",
-    "🧪 Testing in Production because 'UAT takes too long to set up' is the bravest thing you can do with someone else's data.",
-    "📊 Power BI connected directly to Dataverse with no aggregation layer and 50 users refreshing simultaneously. The environment will remember this.",
-    "🔑 Hardcoding your client secret in a flow is not a secret anymore. Azure Key Vault is free. Embarrassment is not.",
-    "🌍 'We'll set up environments properly later' is developer speak for: we will migrate everything manually at 11pm before go-live.",
-    "📱 Canvas App with 47 screens, 200 variables, and zero components. It runs fine. On the device it was built on. Exclusively.",
-    "🎭 Model-Driven App with 12 custom pages and no sitemap structure. Navigation is just a suggestion at this point.",
-    "⚡ 'Let's just use the Common Data Service connector' — it's been deprecated. It was deprecated when you typed that. Dataverse connector. Always.",
-    "🏗️ Publisher prefix set to 'new_' means you accepted every default. Future you is already disappointed.",
-    "🔃 Synchronous plugin that calls an external API. In a transaction. On the Create of Account. Audacious. Incredibly audacious.",
-    "📧 Power Automate flow that sends an email on every Dataverse record change with no filter. Your users will enjoy the 3,000 emails per day.",
-    "🗄️ Storing files as base64 strings in a text column because SharePoint integration 'was complicated.' The column limit says hi.",
-    "🎯 DLP policy that blocks everything except the connectors you needed last year. Your new project is not impressed.",
-    "🧩 PCF control built as a solution component in the Default solution. ALM will find you eventually.",
-    "🔌 Logic App using a service account instead of Managed Identity. One password rotation away from a 2am incident.",
-    "🌐 'We don't need ALM, it's just an internal tool.' Famous last words, spoken approximately 4 weeks before a production incident.",
-    "📋 Business rule with 14 conditions and 3 nested ifs. Works perfectly. Nobody can explain why. Nobody will touch it.",
-    "🎪 Canvas App shared with 'Everyone' in the organization because setting up security groups 'takes too long.' Compliance says hi.",
-    "🔧 Custom connector with no error handling because 'the API never fails.' The API has already failed. It failed while you typed that.",
-    "📐 No environment variables. Connection references hardcoded to Dev. Deployment to UAT will be a spiritual experience.",
-    "🧵 Power Automate flow with 200 actions in a single flow because child flows are 'complicated.' Azure timeout is on its way.",
-    "🗺️ No sitemap customization on the Model-Driven App means users get every table ever created. It's less an app, more a museum.",
-    "💾 'We'll document it later.' Chapter one of every post-mortem ever written.",
-    "🧮 Calculated column doing real-time aggregation across 500k records. The environment is fine. It's fine. Look away.",
-    "🔒 Giving everyone System Administrator role 'temporarily.' Temporarily has been running for 14 months.",
-    "📡 Webhook with no retry logic and no dead-letter handling. Your integration works — until it doesn't, silently, at 2am.",
-    "🎲 Environment without Managed Environments enabled but you're using pipelines. Microsoft will enable it for you. Surprise.",
-    "🛸 'We'll refactor it after go-live.' Statistically, this has never happened. Not once. In the history of software.",
-    "🧯 Hotfix applied directly in Production at midnight. No documentation. No PR. No tests. Fully deployed. Probably fine.",
-    "🔂 Importing an unmanaged solution into Production. The environment will accept it. It just loses all respect for you.",
-    "🧲 Business process flow with 9 stages and no stage-gating. Users will click through all of them in 4 seconds. Guaranteed.",
-    "🌀 Circular reference in Power Automate with a 1-second delay added to 'prevent' it from looping. It's looping.",
-    "🏛️ 'Let's not use source control, it's just one developer.' One developer who will leave in 3 months with no handover.",
-    "🎸 Plugin registered on PostOperation Synchronous that queries 50,000 records. The platform would like a word.",
-    "🗝️ Admin credentials shared in a group chat 'just this once.' Security auditors screenshot group chats too.",
-    "🌋 Canvas App with OnStart loading 8 collections simultaneously. The loading screen is not a bug. It's loading. Still loading. Still loading.",
-    "🧬 'We'll use one environment for both Dev and Test to save capacity.' This is how environments get reset. Ask me how I know.",
-    "🏆 If you made it to tip 50, you've either done all of these or inherited a project where someone else did. Either way — welcome. You're in the right place."
+    // Canvas Apps
+    "Use With() instead of Set() for local variables — your OnStart isn't a variable dump.",
+    "Wrap parallel data calls in Concurrent() — sequential loading is just suffering with extra steps.",
+    "Never put logic in OnVisible. It runs every time the screen loads. Yes, including the back button.",
+    "Use Select() to trigger another control's OnSelect — stop duplicating logic across buttons.",
+    "Named formulas in App.Formulas recalculate automatically. Set() is for state, not derived values.",
+    "Patch only the columns you're changing, not the entire record.",
+    "Set DelayOutput to true on search inputs — every keystroke shouldn't hit your database.",
+    "Use IsMatch() for validation. Nested If() chains are not a substitute for regex.",
+    "Non-delegable functions in Filter() run client-side on 500 rows. Pre-filter with a delegable condition first.",
+    "Components that set global variables to talk to the parent app aren't components — they're accidents.",
+    // Power Automate
+    "Use Select action to reshape arrays before looping — transform once, not inside every iteration.",
+    "Execute Multiple batches up to 1000 Dataverse operations in one request. Stop creating records one by one.",
+    "Enable concurrency on Apply to Each when order doesn't matter. Sequential is just slow by default.",
+    "Never nest Apply to Each loops. 100×100 = 10,000 actions. The run history will haunt you.",
+    "Child flows exist for a reason. Same logic in three flows belongs in one child flow.",
+    "Set a timeout on every HTTP action. A hanging API holds your run open for an hour by default.",
+    "Connection references live in the solution. Hardcoded connections die at the first deployment.",
+    "Do Until needs a run count limit. An infinite loop runs until your action quota is gone.",
+    // Dataverse
+    "Always use $select in Dataverse queries. Fetching 80 columns to display 2 is not a query — it's a hostage situation.",
+    "Define alternate keys on natural identifiers and query by them instead of always scanning by GUID.",
+    "Never edit an OOB form directly. Duplicate it, rename it, modify the copy. Microsoft updates the original.",
+    "Use calculated columns for values derived from the same record. Don't recompute the same thing in every flow and plugin.",
+    "Rollup columns aggregate child records natively. Stop writing flows that sum children and stamp the parent.",
+    "Enable auditing selectively. Every column on every table is a storage bill waiting to happen.",
+    "Managed solutions are read-only in target environments by design. That's not a bug — that's the point.",
+    // Plugins & Custom APIs
+    "Plugins run synchronously in the transaction pipeline. A slow plugin is a slow operation for every user, every time.",
+    "Always get IOrganizationService from the execution context — never instantiate your own inside a plugin.",
+    "Pre-operation to modify incoming data. Post-operation when you need the record ID. Not negotiable.",
+    "Throw InvalidPluginExecutionException for user errors. Generic exceptions produce dialogs nobody understands.",
+    "Use SharedVariables to pass data between pre and post operation plugins. Stop re-querying data you already had.",
+    "Custom APIs are the modern replacement for custom actions. Still creating custom actions in 2025? Ask yourself why.",
+    // Model-Driven Apps
+    "Never modify an OOB form directly. Copy it, prefix it, assign it to security roles, modify the copy.",
+    "Use business rules before reaching for JavaScript on forms. Business rules don't need a developer to change.",
+    "Security roles are additive. Design them around job functions, not individual users.",
+    // Azure & Logic Apps
+    "Use Managed Identity for Logic Apps authentication. No secrets, no rotation, no 3 AM expiry surprises.",
+    "Logic Apps Standard = dedicated compute. Consumption = shared. Know the difference before you quote an SLA.",
+    "Set explicit timeouts on all HTTP actions. Default is one hour. That's one hour of open run per hanging call.",
+    "Use Logic Apps parameters for environment-specific values. Same discipline as environment variables. Same consequences for ignoring it.",
+    // ALM
+    "The publisher prefix is permanent. new_ in production is a timestamp of the day nobody thought to set it up.",
+    "Environment variables are not optional. Every hardcoded URL is a manual fix waiting for go-live.",
+    "Source control is not exporting a ZIP every Friday. That's a backup with no history and no merge capability.",
+    "Run pac solution check before every deployment. Two minutes now or two hours debugging a failed import later.",
+    "Connection References must exist in the target environment before first deployment — under a service account, not yours.",
+    "A solution that fails in UAT is not a UAT problem. It's a missing environment variable or a Dev assumption.",
+    // Jokes
+    "It works on my machine is not a deployment strategy. Neither is I'll sort environments out later.",
+    "The default environment is the shared office kitchen. Don't build production workloads in the office kitchen.",
+    "Two types of Power Platform developers: those who've deployed to production by accident, and those who haven't set up environments yet.",
+    "If your deployment process includes the words 'just quickly' — it's not a process. It's a prayer.",
+    "Your solution isn't done when it works in Dev. It's done when it works in Prod, under a service account, after a clean import, without you in the room.",
   ];
 
   const tip = tips[Math.floor(Math.random() * tips.length)];
-  const m = tip.match(/^(\S+)\s+(.+)$/s);
-  const [, emoji, rest] = m || ['', '⚡', tip];
-  const sentM = rest.match(/^([^.?!]+[.?!])\s*(.*)/s);
-  emojiEl.textContent = emoji;
-  titleEl.textContent = sentM ? sentM[1] : rest;
-  bodyEl.textContent  = sentM ? sentM[2].trim() : '';
+  emojiEl.textContent = '';
+  titleEl.textContent = tip;
+  bodyEl.textContent  = '';
 
   function closeModal() {
     modal.classList.remove('visible');
