@@ -762,7 +762,7 @@
   </header>
 
   <!-- Intro -->
-  <p>I've walked into more projects than I can count where the first thing I see is <code>org32737.crm4.dynamics.com</code> in the browser tab of a production environment. No security groups. Everything built in the default environment. And a Dynamics 365 toggle that someone skipped over during setup — which means you can't install any Dynamics apps now, no matter how much you need them.</p>
+  <p>I've walked into at least a dozen projects where the first thing I see is <code>org32737.crm4.dynamics.com</code> in the browser tab of a production environment. No security groups. Everything built in the default environment. And a Dynamics 365 toggle that someone skipped over during setup — which means you can't install any Dynamics apps now, no matter how much you need them.</p>
 
   <p>These aren't edge cases. They're the norm. And they're all decisions made in the first five minutes of a project — when nobody was paying attention, when the goal was just to "get started."</p>
 
@@ -918,14 +918,14 @@
 
   <h2>The Four Mistakes That Will Haunt You</h2>
 
-  <p>These aren't theoretical. Every one of these I've seen on real projects — some of them on projects I inherited, some on projects that started without proper guidance. I'm documenting them here so you don't have to learn them the same way.</p>
+  <p>Every one of these I've seen on real projects. I'm documenting them here so you don't have to learn them the same way.</p>
 
   <!-- Mistake 1 -->
   <div class="mistake-card">
     <div class="mistake-number">Mistake 01</div>
     <div class="mistake-title">Building in the Default Environment</div>
     <p>The default environment is always there, always accessible, and always a trap. It's shared across your entire tenant. Everyone with a Power Platform license can see it. There are no security groups, no deployment boundaries, and no clean way to move what you build out of it later.</p>
-    <p>I've seen teams build entire applications in the default environment because it was "just a proof of concept" — and then the client loved it and wanted it in production. The migration is painful. The cleanup is worse.</p>
+    <p>I've seen teams build entire applications in the default environment because it was "just a proof of concept" — and then the client loved it and wanted it in production. The migration is painful. The cleanup is worse. Budget two to three weeks you didn't plan for, on work that produces nothing new.</p>
     <div class="fix-label">✓ The fix</div>
     <p>Create a dedicated environment for every project from day one. Reserve the default environment for individual, personal experimentation only, and enforce what can and cannot be built there with a DLP policy.</p>
     <p>If you're managing a team or a whole tenant — not just a single project — there's now a better answer: Environment Routing. This is a tenant-level setting that automatically redirects any maker who visits the Power Apps or Power Automate portal into their own personal developer environment, instead of the default. The default environment stops being a dumping ground by default, without relying on everyone reading a governance policy and doing the right thing.</p>
@@ -988,8 +988,10 @@
       <p class="figure-caption">Fig. 3 — The security group field in Admin Center. Create the group in Entra ID first, then assign it here at creation time.</p>
     </figure>
 
-    <div class="fix-label">✓ The fix</div>
-    <p>Before you create the environment, create the security groups in Entra ID. Name them consistently — something like <code>PP-[Project]-[Env]-[Role]</code>. Assign them at environment creation time. This takes five extra minutes and saves hours of access cleanup later.</p>
+    <div class="callout ok">
+      <div class="callout-label">The fix — 5 minutes upfront, hours saved at go-live</div>
+      <p>Before you create the environment, create the security groups in Entra ID. Name them consistently — something like <code>PP-[Project]-[Env]-[Role]</code>. Assign them at environment creation time. If you skip this and need to add a security group later, you can — but every user currently in the environment without a license or role assignment gets removed, which means an unplanned access-restoration exercise mid-project.</p>
+    </div>
 
   </div>
 
@@ -1010,8 +1012,11 @@
       <p class="figure-caption">Fig. 4 — The toggle is off by default and cannot be changed after environment creation. Admin Center → Environments → New → scroll to "Enable Dynamics 365 apps".</p>
     </figure>
 
-    <div class="fix-label">✓ The fix</div>
-    <p>If there is any chance — any chance at all — that Dynamics 365 apps will be needed in the future, enable this toggle at creation time. The cost is zero. The cost of not enabling it when you need it is enormous.</p>
+    <div class="callout warn">
+      <div class="callout-label">What I saw on a real project</div>
+      <p>A client was six months into a Power Apps build when the business decided to add Dynamics 365 Sales. The environment had been created without the toggle enabled. We spent two weeks planning and executing a migration — exporting solutions, recreating the environment from scratch, re-importing, updating every integration endpoint, reassigning security roles. Two weeks of engineering time, no new functionality delivered, and a go-live pushed back a month. All for a checkbox that takes three seconds to enable at creation time.</p>
+      <p>Enable it if there is any chance — any chance at all — that Dynamics 365 apps will be needed. The cost at creation time is zero. The cost of not enabling it is measured in weeks.</p>
+    </div>
 
   </div>
 
@@ -1029,7 +1034,7 @@
       </div>
       <div class="url-box good">
         <div class="url-box-label">✓ Set at creation (always do this)</div>
-        <div class="url-value">masheed-prod.crm4.dynamics.com</div>
+        <div class="url-value">contoso-prod.crm4.dynamics.com</div>
       </div>
     </div>
 
@@ -1044,7 +1049,7 @@
     </figure>
 
     <div class="fix-label">✓ The fix</div>
-    <p>Always set the URL manually at creation time. Use a consistent naming convention: <code>[client]-[env]</code> — e.g. <code>masheed-dev</code>, <code>masheed-uat</code>, <code>masheed-prod</code>. Two minutes of work, permanent benefit.</p>
+    <p>Always set the URL manually at creation time. Use a consistent naming convention: <code>[client]-[env]</code> — e.g. <code>contoso-dev</code>, <code>contoso-uat</code>, <code>contoso-prod</code>. Two minutes of work, permanent benefit.</p>
   </div>
 
   <div class="divider">
@@ -1107,7 +1112,7 @@
       </div>
       <div class="cl-item" onclick="clToggle(this)">
         <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div><div class="cl-text">Agree on the org URL naming convention before creating anything</div><div class="cl-note">Use [client]-[env] — e.g. masheed-dev, masheed-uat, masheed-prod</div></div>
+        <div><div class="cl-text">Agree on the org URL naming convention before creating anything</div><div class="cl-note">Use [client]-[env] — e.g. contoso-dev, contoso-uat, contoso-prod</div></div>
       </div>
       <div class="cl-item" onclick="clToggle(this)">
         <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
@@ -1127,7 +1132,7 @@
       <div class="cl-phase-label">Security — Owner: Entra ID Admin + PP Admin</div>
       <div class="cl-item" onclick="clToggle(this)">
         <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div><div class="cl-text">Create Entra ID security groups — one per environment per role, before creating any environment</div><div class="cl-note">Naming: PP-[Project]-[Env]-[Role] — e.g. PP-Masheed-Prod-Admins</div></div>
+        <div><div class="cl-text">Create Entra ID security groups — one per environment per role, before creating any environment</div><div class="cl-note">Naming: PP-[Project]-[Env]-[Role] — e.g. PP-Contoso-Prod-Admins</div></div>
       </div>
     </div>
 
@@ -1169,9 +1174,11 @@
 
   <h2>What's Next</h2>
 
-  <p>Now that your environments are set up correctly, the next question is: what goes inside them? In <strong>Post 2</strong>, we cover solution architecture — one solution or many, how to segment by layer, publisher strategy, and the decisions you can't undo mid-project.</p>
+  <p>Most teams that get this right — environments set up cleanly, security groups in place, DLP configured before anyone touches a connector — then undo half of it in their first sprint. Not by changing the environments. By making a decision that feels completely natural: putting everything in one solution.</p>
 
-  <p>If you've seen environment setup go wrong in ways I haven't covered here — I'd genuinely like to hear about it. Drop a comment or find me on LinkedIn.</p>
+  <p>In <strong>Post 2</strong>, I'll show you what that decision costs. Why a single-solution project looks perfectly reasonable until you try to deploy it. What actually happens when your test environment has a managed solution and a developer pushes a change that touches a shared component. And what a layered solution architecture looks like when it's working — not on a whiteboard, but in a real pipeline.</p>
+
+  <p>If you've seen environment setup go wrong in ways I haven't covered here — find me on LinkedIn.</p>
 
   <!-- Series Nav -->
   <div class="series-nav">
@@ -1188,11 +1195,10 @@
   <!-- Disclaimer -->
   <div class="post-disclaimer">
     <p>
-      Everything in this post reflects my own experience and opinions.
-      Not my employer's, not Microsoft's — mine.
-      If something's changed, if you disagree, or if you've seen it go differently:
-      find me on <a href="https://linkedin.com/in/ahmed-el-khatib" target="_blank" rel="noopener">LinkedIn</a>.
-      I'm genuinely curious.
+      Everything here is from the field. My experience, my take, my mistakes.
+      Not my employer's. Not Microsoft's.
+      If something has changed or you've seen it play out differently, I'd like to hear it.
+      Find me on <a href="https://linkedin.com/in/ahmed-el-khatib" target="_blank" rel="noopener">LinkedIn</a>.
     </p>
   </div>
 
