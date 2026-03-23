@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Before environments, pipelines, and solutions — meet Mr. YOLO. The developer who ships first and asks questions never. The story of how good intentions build unmaintainable systems, and why this series exists." />
+<title>Meet Mr. YOLO — Power Platform Deployment Series | Khatib365</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #FAF7F1;
+    --surface:   #F4EFE6;
+    --surface2:  #ECE4D5;
+    --border:    #E0D5C4;
+    --border2:   #D4C8B4;
+    --copper:    #9C5A2E;
+    --copper-l:  #C47A4A;
+    --copper-pal:#F5EBE0;
+    --ink:       #1C1812;
+    --ink-soft:  #453D31;
+    --ink-mid:   #7A6F60;
+    --ink-light: #B5A99A;
+    --code-bg:   #EDE5D8;
+    --code-fg:   #7A3E10;
+    --warn-bg:   #FDF3E8;
+    --warn-border:#E8B87A;
+    --ok-bg:     #EEF5EE;
+    --ok-border: #8AB88A;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    line-height: 1.75;
+    font-size: 17px;
+  }
+
+  /* ── Layout ── */
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 60px 32px 120px;
+  }
+
+  /* ── Header ── */
+  .blog-header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 48px;
+    margin-bottom: 56px;
+  }
+
+  .series-tag {
+    display: inline-block;
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--copper);
+    background: var(--copper-pal);
+    border: 1px solid var(--border2);
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 24px;
+  }
+
+  .blog-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(34px, 5vw, 52px);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 20px;
+    letter-spacing: -.02em;
+  }
+
+  .blog-subtitle {
+    font-size: 18px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    max-width: 640px;
+    margin-bottom: 32px;
+    font-weight: 300;
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    font-family: 'Fira Code', monospace;
+    font-size: 11.5px;
+    color: var(--ink-mid);
+    letter-spacing: .06em;
+  }
+
+  .meta-dot {
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--border2);
+  }
+
+  /* ── Typography ── */
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 56px 0 20px;
+    letter-spacing: -.01em;
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--copper);
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    margin: 36px 0 14px;
+  }
+
+  p { margin-bottom: 20px; color: var(--ink-soft); }
+  p strong { color: var(--ink); font-weight: 600; }
+  p em { font-style: italic; color: var(--ink-soft); }
+
+  a { color: var(--copper); text-decoration: underline; text-underline-offset: 3px; }
+
+  code {
+    font-family: 'Fira Code', monospace;
+    font-size: 13.5px;
+    background: var(--code-bg);
+    color: var(--code-fg);
+    padding: 2px 7px;
+    border-radius: 3px;
+  }
+
+  /* ── Callout boxes ── */
+  .callout {
+    border-left: 3px solid var(--copper);
+    background: var(--copper-pal);
+    padding: 18px 24px;
+    margin: 32px 0;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .callout.warn {
+    border-color: var(--warn-border);
+    background: var(--warn-bg);
+  }
+
+  .callout.ok {
+    border-color: var(--ok-border);
+    background: var(--ok-bg);
+  }
+
+  .callout-label {
+    font-family: 'Fira Code', monospace;
+    font-size: 10.5px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .callout.warn .callout-label { color: #B87333; }
+  .callout.ok .callout-label { color: #4A7A4A; }
+
+  .callout p { margin: 0; font-size: 15.5px; line-height: 1.65; }
+  .callout p + p { margin-top: 10px; }
+
+  /* ── Section divider ── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 52px 0 40px;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .divider-mark {
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    color: var(--ink-light);
+    letter-spacing: .15em;
+  }
+
+  /* ── Series roadmap table ── */
+  .decision-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 28px 0;
+    font-size: 14.5px;
+  }
+
+  .decision-table th {
+    font-family: 'Fira Code', monospace;
+    font-size: 10.5px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    padding: 10px 16px;
+    text-align: left;
+    border-bottom: 2px solid var(--border);
+    background: var(--surface);
+  }
+
+  .decision-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink-soft);
+    vertical-align: top;
+  }
+
+  .decision-table tr:last-child td { border-bottom: none; }
+  .decision-table tr:hover td { background: var(--surface); }
+
+  .td-post {
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    color: var(--copper);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .td-post a {
+    color: var(--copper);
+    text-decoration: none;
+  }
+
+  .td-post a:hover { text-decoration: underline; }
+
+  .td-bonus {
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    color: var(--copper-l);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .td-yolo {
+    font-size: 13.5px;
+    color: var(--ink-mid);
+    font-style: italic;
+  }
+
+  .row-current td { background: var(--copper-pal); }
+  .row-current:hover td { background: var(--copper-pal); }
+
+  /* ── Trait list ── */
+  .trait-list {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 24px 28px;
+    margin: 28px 0;
+  }
+
+  .trait-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  .trait-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .trait-item:first-child { padding-top: 0; }
+
+  .trait-mark {
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    color: var(--ink-light);
+    letter-spacing: .08em;
+    padding-top: 3px;
+    flex-shrink: 0;
+    min-width: 26px;
+  }
+
+  .trait-item strong { color: var(--ink); }
+
+  /* ── Code block ── */
+  .code-block-wrap {
+    margin: 28px 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .code-block-header {
+    font-family: 'Fira Code', monospace;
+    font-size: 10.5px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+  }
+
+  .code-block {
+    background: var(--code-bg);
+    padding: 20px 24px;
+    overflow-x: auto;
+    font-family: 'Fira Code', monospace;
+    font-size: 12.5px;
+    color: var(--code-fg);
+    line-height: 1.7;
+    white-space: pre;
+    margin: 0;
+  }
+
+  .code-comment { color: var(--ink-light); }
+
+  /* ── CTA button ── */
+  .post-cta {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 12px 28px;
+    background: var(--ink);
+    color: var(--bg);
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+
+  .post-cta:hover {
+    background: var(--copper);
+    color: var(--bg);
+    text-decoration: none;
+  }
+
+  /* ── Series nav ── */
+  .series-nav {
+    margin-top: 72px;
+    padding-top: 36px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .series-nav-label {
+    font-family: 'Fira Code', monospace;
+    font-size: 10.5px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 6px;
+  }
+
+  .series-nav-link {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--copper);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .series-nav-link:hover { text-decoration: underline; }
+
+  /* ── Author block ── */
+  .author-block {
+    margin-top: 56px;
+    padding: 28px 32px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .author-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .author-title {
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    color: var(--copper);
+    letter-spacing: .08em;
+    margin-bottom: 10px;
+  }
+
+  .author-bio {
+    font-size: 14px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ── Post disclaimer ── */
+  .post-disclaimer {
+    margin-top: 3rem;
+    padding: 1.25rem 1.5rem;
+    border-left: 2px solid var(--border);
+    font-size: 0.82rem;
+    color: var(--ink-mid);
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .post-disclaimer a {
+    color: var(--copper);
+    text-decoration: none;
+    border-bottom: 0.5px solid var(--copper-l);
+  }
+
+  /* ── Site nav ── */
+  .site-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 2.5rem;
+    background: rgba(250,247,241,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(28,24,18,0.08);
+    font-family: 'Jost', sans-serif;
+  }
+
+  .site-nav-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: #1C1812;
+    text-decoration: none;
+  }
+
+  .site-nav-brand span { color: #9C5A2E; }
+  .site-nav-links { display: flex; align-items: center; gap: 2rem; }
+
+  .site-nav-link {
+    font-size: 0.82rem;
+    color: #7A6F60;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .site-nav-link:hover { color: #1C1812; }
+  .site-nav-link.active { color: #9C5A2E; font-weight: 500; }
+
+  /* ── Breadcrumb ── */
+  .post-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Fira Code', monospace;
+    font-size: 11.5px;
+    color: #B5A99A;
+    letter-spacing: 0.06em;
+    padding: 88px 32px 0;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .post-breadcrumb a { color: #9C5A2E; text-decoration: none; }
+  .post-breadcrumb a:hover { text-decoration: underline; }
+  .bc-sep { color: #D4C8B4; }
+
+  @media (max-width: 600px) {
+    .page { padding: 40px 20px 80px; }
+    .site-nav { padding: 1rem 1.25rem; }
+    .post-breadcrumb { padding: 80px 20px 0; }
+    .decision-table td, .decision-table th { padding: 8px 10px; font-size: 13px; }
+    .td-yolo { display: none; }
+    .code-block { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav" id="siteNav">
+  <a href="../" class="site-nav-brand">Khatib<span>365</span></a>
+  <div class="site-nav-links">
+    <a href="../#about" class="site-nav-link">About</a>
+    <a href="index.html" class="site-nav-link active">Writing</a>
+    <a href="../#skills" class="site-nav-link">Skills</a>
+    <a href="../#contact" class="site-nav-link">Contact</a>
+  </div>
+</nav>
+
+<div class="post-breadcrumb">
+  <a href="../">Home</a>
+  <span class="bc-sep">/</span>
+  <a href="index.html">Writing</a>
+  <span class="bc-sep">/</span>
+  <span>Post 00 — Meet Mr. YOLO</span>
+</div>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('siteNav').style.boxShadow =
+      window.scrollY > 40 ? '0 2px 24px rgba(28,24,18,0.07)' : 'none';
+  });
+</script>
+
+<div class="page">
+
+  <!-- Header -->
+  <header class="blog-header">
+    <div class="series-tag">Power Platform Deployment Series · Post 00</div>
+    <h1 class="blog-title">Meet Mr. YOLO</h1>
+    <p class="blog-subtitle">A story about the developer who ships first, asks questions never, and leaves behind solutions that work perfectly — until someone else has to touch them.</p>
+    <div class="meta">
+      <span class="meta-item">Ahmed El-Khatib</span>
+      <div class="meta-dot"></div>
+      <span class="meta-item">March 2026</span>
+      <div class="meta-dot"></div>
+      <span class="meta-item">8 min read</span>
+    </div>
+  </header>
+
+  <!-- Cinematic opening -->
+  <p>4:47 PM. Thursday. Two days before the client demo.</p>
+
+  <p>Mr. YOLO opens the Power Apps maker portal. In the top-right corner, it says <code>Default environment</code>. He notices this the way you notice a speed limit sign on the motorway — registers it, files it under <em>not relevant right now</em>. He thinks: <em>it's just a prototype. I'll move it later.</em></p>
+
+  <p>He doesn't move it later.</p>
+
+  <p>Six months pass. The prototype is in production. There are forty-three users. There are three cloud flows. There is a canvas app with nineteen screens, a patch formula inside a timer control that runs every sixty seconds, and a SharePoint list being used as a relational database because it was faster to set up. There are no environment variables. The service account email is hardcoded in eleven flows. Nobody knows the publisher prefix — or what a publisher prefix is. The word "solution" on this project refers to a ZIP file that one developer keeps on their desktop, updated manually, emailed to the client, and imported through a browser window whenever something needs to be "deployed."</p>
+
+  <p>And somewhere in a Jira board that nobody opens, there is a ticket that says: <em>TODO: move to proper environment.</em></p>
+
+  <p>It was created six months ago. It has never been touched. It is assigned to Mr. YOLO.</p>
+
+  <div class="callout">
+    <div class="callout-label">What this post covers</div>
+    <p>Who Mr. YOLO is and why he's the starting point for every deployment horror story · Why this series exists and who it's written for · The complete roadmap for all 14 posts in the Power Platform Deployment Series · A first look inside a real solution ZIP — the file most developers have never opened</p>
+  </div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-mark">§ 01</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <h2 id="who-is-mr-yolo">Who Is Mr. YOLO?</h2>
+
+  <p>Mr. YOLO is not a villain. He is not incompetent. He is — in every measurable short-term sense — effective. He delivers. When the business needs a form-to-SharePoint flow by Friday, he has it running by Thursday afternoon. When a manager asks for a dashboard, he builds one before the manager has finished explaining what they want. He doesn't slow things down with process. He doesn't open tickets for every decision. He ships.</p>
+
+  <p>The problems start when someone else inherits his work. When the business decides the prototype was actually production-ready. When the project grows from one developer to five. When the client asks for a second environment. When an auditor asks which version is currently deployed. When the senior developer who joins in month three asks: <em>where is source control? What is the publisher prefix? Is there a deployment pipeline?</em></p>
+
+  <p>Mr. YOLO's answer to all of these is technically honest: <em>it works. Don't touch it.</em></p>
+
+  <h3>The Mr. YOLO trait inventory</h3>
+
+  <div class="trait-list">
+    <div class="trait-item">
+      <span class="trait-mark">01</span>
+      <div><strong>Works exclusively in the Default environment.</strong> It's always there. It already has Dataverse. Nobody told him not to. The default environment is the path of least resistance, and Mr. YOLO is efficient.</div>
+    </div>
+    <div class="trait-item">
+      <span class="trait-mark">02</span>
+      <div><strong>Has never opened a solution ZIP file.</strong> He exports it as a black box. He imports it as a black box. The file between those two actions is someone else's concern.</div>
+    </div>
+    <div class="trait-item">
+      <span class="trait-mark">03</span>
+      <div><strong>Deploys by dragging exports between browser windows.</strong> Admin Center tab on the left, source environment on the right. Export, download, switch tabs, import. This is his pipeline. It works until it doesn't.</div>
+    </div>
+    <div class="trait-item">
+      <span class="trait-mark">04</span>
+      <div><strong>Uses one solution for everything.</strong> The data model, the flows, the canvas apps, the security roles, the dashboards, the PCF components — all in one solution named <code>ProjectName_v3_FINAL_real.zip</code>.</div>
+    </div>
+    <div class="trait-item">
+      <span class="trait-mark">05</span>
+      <div><strong>Hardcodes everything that could be an environment variable.</strong> The API endpoint. The SharePoint site URL. The service account email. The lookup GUID he copy-pasted from the browser URL bar eight months ago. It's fine.</div>
+    </div>
+    <div class="trait-item">
+      <span class="trait-mark">06</span>
+      <div><strong>Has no DLP policy.</strong> There was never a right time to set one up. The connectors that shouldn't be in this environment are in this environment. Nobody has looked. It's probably fine.</div>
+    </div>
+    <div class="trait-item">
+      <span class="trait-mark">07</span>
+      <div><strong>Thinks ALM is something large enterprises do.</strong> This project has six users. ALM is overkill right now. He'll add governance later, when it matters. It will matter in two months. He will add it never.</div>
+    </div>
+  </div>
+
+  <p>If you have worked on any Power Platform project with more than one developer and more than one environment, you have met Mr. YOLO. You may have been him at some point. I know I was — earlier in my career, when the platform was new to me and the path of least resistance looked a lot like the right path.</p>
+
+  <div class="callout warn">
+    <div class="callout-label">A note on the character</div>
+    <p>Mr. YOLO is a composite. He is not any one person, and he is not a criticism of any individual developer. He is the product of time pressure, unclear requirements, missing guidance, and a platform that makes it dangerously easy to start building before you know what you're building toward. Every mistake in this series is a mistake I've seen on real projects — including on projects I was responsible for.</p>
+  </div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-mark">§ 02</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <h2 id="why-this-series">Why This Series Exists</h2>
+
+  <p>The Power Platform is genuinely remarkable at shortening the distance between an idea and a working solution. That is its strength. That is also the source of most ALM problems on the platform.</p>
+
+  <p>Because it is fast to start, teams start without deciding how they'll finish. Because it's visual and approachable, projects grow past the complexity threshold where informal processes still hold — and nobody notices until go-live. Because Microsoft's documentation is thorough on individual features but doesn't connect the decisions: what to configure in what order, why the sequence matters, and what breaks permanently when you get it wrong.</p>
+
+  <p>This series is the document I wish had existed when I started building on the platform. Not a certification guide. Not a feature walkthrough. A practitioner's sequence — the decisions, in the order you'll actually face them, with the context you need to make them well the first time.</p>
+
+  <h3>Who this is for</h3>
+
+  <p><strong>You're a developer who has shipped solutions but never built a proper pipeline.</strong> You know the platform well. You don't know why your deployments are painful, or how to make them not be.</p>
+
+  <p><strong>You're a technical lead inheriting a project that Mr. YOLO started.</strong> You need to understand what decisions were made, what they cost to reverse, and what to fix first.</p>
+
+  <p><strong>You're a Power Platform admin establishing governance</strong> on a tenant where things have already gotten messy.</p>
+
+  <p><strong>You're starting a fresh project and want to do it right from day one.</strong> This series gives you a sequence to follow and a checklist to validate before you write a single formula.</p>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-mark">§ 03</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <h2 id="series-roadmap">The Full Series Roadmap</h2>
+
+  <p>Fourteen posts, in the order you'll face the decisions. Each one covers a single layer of the ALM stack — and opens with the mistake Mr. YOLO makes at that layer.</p>
+
+  <table class="decision-table">
+    <thead>
+      <tr>
+        <th>Post</th>
+        <th>Topic</th>
+        <th class="td-yolo" style="font-style:normal;">Mr. YOLO's Mistake</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="row-current">
+        <td class="td-post">Post 00</td>
+        <td>Meet Mr. YOLO <em style="font-size:12px;color:var(--ink-light);">(you are here)</em></td>
+        <td class="td-yolo">"Has no idea what he doesn't know"</td>
+      </tr>
+      <tr>
+        <td class="td-post"><a href="post1-environment-strategy.html">Post 01</a></td>
+        <td>Environment Strategy</td>
+        <td class="td-yolo">"The default environment works fine"</td>
+      </tr>
+      <tr>
+        <td class="td-post">Post 02</td>
+        <td>DLP Policies</td>
+        <td class="td-yolo">"Nobody else uses this tenant anyway"</td>
+      </tr>
+      <tr>
+        <td class="td-post">Post 03</td>
+        <td>Solutions 101 — Managed, Unmanaged, Publishers &amp; Naming</td>
+        <td class="td-yolo">"I just export the whole thing"</td>
+      </tr>
+      <tr>
+        <td class="td-post">Post 04</td>
+        <td>Solution Architecture &amp; Segmentation</td>
+        <td class="td-yolo">"One solution. Everything in it."</td>
+      </tr>
+      <tr>
+        <td class="td-post">Post 05</td>
+        <td>ALM Foundations</td>
+        <td class="td-yolo">"What's ALM?"</td>
+      </tr>
+      <tr>
+        <td class="td-post">Post 06</td>
+        <td>Deployment Methods — The Decision Guide</td>
+        <td class="td-yolo">"I just pick whatever's easiest"</td>
+      </tr>
+      <tr>
+        <td class="td-post">Post 07</td>
+        <td>Pipelines Deep-Dive: Power Platform Pipelines</td>
+        <td class="td-yolo">"It worked once so it's fine"</td>
+      </tr>
+      <tr>
+        <td class="td-post">Post 08</td>
+        <td>Pipelines Deep-Dive: Azure DevOps &amp; Build Tools</td>
+        <td class="td-yolo">"I'll set up DevOps later"</td>
+      </tr>
+      <tr>
+        <td class="td-post">Post 09</td>
+        <td>Pipelines Deep-Dive: GitHub Actions</td>
+        <td class="td-yolo">"We don't need CI/CD for this"</td>
+      </tr>
+      <tr>
+        <td class="td-post">Post 10</td>
+        <td>Pipelines Deep-Dive: ALM Accelerator</td>
+        <td class="td-yolo">"That's too complicated for our team"</td>
+      </tr>
+      <tr>
+        <td class="td-post">Post 11</td>
+        <td>Pipelines Deep-Dive: Solution Packager &amp; CLI</td>
+        <td class="td-yolo">"What's a CLI?"</td>
+      </tr>
+      <tr>
+        <td class="td-post">Post 12</td>
+        <td>Environment Variables &amp; Connection References</td>
+        <td class="td-yolo">"I hardcoded the URL, it's fine"</td>
+      </tr>
+      <tr>
+        <td class="td-bonus">★ Bonus</td>
+        <td>Solution XML Anatomy</td>
+        <td class="td-yolo">"I've never opened the ZIP"</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <div class="callout-label">Publishing cadence</div>
+    <p>Posts are published as they're ready — no fixed schedule. Follow on <a href="https://linkedin.com/in/ahmed-el-khatib" target="_blank" rel="noopener">LinkedIn</a> to be notified when each one drops.</p>
+  </div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-mark">★</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <h2 id="inside-the-zip">A First Look Inside the ZIP</h2>
+
+  <p>Mr. YOLO has never opened a solution ZIP file. He exports it, downloads it, and imports it somewhere else. The file between those two events is a black box — goes in one end, solution comes out the other. This is extremely common. Most Power Platform developers have never read a single line of what's inside.</p>
+
+  <p>The ZIP is not magic. It's a structured archive: a folder of XML files, each one a precise, machine-readable description of every component in your solution. The root of the archive is <code>solution.xml</code> — a manifest that defines the solution's identity, its publisher, its version, and an enumerated list of every component it contains.</p>
+
+  <p>Here's what a real one looks like:</p>
+
+  <div class="code-block-wrap">
+    <div class="code-block-header">solution.xml — extracted from a managed solution export</div>
+    <pre class="code-block">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;ImportExportXml version="9.0.0.0"
+  SolutionPackageVersion="9.0"
+  languagecode="1033"
+  generatedBy="CrmExport"&gt;
+  &lt;SolutionManifest&gt;
+    &lt;UniqueName&gt;ContosoCore&lt;/UniqueName&gt;
+    &lt;LocalizedNames&gt;
+      &lt;LocalizedName description="Contoso Core" languagecode="1033" /&gt;
+    &lt;/LocalizedNames&gt;
+    &lt;Version&gt;1.2.0.47&lt;/Version&gt;
+    &lt;Managed&gt;1&lt;/Managed&gt;
+    &lt;Publisher&gt;
+      &lt;UniqueName&gt;contoso&lt;/UniqueName&gt;
+      &lt;CustomizationPrefix&gt;con&lt;/CustomizationPrefix&gt;
+      &lt;CustomizationOptionValuePrefix&gt;10000&lt;/CustomizationOptionValuePrefix&gt;
+    &lt;/Publisher&gt;
+    &lt;RootComponents&gt;
+      &lt;RootComponent type="1"  id="{4a5f2b3c-8e1d-4f9a-b7c2-1e3d5a9f8b7c}" behavior="0" /&gt;
+      &lt;RootComponent type="61" id="{e8d1c9a7-3f2b-4e5d-a6c1-9b8f7e2d1c4a}" behavior="0" /&gt;
+      &lt;RootComponent type="29" id="{f3c1d8b2-7a4e-4f9c-b5d3-2e6a8c1f9d7b}" behavior="0" /&gt;
+      &lt;RootComponent type="92" id="{b7d4e9a1-2c6f-4b8d-a3e5-9f1c7b4d2e8a}" behavior="0" /&gt;
+      <span class="code-comment">&lt;!-- ...43 more components... --&gt;</span>
+    &lt;/RootComponents&gt;
+  &lt;/SolutionManifest&gt;
+&lt;/ImportExportXml&gt;</pre>
+  </div>
+
+  <p>Each <code>RootComponent</code> is one component in your solution. The <code>type</code> number is a component type code — <code>1</code> is an Entity (Table), <code>29</code> is a Saved Query, <code>61</code> is a Form, <code>92</code> is a Plugin Assembly. The <code>id</code> is the component's GUID in Dataverse. Every component type has a corresponding folder in the ZIP with its own XML file.</p>
+
+  <p>This is the file that encodes your publisher prefix — permanently, across every component. This is the file where two developers exporting from different environments and trying to merge solutions will find their first conflict. This is the file where the difference between <code>Managed&gt;0&lt;</code> and <code>Managed&gt;1&lt;</code> determines what a receiving environment can and cannot edit.</p>
+
+  <p>The bonus post in this series is a complete anatomy of everything inside the archive: how <code>solution.xml</code> works, what each component type maps to in the UI, how the customizations folder is structured, what changes between managed and unmanaged exports, how patches work at the file level, and what actually happens inside the ZIP when a merge conflict occurs. It is the post that will change how you think about exports, patches, and source control for Power Platform solutions.</p>
+
+  <div class="callout ok">
+    <div class="callout-label">Why it matters now</div>
+    <p>You don't need to understand every file in the ZIP before you start building. But you need to know that the ZIP has structure — and that structure is a record of every architectural decision you've made, including the ones made by accident. The bonus post gives you that mental model. Read it before you write your first patch.</p>
+  </div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-mark">→</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <h2 id="whats-next">Start With the Environment</h2>
+
+  <p>The first real post in this series is about the decision Mr. YOLO made at 4:47 PM on Thursday — the one that put him in the Default environment and kept him there for six months. Post 01 covers what environments actually are as architecture decisions, why the choices made at creation time are permanent, the four mistakes that haunt every project that gets them wrong, and the checklist that prevents all of them.</p>
+
+  <p>If you're starting a new project — or inheriting one that already has these problems — Post 01 is where to begin.</p>
+
+  <p style="margin-top: 28px;">
+    <a href="post1-environment-strategy.html" class="post-cta">Read Post 01 — Environment Strategy →</a>
+  </p>
+
+  <!-- Series Nav -->
+  <div class="series-nav">
+    <div>
+      <div class="series-nav-label">Current</div>
+      <span style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--ink-soft);">Post 00 — Meet Mr. YOLO</span>
+    </div>
+    <div style="text-align:right">
+      <div class="series-nav-label">Next in series</div>
+      <a href="post1-environment-strategy.html" class="series-nav-link">Post 01 — Environment Strategy →</a>
+    </div>
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="post-disclaimer">
+    <p>
+      Everything here is from the field. My experience, my take, my mistakes.
+      Not my employer's. Not Microsoft's.
+      If something has changed or you've seen it play out differently, I'd like to hear it.
+      Find me on <a href="https://linkedin.com/in/ahmed-el-khatib" target="_blank" rel="noopener">LinkedIn</a>.
+    </p>
+  </div>
+
+  <!-- Author -->
+  <div class="author-block">
+    <img src="../assets/photo.jpg" alt="Ahmed El-Khatib" style="width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid var(--border2);flex-shrink:0;" />
+    <div>
+      <div class="author-name">Ahmed El-Khatib</div>
+      <div class="author-title">Power Platform Lead</div>
+      <p class="author-bio">Sharing what I know from the field — because I wish someone had written this down when I needed it.</p>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
