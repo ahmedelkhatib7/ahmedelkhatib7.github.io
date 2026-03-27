@@ -419,14 +419,6 @@
   <!-- OPENING PROVOCATION                             -->
   <!-- ═══════════════════════════════════════════════ -->
 
-  <!-- Mr. YOLO image #1: confident, headphones on, building away, zero awareness -->
-  <div class="yolo-moment">
-    <img src="../assets/yolo/post01-yolo-confident.png" alt="Mr. YOLO — confident, building, zero awareness" />
-    <div class="yolo-moment-text">
-      <div class="yolo-moment-label">Mr. YOLO — Day One</div>
-      <div class="yolo-moment-quote">"The default environment works fine. I'll sort the proper setup later."</div>
-    </div>
-  </div>
 
   <p>You've been on this project for months. Requirements workshops, design sessions, sprint reviews. The client has seen the app evolve week by week. They've given feedback, you've incorporated it. Then came UAT — business users testing real scenarios, raising issues, you fixing them, another round, sign-off. Weeks of that.</p>
 
@@ -466,7 +458,13 @@
 
   <h2>A Brief History of Environments — From the Server Room to the Cloud</h2>
 
-  <p>I started my career on Dynamics CRM 2016. But I've seen implementations from earlier than that — projects built on versions that most people reading this have never touched. And the difference between where we started and where we are in 2026 is worth understanding. Because most of the bad habits we're fixing in this series have roots in how this platform used to work.</p>
+  <p>The Power Platform Admin Center in 2026 gives you everything you need to govern environments properly. Security groups. DLP policies. Managed Environments. Environment Routing. Pipelines. The full toolkit.</p>
+
+  <p>None of this is new. The capability to create multiple environments, restrict access, and deploy properly has existed in some form since the early days of Dynamics CRM. The tooling got easier over time — but easier was never the problem.</p>
+
+  <p>The problem was always the engineer. The habit. The culture of skipping governance because nobody forced it.</p>
+
+  <p>Here's how that played out across the eras.</p>
 
   <!-- Animated timeline -->
   <div class="post-figure">
@@ -524,9 +522,9 @@
     </div>
   </div>
 
-  <p>"Environment" meant a server. Literally. A physical or virtual machine sitting in your client's data center, managed by their IT team. You wanted a test environment — you raised a change request, waited for IT, got another server provisioned, installed CRM on it, configured IIS and SQL Server, and hoped the network team opened the right ports. That was your dev environment.</p>
+  <p>Multiple organizations existed in the Deployment Manager. You could have a Dev org, a Test org, a Production org — all on the same server. The capability was there. But creating an org meant provisioning a SQL database, configuring IIS, setting up Active Directory groups. It was IT-level work, not developer work. So most teams didn't bother. One org. Everyone in it. Including production.</p>
 
-  <p>Deployment meant copying customization files, running SQL scripts, exporting and importing organization databases, and scheduling a maintenance window. ALM was whatever the sysadmin felt like enforcing that week. There was no Admin Center. No environment creation wizard. No pipelines. Just servers, scripts, and tribal knowledge passed down from whoever set it up the first time.</p>
+  <p>The technology wasn't the blocker. The pain of doing it right was the excuse for not doing it.</p>
 
   <h3>Era 2 — CRM Online: First Steps to the Cloud (2011–2015)</h3>
 
@@ -550,9 +548,9 @@
     </div>
   </div>
 
-  <p>Microsoft moved Dynamics CRM to the cloud. The infrastructure disappeared — no more servers, no more IIS, no more SQL Server to manage. But the mindset didn't move with it. People still thought in terms of "the org" — one URL, one instance, that's your system. If you had 25 users or more, you got a sandbox. One sandbox. Shared by everyone. The concept of multiple environments as a proper deployment strategy was still largely foreign.</p>
+  <p>Microsoft removed the server. No more SQL Server to provision. No more IIS to configure. Sandbox instances appeared — free, ready to use, no IT ticket required. The excuse of "it's too hard to set up a test environment" disappeared overnight.</p>
 
-  <p>Deployment still meant: export the solution from your org, import it into the sandbox, test it, export it again, import it into production, and hope the two orgs were in sync. No version control. No pipeline. Just a zip file and a prayer.</p>
+  <p>The engineers kept working the same way. One org. Export, import, pray. The tooling changed. The habits didn't.</p>
 
   <h3>Era 3 — Dynamics 365: The Platform Starts Maturing (2016–2018)</h3>
 
@@ -577,24 +575,9 @@
     </div>
   </div>
 
-  <p>This is where I came in. The product rebranded as Dynamics 365, the ecosystem expanded, and environments — now called "instances" — started becoming real governance concepts. The Dynamics 365 Administration Center gave you a list of your instances. You could have multiple. You could label them Dev, Test, Production. The concept of a proper topology was starting to take shape.</p>
+  <p>Multiple instances in the Admin Center. Proper labels — Dev, Test, Production. The topology existed as a concept that anyone could implement. Solutions were maturing. The idea of a proper deployment pipeline was in the conversation.</p>
 
-  <p>But the tooling was still primitive. Solutions existed but ALM around them was entirely manual. No pipelines. No environment variables. No deployment gates. Most teams still deployed by hand — export, import, cross your fingers. The topology existed on a whiteboard. In practice, half the team was still deploying directly to production "just this once."</p>
-
-  <figure class="post-figure post-figure--screenshot">
-    <img src="../assets/screenshots/post01/maturity-level-0.jpg" alt="Maturity Level 0 — one environment, everyone develops here, no deployment boundary" class="post-screenshot" loading="lazy"/>
-    <p class="figure-caption">Fig. — Maturity Level 0. One environment. Everyone develops here. Chaos reigns.</p>
-  </figure>
-
-  <figure class="post-figure post-figure--screenshot">
-    <img src="../assets/screenshots/post01/maturity-level-1.jpg" alt="Maturity Level 1 — manual export/import between environments" class="post-screenshot" loading="lazy"/>
-    <p class="figure-caption">Fig. — Maturity Level 1. Manual export/import. Bridge is made of hope and prayer.</p>
-  </figure>
-
-  <figure class="post-figure post-figure--screenshot">
-    <img src="../assets/screenshots/post01/maturity-level-2.jpg" alt="Maturity Level 2 — changes always move upward through environments, never backwards" class="post-screenshot" loading="lazy"/>
-    <p class="figure-caption">Fig. — Maturity Level 2. Changes always move up. Never backwards.</p>
-  </figure>
+  <p>Most teams still deployed by hand. Still skipped the test environment when the sprint was running late. Still made "just this once" exceptions that became permanent habits. The tools were there. The discipline wasn't enforced.</p>
 
   <h3>Era 4 — Power Platform: The Framework Exists, Nobody Uses It (2019–2022)</h3>
 
@@ -620,26 +603,18 @@
     </div>
   </div>
 
-  <p>The Power Platform brand arrived and environments became first-class citizens in a proper Admin Center. DLP policies appeared. Security groups could be assigned. Managed Environments started taking shape. For the first time, the platform gave you the governance tools to do this properly.</p>
+  <p>DLP policies. Security groups. Managed Environments. The full governance framework arrived. Not as a third-party tool, not as a consultant's custom solution — built into the platform, available to everyone, free to configure.</p>
 
-  <p>But it didn't force you to use them. And most teams didn't. The low-code promise brought in a wave of new makers who had never thought about deployment discipline — because nothing in their experience had ever required it. The default environment was right there, ready to use. DLP policies were optional. Security groups were optional. Environment naming was optional. Everything was optional. So most of it got skipped.</p>
+  <p>Optional. So most teams skipped it. The default environment was right there. Easier to start. Nobody said no. Nobody enforced anything. The framework existed. The culture didn't.</p>
 
   <h3>Era 5 — Modern Power Platform: No Excuses Left (2023–2026)</h3>
 
-  <p>Pipelines built into the platform. Environment Groups with inherited governance rules. Environment Routing that automatically redirects makers away from the default environment. Managed Capacity dashboards. Solution checker enforcement as a deployment gate. The platform now has everything a mature ALM practice needs built right in.</p>
+  <p>Environment Routing. Environment Groups. Pipelines. Managed Capacity. There is now no technical barrier to doing this properly. None. The platform has eliminated every legitimate excuse.</p>
 
-  <p>Microsoft has done their part. The tooling is there. The governance features are there. The Admin Center has more capability than most teams will ever use.</p>
+  <p>If your team is still building in the default environment in 2026, the technology is not the problem. The engineer is the problem. The culture is the problem. The absence of a framework — enforced by someone, owned by someone — is the problem.</p>
 
-  <p>The only thing missing is the decision to use them. And that decision — in most projects — still isn't being made. Not because the tools are hard. Because nobody forced it.</p>
+  <p>That's what this series fixes.</p>
 
-  <!-- Mr. YOLO image #2: server room, CRT monitor, Dynamics CRM on screen -->
-  <div class="yolo-moment" style="margin-top:32px;">
-    <img src="../assets/yolo/post01-yolo-serverroom.png" alt="Mr. YOLO — server room era, CRT monitor, Dynamics CRM" />
-    <div class="yolo-moment-text">
-      <div class="yolo-moment-label">Mr. YOLO — Then and Now</div>
-      <div class="yolo-moment-quote">"Mr. YOLO isn't a bad developer. He's a 2016 developer on a 2026 platform. This series is the update he never got."</div>
-    </div>
-  </div>
 
 
   <!-- ═══════════════════════════════════════════════ -->
@@ -1078,6 +1053,23 @@
 
   <p>Every one of these I've seen on real projects. Some I've made myself. I'm documenting them here so you don't have to learn them the same way.</p>
 
+  <p>Before we get into the specific mistakes, here's what bad looks like at different maturity levels — so you can recognize where you or your team currently sits.</p>
+
+  <figure class="post-figure post-figure--screenshot">
+    <img src="../assets/screenshots/post01/maturity-level-0.jpg" alt="Maturity Level 0 — one environment, everyone develops here, no deployment boundary" class="post-screenshot" loading="lazy"/>
+    <p class="figure-caption">Fig. — Maturity Level 0 — The Wild West. One environment. Everyone develops here. Chaos reigns.</p>
+  </figure>
+
+  <figure class="post-figure post-figure--screenshot">
+    <img src="../assets/screenshots/post01/maturity-level-1.jpg" alt="Maturity Level 1 — manual export/import between environments, no pipeline" class="post-screenshot" loading="lazy"/>
+    <p class="figure-caption">Fig. — Maturity Level 1 — The Awakening. Manual export/import. Bridge is made of hope and prayer.</p>
+  </figure>
+
+  <figure class="post-figure post-figure--screenshot">
+    <img src="../assets/screenshots/post01/maturity-level-2.jpg" alt="Maturity Level 2 — changes always move upward through environments, never backwards" class="post-screenshot" loading="lazy"/>
+    <p class="figure-caption">Fig. — Maturity Level 2 — Getting Serious. Changes always move up. Never backwards. This is the minimum acceptable baseline.</p>
+  </figure>
+
   <!-- Mistake 1 -->
   <div class="mistake-card">
     <div class="mistake-number">Mistake 01</div>
@@ -1179,14 +1171,6 @@
     <p>Always set the URL manually at creation time. Use a consistent naming convention: <code>[client]-[env]</code> — e.g. <code>contoso-dev</code>, <code>contoso-uat</code>, <code>contoso-prod</code>. Two minutes of work, permanent benefit.</p>
   </div>
 
-  <!-- Mr. YOLO image #3 -->
-  <div class="yolo-moment" style="margin: 40px 0;">
-    <img src="../assets/yolo/post01-yolo-org-url.png" alt="Mr. YOLO — org2032013 in browser tab, client standing behind him" />
-    <div class="yolo-moment-text">
-      <div class="yolo-moment-label">Mr. YOLO — Go-Live Day</div>
-      <div class="yolo-moment-quote">"Nobody told me I had to set the URL. There was no warning. There was no red light."</div>
-    </div>
-  </div>
 
 
   <!-- ═══════════════════════════════════════════════ -->
@@ -1195,7 +1179,7 @@
 
   <div class="divider">
     <div class="divider-line"></div>
-    <div class="divider-mark">§ 08.5</div>
+    <div class="divider-mark">§ 09</div>
     <div class="divider-line"></div>
   </div>
 
@@ -1228,18 +1212,13 @@
 
   <div class="divider">
     <div class="divider-line"></div>
-    <div class="divider-mark">§ 09</div>
+    <div class="divider-mark">§ 10</div>
     <div class="divider-line"></div>
   </div>
 
   <h2>The Pre-Start Checklist</h2>
 
   <p>Before you create a single environment on your next project, go through this list. It takes less than 30 minutes and prevents all of the above entirely.</p>
-
-  <figure class="post-figure post-figure--screenshot">
-    <img src="../assets/screenshots/post01/disaster-recovery.jpg" alt="The 7-Day Rule — take a manual backup before every production deployment" class="post-screenshot" loading="lazy"/>
-    <p class="figure-caption">Fig. — The 7-Day Rule. Take a manual backup before every production deployment.</p>
-  </figure>
 
   <div class="interactive-checklist">
     <div class="cl-progress-row">
@@ -1320,7 +1299,7 @@
 
   <div class="divider">
     <div class="divider-line"></div>
-    <div class="divider-mark">§ 10</div>
+    <div class="divider-mark">§ 11</div>
     <div class="divider-line"></div>
   </div>
 

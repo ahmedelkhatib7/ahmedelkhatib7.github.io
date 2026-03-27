@@ -918,9 +918,11 @@ i.skill-svg-icon { width: auto; height: auto; font-size: 28px; line-height: 1; }
   border-radius: 8px; padding: 0.85rem 1rem; margin-bottom: 1rem;
 }
 .sardonic-explanation-text {
-  font-size: 0.84rem; color: rgba(228,218,205,0.78); line-height: 1.6;
+  font-size: 0.84rem; color: var(--ink-soft); line-height: 1.6;
   margin: 0; font-style: italic;
 }
+.sardonic-explanation-text strong { color: var(--ink); font-style: normal; }
+.sardonic-explanation-text a { color: var(--copper); }
 
 /* ═══════════════════ HEALTH MODAL ═══════════════════ */
 .modal-overlay {
