@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Environment decisions in Power Platform are irreversible. Here's what to get right before writing a single line of code — topology, security groups, URLs, and the four mistakes that haunt projects." />
+<meta name="description" content="Environment decisions in Power Platform are irreversible. Before a single line of code — understand what environments are, where they came from, and what to get right from day one." />
 <title>Environment Strategy — Before You Write a Single Line of Code | Khatib365</title>
 <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
@@ -40,11 +40,45 @@
     font-size: 17px;
   }
 
+  /* ── Nav ── */
+  .site-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 2.5rem;
+    background: rgba(250,247,241,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(28,24,18,0.08);
+    font-family: 'Jost', sans-serif;
+    transition: box-shadow 0.3s;
+  }
+  .site-nav-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 600;
+    letter-spacing: -0.02em; color: #1C1812; text-decoration: none;
+  }
+  .site-nav-brand span { color: #9C5A2E; }
+  .site-nav-links { display: flex; align-items: center; gap: 2rem; }
+  .site-nav-link { font-size: 0.82rem; color: #7A6F60; text-decoration: none; transition: color 0.2s; }
+  .site-nav-link:hover { color: #1C1812; }
+  .site-nav-link.active { color: #9C5A2E; font-weight: 500; }
+
+  /* ── Breadcrumb ── */
+  .post-breadcrumb {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Fira Code', monospace; font-size: 11.5px;
+    color: #B5A99A; letter-spacing: 0.06em;
+    max-width: 780px; margin: 0 auto;
+    padding: 88px 32px 0;
+  }
+  .post-breadcrumb a { color: #9C5A2E; text-decoration: none; }
+  .post-breadcrumb a:hover { text-decoration: underline; }
+  .bc-sep { color: #D4C8B4; }
+
   /* ── Layout ── */
   .page {
     max-width: 780px;
     margin: 0 auto;
-    padding: 60px 32px 120px;
+    padding: 40px 32px 120px;
   }
 
   /* ── Header ── */
@@ -57,601 +91,143 @@
   .series-tag {
     display: inline-block;
     font-family: 'Fira Code', monospace;
-    font-size: 11px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--copper);
-    background: var(--copper-pal);
+    font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--copper); background: var(--copper-pal);
     border: 1px solid var(--border2);
-    padding: 4px 12px;
-    border-radius: 2px;
-    margin-bottom: 24px;
+    padding: 4px 12px; border-radius: 2px; margin-bottom: 24px;
   }
 
   .blog-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(34px, 5vw, 52px);
-    font-weight: 600;
-    line-height: 1.15;
-    color: var(--ink);
-    margin-bottom: 20px;
-    letter-spacing: -.02em;
+    font-size: clamp(34px, 5vw, 52px); font-weight: 600;
+    line-height: 1.15; color: var(--ink);
+    margin-bottom: 20px; letter-spacing: -.02em;
   }
 
   .blog-subtitle {
-    font-size: 18px;
-    color: var(--ink-soft);
-    line-height: 1.6;
-    max-width: 640px;
-    margin-bottom: 32px;
-    font-weight: 300;
+    font-size: 18px; color: var(--ink-soft);
+    line-height: 1.6; max-width: 640px;
+    margin-bottom: 32px; font-weight: 300;
   }
 
-  .meta {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-
-  .meta-item {
-    font-family: 'Fira Code', monospace;
-    font-size: 11.5px;
-    color: var(--ink-mid);
-    letter-spacing: .06em;
-  }
-
-  .meta-dot {
-    width: 3px; height: 3px;
-    border-radius: 50%;
-    background: var(--border2);
-  }
+  .meta { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .meta-item { font-family: 'Fira Code', monospace; font-size: 11.5px; color: var(--ink-mid); letter-spacing: .06em; }
+  .meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--border2); }
 
   /* ── Typography ── */
   h2 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 32px;
-    font-weight: 600;
-    color: var(--ink);
-    margin: 56px 0 20px;
-    letter-spacing: -.01em;
-    line-height: 1.2;
+    font-size: 32px; font-weight: 600; color: var(--ink);
+    margin: 56px 0 20px; letter-spacing: -.01em; line-height: 1.2;
   }
 
   h3 {
-    font-family: 'Jost', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--copper);
-    text-transform: uppercase;
-    letter-spacing: .1em;
-    margin: 36px 0 14px;
+    font-family: 'Jost', sans-serif; font-size: 16px; font-weight: 600;
+    color: var(--copper); text-transform: uppercase;
+    letter-spacing: .1em; margin: 36px 0 14px;
   }
 
   p { margin-bottom: 20px; color: var(--ink-soft); }
-
   p strong { color: var(--ink); font-weight: 600; }
-
   a { color: var(--copper); text-decoration: underline; text-underline-offset: 3px; }
 
   code {
-    font-family: 'Fira Code', monospace;
-    font-size: 13.5px;
-    background: var(--code-bg);
-    color: var(--code-fg);
-    padding: 2px 7px;
-    border-radius: 3px;
+    font-family: 'Fira Code', monospace; font-size: 13.5px;
+    background: var(--code-bg); color: var(--code-fg);
+    padding: 2px 7px; border-radius: 3px;
   }
 
   /* ── Callout boxes ── */
   .callout {
     border-left: 3px solid var(--copper);
     background: var(--copper-pal);
-    padding: 18px 24px;
-    margin: 32px 0;
+    padding: 18px 24px; margin: 32px 0;
     border-radius: 0 4px 4px 0;
   }
-
-  .callout.warn {
-    border-color: var(--warn-border);
-    background: var(--warn-bg);
-  }
-
-  .callout.ok {
-    border-color: var(--ok-border);
-    background: var(--ok-bg);
-  }
-
+  .callout.warn { border-color: var(--warn-border); background: var(--warn-bg); }
+  .callout.ok { border-color: var(--ok-border); background: var(--ok-bg); }
   .callout-label {
-    font-family: 'Fira Code', monospace;
-    font-size: 10.5px;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: var(--copper);
-    margin-bottom: 8px;
-    font-weight: 500;
+    font-family: 'Fira Code', monospace; font-size: 10.5px;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--copper); margin-bottom: 8px; font-weight: 500;
   }
-
   .callout.warn .callout-label { color: #B87333; }
   .callout.ok .callout-label { color: #4A7A4A; }
-
-  .callout p { margin: 0; font-size: 15.5px; line-height: 1.65; }
+  .callout p { margin: 0 0 12px; font-size: 15.5px; line-height: 1.65; }
+  .callout p:last-child { margin-bottom: 0; }
 
   /* ── Section divider ── */
   .divider {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    display: flex; align-items: center; gap: 16px;
     margin: 52px 0 40px;
   }
-
-  .divider-line {
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  .divider-mark {
-    font-family: 'Fira Code', monospace;
-    font-size: 10px;
-    color: var(--ink-light);
-    letter-spacing: .15em;
-  }
+  .divider-line { flex: 1; height: 1px; background: var(--border); }
+  .divider-mark { font-family: 'Fira Code', monospace; font-size: 10px; color: var(--ink-light); letter-spacing: .15em; }
 
   /* ── Mistake card ── */
   .mistake-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 28px 32px;
-    margin: 28px 0;
-    position: relative;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; padding: 28px 32px;
+    margin: 28px 0; position: relative;
   }
-
   .mistake-number {
-    position: absolute;
-    top: -14px;
-    left: 24px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: .08em;
-    color: var(--copper);
-    background: var(--bg);
-    padding: 0 10px;
-    text-transform: uppercase;
+    position: absolute; top: -14px; left: 24px;
+    font-family: 'Cormorant Garamond', serif; font-size: 13px;
+    font-weight: 600; letter-spacing: .08em; color: var(--copper);
+    background: var(--bg); padding: 0 10px; text-transform: uppercase;
   }
-
   .mistake-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--ink);
-    margin-bottom: 12px;
+    font-family: 'Cormorant Garamond', serif; font-size: 22px;
+    font-weight: 600; color: var(--ink); margin-bottom: 12px;
   }
-
-  .mistake-card p {
-    font-size: 15.5px;
-    margin-bottom: 14px;
-  }
-
+  .mistake-card p { font-size: 15.5px; margin-bottom: 14px; }
   .mistake-card p:last-child { margin-bottom: 0; }
-
   .fix-label {
-    font-family: 'Fira Code', monospace;
-    font-size: 10.5px;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: #4A7A4A;
-    margin-bottom: 6px;
-  }
-
-  /* ── Screenshot placeholder ── */
-  .screenshot-placeholder {
-    background: var(--surface2);
-    border: 1.5px dashed var(--border2);
-    border-radius: 6px;
-    padding: 36px 24px;
-    text-align: center;
-    margin: 24px 0;
-  }
-
-  .screenshot-placeholder .ph-label {
-    font-family: 'Fira Code', monospace;
-    font-size: 11px;
-    color: var(--ink-light);
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-
-  .screenshot-placeholder .ph-desc {
-    font-size: 14px;
-    color: var(--ink-mid);
-  }
-
-  /* ── Diagram: Environment Topology ── */
-  .diagram-wrap {
-    margin: 36px 0;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 36px 28px 28px;
-  }
-
-  .diagram-title {
-    font-family: 'Fira Code', monospace;
-    font-size: 11px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--ink-mid);
-    margin-bottom: 28px;
-    text-align: center;
-  }
-
-  .env-topology {
-    display: flex;
-    gap: 0;
-    align-items: stretch;
-    position: relative;
-  }
-
-  .env-node {
-    flex: 1;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 18px 14px;
-    text-align: center;
-    position: relative;
-  }
-
-  .env-node.highlight {
-    border-color: var(--copper-l);
-    background: var(--copper-pal);
-  }
-
-  .env-arrow {
-    display: flex;
-    align-items: center;
-    padding: 0 6px;
-    color: var(--ink-light);
-    font-size: 18px;
-    flex-shrink: 0;
-  }
-
-  .env-node-name {
-    font-family: 'Fira Code', monospace;
-    font-size: 11px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--copper);
-    margin-bottom: 6px;
-    font-weight: 500;
-  }
-
-  .env-node.highlight .env-node-name { color: var(--copper); }
-
-  .env-node-desc {
-    font-size: 12px;
-    color: var(--ink-mid);
-    line-height: 1.45;
-  }
-
-  .env-badge {
-    display: inline-block;
-    font-family: 'Fira Code', monospace;
-    font-size: 9.5px;
-    padding: 2px 7px;
-    border-radius: 2px;
-    margin-top: 8px;
-    letter-spacing: .06em;
-  }
-
-  .badge-unmanaged { background: #E8F0FF; color: #4A6AB8; }
-  .badge-managed   { background: #E8F5E8; color: #3A7A3A; }
-
-  /* ── Security Group Diagram ── */
-  .sg-diagram {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin: 8px 0;
-  }
-
-  .sg-env {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 16px;
-  }
-
-  .sg-env-name {
-    font-family: 'Fira Code', monospace;
-    font-size: 10.5px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--copper);
-    margin-bottom: 10px;
-  }
-
-  .sg-group {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12.5px;
-    color: var(--ink-soft);
-    padding: 5px 8px;
-    background: var(--surface2);
-    border-radius: 4px;
-    margin-bottom: 5px;
-  }
-
-  .sg-icon { font-size: 14px; }
-
-  .sg-no-group {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12.5px;
-    color: #B87333;
-    padding: 5px 8px;
-    background: var(--warn-bg);
-    border: 1px dashed var(--warn-border);
-    border-radius: 4px;
+    font-family: 'Fira Code', monospace; font-size: 10.5px;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: #4A7A4A; margin-bottom: 6px;
   }
 
   /* ── Decision table ── */
-  .decision-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 28px 0;
-    font-size: 14.5px;
-  }
-
+  .decision-table { width: 100%; border-collapse: collapse; margin: 28px 0; font-size: 14.5px; }
   .decision-table th {
-    font-family: 'Fira Code', monospace;
-    font-size: 10.5px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--ink-mid);
-    padding: 10px 16px;
-    text-align: left;
-    border-bottom: 2px solid var(--border);
-    background: var(--surface);
+    font-family: 'Fira Code', monospace; font-size: 10.5px;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mid);
+    padding: 10px 16px; text-align: left;
+    border-bottom: 2px solid var(--border); background: var(--surface);
   }
-
-  .decision-table td {
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--border);
-    color: var(--ink-soft);
-    vertical-align: top;
-  }
-
+  .decision-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--ink-soft); vertical-align: top; }
   .decision-table tr:last-child td { border-bottom: none; }
-
   .decision-table tr:hover td { background: var(--surface); }
-
-  .td-env {
-    font-family: 'Fira Code', monospace;
-    font-size: 12px;
-    color: var(--copper);
-    font-weight: 500;
-  }
-
+  .td-env { font-family: 'Fira Code', monospace; font-size: 12px; color: var(--copper); font-weight: 500; }
   .check { color: #4A8A4A; font-size: 15px; }
   .cross { color: #B85A3A; font-size: 15px; }
 
-  /* ── URL diagram ── */
-  .url-compare {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin: 20px 0;
-  }
-
-  .url-box {
-    border-radius: 6px;
-    padding: 18px 20px;
-    border: 1px solid;
-  }
-
-  .url-box.bad {
-    background: var(--warn-bg);
-    border-color: var(--warn-border);
-  }
-
-  .url-box.good {
-    background: var(--ok-bg);
-    border-color: var(--ok-border);
-  }
-
-  .url-box-label {
-    font-family: 'Fira Code', monospace;
-    font-size: 10px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-
+  /* ── URL compare ── */
+  .url-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .url-box { border-radius: 6px; padding: 18px 20px; border: 1px solid; }
+  .url-box.bad { background: var(--warn-bg); border-color: var(--warn-border); }
+  .url-box.good { background: var(--ok-bg); border-color: var(--ok-border); }
+  .url-box-label { font-family: 'Fira Code', monospace; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 10px; }
   .url-box.bad .url-box-label { color: #B87333; }
   .url-box.good .url-box-label { color: #4A7A4A; }
-
-  .url-value {
-    font-family: 'Fira Code', monospace;
-    font-size: 13px;
-    word-break: break-all;
-    line-height: 1.5;
-  }
-
+  .url-value { font-family: 'Fira Code', monospace; font-size: 13px; word-break: break-all; line-height: 1.5; }
   .url-box.bad .url-value { color: #8B4513; }
   .url-box.good .url-value { color: #2A5A2A; }
 
-  /* ── Checklist ── */
-  .checklist {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 24px 28px;
-    margin: 28px 0;
-  }
-
-  .checklist-title {
-    font-family: 'Fira Code', monospace;
-    font-size: 11px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--copper);
-    margin-bottom: 18px;
-  }
-
-  .checklist-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 12px;
-    font-size: 15px;
-    color: var(--ink-soft);
-    line-height: 1.5;
-  }
-
-  .checklist-item:last-child { margin-bottom: 0; }
-
-  .check-box {
-    width: 18px; height: 18px;
-    border: 1.5px solid var(--border2);
-    border-radius: 3px;
-    flex-shrink: 0;
-    margin-top: 2px;
-    background: var(--bg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    color: var(--copper);
-  }
-
-  /* ── Series nav ── */
-  .series-nav {
-    margin-top: 72px;
-    padding-top: 36px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-
-  .series-nav-label {
-    font-family: 'Fira Code', monospace;
-    font-size: 10.5px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--ink-light);
-    margin-bottom: 6px;
-  }
-
-  .series-nav-link {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
-    color: var(--copper);
-    text-decoration: none;
-    font-weight: 600;
-  }
-
-  .series-nav-link:hover { text-decoration: underline; }
-
-  /* ── Author block ── */
-  .author-block {
-    margin-top: 56px;
-    padding: 28px 32px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-  }
-
-  .author-avatar {
-    width: 52px; height: 52px;
-    border-radius: 50%;
-    background: var(--copper-pal);
-    border: 2px solid var(--border2);
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
-    color: var(--copper);
-    font-weight: 600;
-  }
-
-  .author-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--ink);
-    margin-bottom: 4px;
-  }
-
-  .author-title {
-    font-family: 'Fira Code', monospace;
-    font-size: 11px;
-    color: var(--copper);
-    letter-spacing: .08em;
-    margin-bottom: 10px;
-  }
-
-  .author-bio {
-    font-size: 14px;
-    color: var(--ink-mid);
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  /* ── Post disclaimer ── */
-  .post-disclaimer {
-    margin-top: 3rem;
-    padding: 1.25rem 1.5rem;
-    border-left: 2px solid var(--border);
-    font-size: 0.82rem;
-    color: var(--ink-mid);
-    line-height: 1.7;
-    font-style: italic;
-  }
-  .post-disclaimer a {
-    color: var(--copper);
-    text-decoration: none;
-    border-bottom: 0.5px solid var(--copper-l);
-  }
-
-  @media (max-width: 600px) {
-    .env-topology { flex-direction: column; }
-    .env-arrow { transform: rotate(90deg); align-self: center; }
-    .sg-diagram { grid-template-columns: 1fr; }
-    .url-compare { grid-template-columns: 1fr; }
-  }
-
-  /* ── Post figure / screenshot ── */
+  /* ── Post figure ── */
   .post-figure { margin: 2rem 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .post-figure--screenshot { margin: 1.5rem 0; }
-  .post-screenshot {
-    width: 100%;
-    border-radius: 8px;
-    border: 0.5px solid var(--border);
-    display: block;
-  }
-  .figure-caption {
-    font-family: 'Fira Code', monospace;
-    font-size: 11.5px;
-    color: var(--ink-light);
-    letter-spacing: .04em;
-    margin-top: 10px;
-    margin-bottom: 0;
-  }
+  .post-screenshot { width: 100%; border-radius: 8px; border: 0.5px solid var(--border); display: block; }
+  .figure-caption { font-family: 'Fira Code', monospace; font-size: 11.5px; color: var(--ink-light); letter-spacing: .04em; margin-top: 10px; margin-bottom: 0; }
+
+  /* ── Security Group Diagram ── */
+  .sg-diagram { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 8px 0; }
+  .sg-env { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 16px; }
+  .sg-env-name { font-family: 'Fira Code', monospace; font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--copper); margin-bottom: 10px; }
+  .sg-group { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--ink-soft); padding: 5px 8px; background: var(--surface2); border-radius: 4px; margin-bottom: 5px; }
+  .sg-icon { font-size: 14px; }
+  .sg-no-group { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: #B87333; padding: 5px 8px; background: var(--warn-bg); border: 1px dashed var(--warn-border); border-radius: 4px; }
 
   /* ── Interactive checklist ── */
   .interactive-checklist { margin: 2rem 0; }
@@ -672,50 +248,125 @@
   .cl-text { font-size: 14px; line-height: 1.5; color: #2c1a0e; }
   .cl-note { font-size: 12px; color: #a89880; margin-top: 2px; line-height: 1.4; }
 
-  .site-nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.1rem 2.5rem;
-    background: rgba(250,247,241,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(28,24,18,0.08);
-    font-family: 'Jost', sans-serif;
+  /* ── Series nav ── */
+  .series-nav {
+    margin-top: 72px; padding-top: 36px; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
   }
-  .site-nav-brand {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    color: #1C1812;
-    text-decoration: none;
+  .series-nav-label { font-family: 'Fira Code', monospace; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 6px; }
+  .series-nav-link { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--copper); text-decoration: none; font-weight: 600; }
+  .series-nav-link:hover { text-decoration: underline; }
+
+  /* ── Author block ── */
+  .author-block {
+    margin-top: 56px; padding: 28px 32px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; display: flex; gap: 20px; align-items: flex-start;
   }
-  .site-nav-brand span { color: #9C5A2E; }
-  .site-nav-links { display: flex; align-items: center; gap: 2rem; }
-  .site-nav-link {
-    font-size: 0.82rem;
-    color: #7A6F60;
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .site-nav-link:hover { color: #1C1812; }
-  .site-nav-link.active { color: #9C5A2E; font-weight: 500; }
-  .post-breadcrumb {
+  .author-name { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .author-title { font-family: 'Fira Code', monospace; font-size: 11px; color: var(--copper); letter-spacing: .08em; margin-bottom: 10px; }
+  .author-bio { font-size: 14px; color: var(--ink-mid); line-height: 1.6; margin: 0; }
+
+  /* ── Post disclaimer ── */
+  .post-disclaimer { margin-top: 3rem; padding: 1.25rem 1.5rem; border-left: 2px solid var(--border); font-size: 0.82rem; color: var(--ink-mid); line-height: 1.7; font-style: italic; }
+  .post-disclaimer a { color: var(--copper); text-decoration: none; border-bottom: 0.5px solid var(--copper-l); }
+
+  /* ── Mr YOLO image block ── */
+  .yolo-moment {
+    margin: 40px 0;
     display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'Fira Code', monospace;
-    font-size: 11.5px;
-    color: #B5A99A;
-    letter-spacing: 0.06em;
-    padding: 88px 0 0;
-    max-width: 780px;
-    margin: 0 auto;
-    padding-left: 32px;
-    padding-right: 32px;
+    gap: 24px;
+    align-items: flex-start;
   }
-  .post-breadcrumb a { color: #9C5A2E; text-decoration: none; }
-  .post-breadcrumb a:hover { text-decoration: underline; }
-  .bc-sep { color: #D4C8B4; }
+  .yolo-moment img {
+    width: 160px;
+    flex-shrink: 0;
+    border-radius: 8px;
+  }
+  .yolo-moment-text {
+    padding-top: 8px;
+  }
+  .yolo-moment-label {
+    font-family: 'Fira Code', monospace;
+    font-size: 10px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--copper);
+    margin-bottom: 10px;
+  }
+  .yolo-moment-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-style: italic;
+    color: var(--ink); line-height: 1.4;
+  }
+
+  /* ── Era mockup ── */
+  .era-mockup {
+    border-radius: 8px; overflow: hidden;
+    border: 1px solid var(--border);
+    margin: 20px 0;
+    font-family: 'Fira Code', monospace;
+  }
+  .era-mockup-bar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 14px;
+    font-size: 11px;
+  }
+  .era-mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .era-mockup-title { font-size: 11px; letter-spacing: .06em; margin-left: 8px; }
+  .era-mockup-body { padding: 16px 18px; font-size: 12px; line-height: 1.8; }
+
+  /* Era 1 — on premise — dark server room */
+  .era-onprem .era-mockup-bar { background: #1a1a2e; }
+  .era-onprem .era-mockup-body { background: #0d1117; color: #58a6ff; }
+  .era-onprem .era-mockup-title { color: #8b949e; }
+
+  /* Era 2 — CRM Online — early O365 */
+  .era-online .era-mockup-bar { background: #0078d4; }
+  .era-online .era-mockup-body { background: #f3f2f1; color: #323130; }
+  .era-online .era-mockup-title { color: #fff; font-size: 11px; }
+
+  /* Era 3 — D365 instances */
+  .era-d365 .era-mockup-bar { background: #002050; }
+  .era-d365 .era-mockup-body { background: #f8f8f8; color: #323130; }
+  .era-d365 .era-mockup-title { color: #fff; }
+
+  /* Era 4 — Early PP Admin Center */
+  .era-pp-early .era-mockup-bar { background: #742774; }
+  .era-pp-early .era-mockup-body { background: #faf9f8; color: #323130; }
+  .era-pp-early .era-mockup-title { color: #fff; }
+
+  .era-label {
+    font-family: 'Fira Code', monospace; font-size: 10px;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--ink-light); margin-bottom: 8px;
+  }
+
+  /* ── SaaS diagram styles ── */
+  .saas-stack {
+    margin: 32px 0;
+  }
+
+  /* ── Animations ── */
+  @keyframes flowPulse { 0% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -40; } }
+  .flow-arrow { stroke-dasharray: 8 6; animation: flowPulse 1.4s linear infinite; }
+  .flow-arrow-slow { stroke-dasharray: 8 6; animation: flowPulse 2s linear infinite; }
+  @keyframes pulse-warn { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+  .warn-pulse { animation: pulse-warn 2s ease-in-out infinite; }
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .era-appear { opacity: 0; }
+  .era-appear.visible { animation: fadeInUp 0.5s ease forwards; }
+  @media (prefers-reduced-motion: reduce) {
+    .flow-arrow, .flow-arrow-slow { animation: none; stroke-dasharray: none; }
+    .warn-pulse { animation: none; opacity: 0.8; }
+    .era-appear { opacity: 1; }
+  }
+
+  @media (max-width: 600px) {
+    .url-compare { grid-template-columns: 1fr; }
+    .sg-diagram { grid-template-columns: 1fr; }
+    .yolo-moment { flex-direction: column; }
+    .yolo-moment img { width: 100%; }
+    .site-nav-links { gap: 1rem; }
+  }
 </style>
 </head>
 <body>
@@ -747,31 +398,65 @@
 
 <div class="page">
 
-  <!-- Header -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- HEADER                                          -->
+  <!-- ═══════════════════════════════════════════════ -->
   <header class="blog-header">
-    <div class="series-tag">Power Platform Deployment Series · Post 01</div>
+    <div class="series-tag">Power Platform ALM Series · Post 01</div>
     <h1 class="blog-title">Before You Write a Single Line of Code, Get Your Environments Right</h1>
-    <p class="blog-subtitle">Most Power Platform projects fail at deployment — not because of bad code, but because of decisions made in the first five minutes that nobody thought to question.</p>
+    <p class="blog-subtitle">Most Power Platform projects don't fail because of bad code. They fail because of decisions made in the first five minutes — when nobody was paying attention, and nobody forced anyone to think.</p>
     <div class="meta">
       <span class="meta-item">Ahmed El-Khatib</span>
       <div class="meta-dot"></div>
       <span class="meta-item">March 2026</span>
       <div class="meta-dot"></div>
-      <span class="meta-item">12 min read</span>
+      <span class="meta-item">18 min read</span>
     </div>
   </header>
 
-  <!-- Intro -->
-  <p>I've walked into at least a dozen projects where the first thing I see is <code>org32737.crm4.dynamics.com</code> in the browser tab of a production environment. No security groups. Everything built in the default environment. And a Dynamics 365 toggle that someone skipped over during setup — which means you can't install any Dynamics apps now, no matter how much you need them.</p>
 
-  <p>These aren't edge cases. They're the norm. And they're all decisions made in the first five minutes of a project — when nobody was paying attention, when the goal was just to "get started."</p>
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- OPENING PROVOCATION                             -->
+  <!-- ═══════════════════════════════════════════════ -->
 
-  <p>This post is about those decisions. Not the code. Not the pipelines. The stuff that happens before any of that — and that you can never fully undo once it's done.</p>
+  <!-- Mr. YOLO image #1: confident, headphones on, building away, zero awareness -->
+  <div class="yolo-moment">
+    <img src="../assets/yolo/post01-yolo-confident.png" alt="Mr. YOLO — confident, building, zero awareness" />
+    <div class="yolo-moment-text">
+      <div class="yolo-moment-label">Mr. YOLO — Day One</div>
+      <div class="yolo-moment-quote">"The default environment works fine. I'll sort the proper setup later."</div>
+    </div>
+  </div>
+
+  <p>You've been on this project for months. Requirements workshops, design sessions, sprint reviews. The client has seen the app evolve week by week. They've given feedback, you've incorporated it. Then came UAT — business users testing real scenarios, raising issues, you fixing them, another round, sign-off. Weeks of that.</p>
+
+  <p>And then the email arrives. <em>"We're ready to go live."</em></p>
+
+  <p>You open the Admin Center to prepare the production environment. And that's when you start finding the decisions nobody made.</p>
+
+  <p>The UAT environment has no security group. Which means every licensed user in the tenant has had access to it for six months. Including the client's CEO, who logged in three weeks ago during a particularly rough sprint and saw screens nobody was ready to show him. You found out about it in a very uncomfortable call.</p>
+
+  <p>The client just asked about adding Dynamics 365 Sales to the solution. You go back to the environment settings and find the toggle that was never enabled at creation time — the one that can't be turned on now. The one that means recreating the environment from scratch, migrating everything, and updating every integration. Weeks of work. No new functionality delivered. Go-live pushed.</p>
+
+  <p>Six months into the project, an integration team comes onboard. They ask for the environment URL. You send it over: <code>org2032013.crm4.dynamics.com</code>. Auto-generated on day one, never changed. It's now referenced in three integrations, two client-facing documents, and the support team's ticketing system. Changing it is straightforward in the Admin Center — but every integration that references the old URL breaks the moment you do. Every bookmark, every API config, every piece of documentation needs updating. The URL is easy to change. The blast radius isn't.</p>
+
+  <p>And there's no DLP policy on any of the environments. A maker connected Dataverse to his personal Gmail on week two of the project. Nobody noticed. The data has been flowing for five months.</p>
+
+  <p>None of this happened because anyone was careless. It happened because the platform didn't force any of it. No warning when you skipped the security group. No red light when the URL was auto-generated. No compiler error when you built in the wrong environment. And if your employer didn't define a framework — nobody did.</p>
+
+  <p>How the solution was deployed between these environments — the pipelines, the managed solutions, the version strategy — that's a separate conversation, and we'll get there in a later post. What we're fixing here is what should have been decided before a single line of code was written.</p>
+
+  <p>But to understand why these decisions matter, we need to take a step back. Further back than Power Platform. Further back than Dynamics 365. Back to where environments came from — and how we ended up here.</p>
 
   <div class="callout">
     <div class="callout-label">What this post covers</div>
-    <p>Environment types and when to use each · The four most painful environment setup mistakes · A complete environment topology for enterprise projects · A pre-start checklist you can use right now</p>
+    <p>A brief history of environments in the Microsoft ecosystem · What SaaS means for deployment discipline · The SDLC and where environments live in it · What an environment actually is · Single vs. multiple dev environments · Your environment strategy toolkit in Power Platform · The four setup mistakes that haunt projects · A pre-start checklist you can use right now</p>
   </div>
+
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- HISTORY                                         -->
+  <!-- ═══════════════════════════════════════════════ -->
 
   <div class="divider">
     <div class="divider-line"></div>
@@ -779,13 +464,505 @@
     <div class="divider-line"></div>
   </div>
 
+  <h2>A Brief History of Environments — From the Server Room to the Cloud</h2>
+
+  <p>I started my career on Dynamics CRM 2016. But I've seen implementations from earlier than that — projects built on versions that most people reading this have never touched. And the difference between where we started and where we are in 2026 is worth understanding. Because most of the bad habits we're fixing in this series have roots in how this platform used to work.</p>
+
+  <!-- Animated timeline -->
+  <div class="post-figure">
+    <svg width="100%" viewBox="0 0 700 120" xmlns="http://www.w3.org/2000/svg" id="era-timeline">
+      <defs>
+        <marker id="arr-era" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#c8bfb0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+      <!-- Timeline line -->
+      <line x1="40" y1="60" x2="660" y2="60" stroke="#e0d9cc" stroke-width="1.5" marker-end="url(#arr-era)"/>
+      <!-- Era dots -->
+      <circle cx="100" cy="60" r="7" fill="#7a6f60" class="era-dot" data-era="0"/>
+      <circle cx="240" cy="60" r="7" fill="#7a6f60" class="era-dot" data-era="1"/>
+      <circle cx="370" cy="60" r="7" fill="#7a6f60" class="era-dot" data-era="2"/>
+      <circle cx="500" cy="60" r="7" fill="#7a6f60" class="era-dot" data-era="3"/>
+      <circle cx="630" cy="60" r="9" fill="#9c5a2e" class="era-dot" data-era="4"/>
+      <!-- Labels above -->
+      <text x="100" y="38" text-anchor="middle" font-size="10" fill="#a89880" font-family="inherit">On-Premise</text>
+      <text x="100" y="50" text-anchor="middle" font-size="9" fill="#b5a99a" font-family="inherit">pre-2011</text>
+      <text x="240" y="38" text-anchor="middle" font-size="10" fill="#a89880" font-family="inherit">CRM Online</text>
+      <text x="240" y="50" text-anchor="middle" font-size="9" fill="#b5a99a" font-family="inherit">2011–2015</text>
+      <text x="370" y="38" text-anchor="middle" font-size="10" fill="#a89880" font-family="inherit">Dynamics 365</text>
+      <text x="370" y="50" text-anchor="middle" font-size="9" fill="#b5a99a" font-family="inherit">2016–2018</text>
+      <text x="500" y="38" text-anchor="middle" font-size="10" fill="#a89880" font-family="inherit">Power Platform</text>
+      <text x="500" y="50" text-anchor="middle" font-size="9" fill="#b5a99a" font-family="inherit">2019–2022</text>
+      <text x="630" y="38" text-anchor="middle" font-size="10" fill="#9c5a2e" font-family="inherit" font-weight="500">Modern PP</text>
+      <text x="630" y="50" text-anchor="middle" font-size="9" fill="#c47a4a" font-family="inherit">2023–2026</text>
+      <!-- "You are here" marker -->
+      <text x="630" y="90" text-anchor="middle" font-size="9" fill="#9c5a2e" font-family="inherit">▲ you are here</text>
+    </svg>
+    <p class="figure-caption">Fig. 1 — The Microsoft Dynamics / Power Platform environment era timeline. The tooling grew up. The practices didn't always follow.</p>
+  </div>
+
+  <h3>Era 1 — On-Premise (pre-2011)</h3>
+
+  <div class="era-label">What "environment" meant then</div>
+  <div class="era-mockup era-onprem">
+    <div class="era-mockup-bar">
+      <div class="era-mockup-dot" style="background:#ff5f57"></div>
+      <div class="era-mockup-dot" style="background:#febc2e"></div>
+      <div class="era-mockup-dot" style="background:#28c840"></div>
+      <span class="era-mockup-title">Microsoft Dynamics CRM — Deployment Manager</span>
+    </div>
+    <div class="era-mockup-body">
+      <span style="color:#8b949e">C:\&gt;</span> CRMDeploymentManager.exe<br/>
+      <span style="color:#8b949e">Organizations:</span><br/>
+      &nbsp;&nbsp;[1] CONTOSO_PROD &nbsp;&nbsp;<span style="color:#3fb950">● Active</span><br/>
+      &nbsp;&nbsp;[2] CONTOSO_TEST &nbsp;&nbsp;<span style="color:#f0883e">● Inactive</span><br/>
+      <span style="color:#8b949e">Server:</span> CRMSERVER01.contoso.local<br/>
+      <span style="color:#8b949e">SQL:</span> SQLSERVER01\MSSQLSERVER<br/>
+      <span style="color:#8b949e">Deployment:</span> On-Premise · IIS 7.5 · .NET 4.0<br/>
+      <br/>
+      <span style="color:#8b949e">Action:</span> <span style="color:#58a6ff">_</span>
+    </div>
+  </div>
+
+  <p>"Environment" meant a server. Literally. A physical or virtual machine sitting in your client's data center, managed by their IT team. You wanted a test environment — you raised a change request, waited for IT, got another server provisioned, installed CRM on it, configured IIS and SQL Server, and hoped the network team opened the right ports. That was your dev environment.</p>
+
+  <p>Deployment meant copying customization files, running SQL scripts, exporting and importing organization databases, and scheduling a maintenance window. ALM was whatever the sysadmin felt like enforcing that week. There was no Admin Center. No environment creation wizard. No pipelines. Just servers, scripts, and tribal knowledge passed down from whoever set it up the first time.</p>
+
+  <h3>Era 2 — CRM Online: First Steps to the Cloud (2011–2015)</h3>
+
+  <div class="era-label">What "environment" meant then</div>
+  <div class="era-mockup era-online">
+    <div class="era-mockup-bar">
+      <span class="era-mockup-title">Microsoft Online Services — Dynamics CRM Administration</span>
+    </div>
+    <div class="era-mockup-body">
+      <div style="border-bottom:1px solid #edebe9;padding-bottom:12px;margin-bottom:12px;">
+        <strong style="font-size:13px;">Your CRM Organization</strong>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #edebe9;">
+        <span>contoso.crm.dynamics.com</span>
+        <span style="color:#0078d4;font-size:11px;">Production · 25 users</span>
+      </div>
+      <div style="padding:12px 0;color:#797775;font-size:11px;">
+        ℹ️ &nbsp;Your subscription includes 1 production organization.<br/>
+        Additional sandbox instances available for 25+ user subscriptions.
+      </div>
+    </div>
+  </div>
+
+  <p>Microsoft moved Dynamics CRM to the cloud. The infrastructure disappeared — no more servers, no more IIS, no more SQL Server to manage. But the mindset didn't move with it. People still thought in terms of "the org" — one URL, one instance, that's your system. If you had 25 users or more, you got a sandbox. One sandbox. Shared by everyone. The concept of multiple environments as a proper deployment strategy was still largely foreign.</p>
+
+  <p>Deployment still meant: export the solution from your org, import it into the sandbox, test it, export it again, import it into production, and hope the two orgs were in sync. No version control. No pipeline. Just a zip file and a prayer.</p>
+
+  <h3>Era 3 — Dynamics 365: The Platform Starts Maturing (2016–2018)</h3>
+
+  <div class="era-label">What "environment" meant then</div>
+  <div class="era-mockup era-d365">
+    <div class="era-mockup-bar">
+      <span class="era-mockup-title">Dynamics 365 Administration Center — Instances</span>
+    </div>
+    <div class="era-mockup-body">
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px;font-size:11px;color:#605e5c;border-bottom:1px solid #edebe9;padding-bottom:6px;margin-bottom:8px;">
+        <span>Instance Name</span><span>Type</span><span>Version</span><span>Status</span>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px;font-size:12px;padding:6px 0;border-bottom:1px solid #edebe9;">
+        <span>Contoso (default)</span><span style="color:#0078d4">Production</span><span>9.0.2</span><span style="color:#107c10">Ready</span>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px;font-size:12px;padding:6px 0;border-bottom:1px solid #edebe9;">
+        <span>Contoso - Dev</span><span style="color:#8764b8">Sandbox</span><span>9.0.2</span><span style="color:#107c10">Ready</span>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px;font-size:12px;padding:6px 0;">
+        <span>Contoso - Test</span><span style="color:#8764b8">Sandbox</span><span>9.0.1</span><span style="color:#107c10">Ready</span>
+      </div>
+    </div>
+  </div>
+
+  <p>This is where I came in. The product rebranded as Dynamics 365, the ecosystem expanded, and environments — now called "instances" — started becoming real governance concepts. The Dynamics 365 Administration Center gave you a list of your instances. You could have multiple. You could label them Dev, Test, Production. The concept of a proper topology was starting to take shape.</p>
+
+  <p>But the tooling was still primitive. Solutions existed but ALM around them was entirely manual. No pipelines. No environment variables. No deployment gates. Most teams still deployed by hand — export, import, cross your fingers. The topology existed on a whiteboard. In practice, half the team was still deploying directly to production "just this once."</p>
+
+  <h3>Era 4 — Power Platform: The Framework Exists, Nobody Uses It (2019–2022)</h3>
+
+  <div class="era-label">What "environment" meant then</div>
+  <div class="era-mockup era-pp-early">
+    <div class="era-mockup-bar">
+      <span class="era-mockup-title">Power Platform Admin Center — Environments</span>
+    </div>
+    <div class="era-mockup-body">
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px;font-size:11px;color:#605e5c;border-bottom:1px solid #edebe9;padding-bottom:6px;margin-bottom:8px;">
+        <span>Name</span><span>Type</span><span>Region</span><span>State</span>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px;font-size:12px;padding:6px 0;border-bottom:1px solid #edebe9;">
+        <span style="color:#742774">Contoso (default)</span><span>Default</span><span>UAE North</span><span style="color:#107c10">Ready</span>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px;font-size:12px;padding:6px 0;border-bottom:1px solid #edebe9;">
+        <span>Contoso-Dev</span><span>Sandbox</span><span>UAE North</span><span style="color:#107c10">Ready</span>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px;font-size:12px;padding:6px 0;">
+        <span>Contoso-Prod</span><span>Production</span><span>UAE North</span><span style="color:#107c10">Ready</span>
+      </div>
+      <div style="padding:10px 0 0;color:#a89880;font-size:11px;">No DLP policies configured · No security groups assigned</div>
+    </div>
+  </div>
+
+  <p>The Power Platform brand arrived and environments became first-class citizens in a proper Admin Center. DLP policies appeared. Security groups could be assigned. Managed Environments started taking shape. For the first time, the platform gave you the governance tools to do this properly.</p>
+
+  <p>But it didn't force you to use them. And most teams didn't. The low-code promise brought in a wave of new makers who had never thought about deployment discipline — because nothing in their experience had ever required it. The default environment was right there, ready to use. DLP policies were optional. Security groups were optional. Environment naming was optional. Everything was optional. So most of it got skipped.</p>
+
+  <h3>Era 5 — Modern Power Platform: No Excuses Left (2023–2026)</h3>
+
+  <p>Pipelines built into the platform. Environment Groups with inherited governance rules. Environment Routing that automatically redirects makers away from the default environment. Managed Capacity dashboards. Solution checker enforcement as a deployment gate. The platform now has everything a mature ALM practice needs built right in.</p>
+
+  <p>Microsoft has done their part. The tooling is there. The governance features are there. The Admin Center has more capability than most teams will ever use.</p>
+
+  <p>The only thing missing is the decision to use them. And that decision — in most projects — still isn't being made. Not because the tools are hard. Because nobody forced it.</p>
+
+  <!-- Mr. YOLO image #2: server room, CRT monitor, Dynamics CRM on screen -->
+  <div class="yolo-moment" style="margin-top:32px;">
+    <img src="../assets/yolo/post01-yolo-serverroom.png" alt="Mr. YOLO — server room era, CRT monitor, Dynamics CRM" />
+    <div class="yolo-moment-text">
+      <div class="yolo-moment-label">Mr. YOLO — Then and Now</div>
+      <div class="yolo-moment-quote">"Mr. YOLO isn't a bad developer. He's a 2016 developer on a 2026 platform. This series is the update he never got."</div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- POWER PLATFORM IN THE SOFTWARE WORLD            -->
+  <!-- ═══════════════════════════════════════════════ -->
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-mark">§ 02</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <h2>Power Platform in the Software World</h2>
+
+  <p>Before we talk about environment strategy, we need a shared mental model. Because the reason most teams get environments wrong isn't technical — it's conceptual. They don't have a clear picture of what kind of software Power Platform actually is, and what that means for how they should work with it.</p>
+
+  <h3>Cloud Development — The Three Layers</h3>
+
+  <p>When we talk about cloud software, everything sits in one of three layers. Understanding which layer your platform lives in tells you exactly where your responsibilities begin and end.</p>
+
+  <!-- SaaS/PaaS/IaaS diagram -->
+  <div class="post-figure">
+    <svg width="100%" viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr-saas" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#c8bfb0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+
+      <!-- IaaS layer -->
+      <rect x="40" y="240" width="600" height="72" rx="8" fill="#f1eeea" stroke="#c8bfb0" stroke-width="0.5"/>
+      <text x="60" y="268" font-size="13" font-weight="500" fill="#4a3d30" font-family="inherit">IaaS — Infrastructure as a Service</text>
+      <text x="60" y="288" font-size="11" fill="#7a6f60" font-family="inherit">You manage: OS, runtime, middleware, apps, data</text>
+      <text x="60" y="304" font-size="11" fill="#a89880" font-family="inherit">e.g. Azure VMs, AWS EC2 — the "raw server" model</text>
+      <rect x="520" y="252" width="100" height="48" rx="6" fill="#ede8f5" stroke="#9b84cc" stroke-width="0.5"/>
+      <text x="570" y="274" text-anchor="middle" font-size="11" fill="#4a3580" font-family="inherit">On-Premise</text>
+      <text x="570" y="290" text-anchor="middle" font-size="10" fill="#7a68aa" font-family="inherit">CRM pre-2011</text>
+
+      <!-- PaaS layer -->
+      <rect x="40" y="156" width="600" height="72" rx="8" fill="#e8f0ea" stroke="#8ab88a" stroke-width="0.5"/>
+      <text x="60" y="184" font-size="13" font-weight="500" fill="#1e5c35" font-family="inherit">PaaS — Platform as a Service</text>
+      <text x="60" y="204" font-size="11" fill="#3a7a50" font-family="inherit">You manage: apps and data only</text>
+      <text x="60" y="220" font-size="11" fill="#6aaa80" font-family="inherit">e.g. Azure App Service, Azure Functions, Azure Logic Apps</text>
+      <rect x="520" y="168" width="100" height="48" rx="6" fill="#e4f0ea" stroke="#5a9e72" stroke-width="0.5"/>
+      <text x="570" y="190" text-anchor="middle" font-size="11" fill="#1e5c35" font-family="inherit">Azure Services</text>
+      <text x="570" y="206" text-anchor="middle" font-size="10" fill="#3a7a50" font-family="inherit">Logic Apps etc.</text>
+
+      <!-- SaaS layer — highlighted -->
+      <rect x="40" y="56" width="600" height="88" rx="8" fill="#f5ebe0" stroke="#9c5a2e" stroke-width="1.5"/>
+      <text x="60" y="84" font-size="13" font-weight="500" fill="#7a3e10" font-family="inherit">SaaS — Software as a Service</text>
+      <text x="60" y="104" font-size="11" fill="#9c5a2e" font-family="inherit">You manage: your solution, your data, your configuration</text>
+      <text x="60" y="120" font-size="11" fill="#c47a4a" font-family="inherit">Everything else is Microsoft's responsibility</text>
+      <rect x="460" y="68" width="160" height="64" rx="6" fill="#9c5a2e"/>
+      <text x="540" y="94" text-anchor="middle" font-size="13" font-weight="600" fill="#fff" font-family="inherit">Power Platform</text>
+      <text x="540" y="112" text-anchor="middle" font-size="10" fill="#f5d5b8" font-family="inherit">Dataverse · Power Apps</text>
+      <text x="540" y="126" text-anchor="middle" font-size="10" fill="#f5d5b8" font-family="inherit">Power Automate · D365</text>
+
+      <!-- Responsibility arrow -->
+      <text x="22" y="100" font-size="10" fill="#a89880" font-family="inherit" transform="rotate(-90, 22, 180)">← Your responsibility grows</text>
+    </svg>
+    <p class="figure-caption">Fig. 2 — The three cloud layers. Power Platform sits at SaaS — Microsoft owns the infrastructure, platform, and runtime. You own the solution on top of it.</p>
+  </div>
+
+  <p><strong>IaaS (Infrastructure as a Service)</strong> — You rent the raw compute. Microsoft gives you virtual machines. You install the OS, the runtime, the middleware, everything. Maximum control, maximum responsibility. This is where on-premise CRM lived when it moved to the cloud.</p>
+
+  <p><strong>PaaS (Platform as a Service)</strong> — Microsoft manages the infrastructure and the platform. You bring your application and your data. Azure Logic Apps, Azure Functions, Azure App Service — these are PaaS. You don't think about servers or OS patches. You think about your code.</p>
+
+  <p><strong>SaaS (Software as a Service)</strong> — Microsoft manages everything: infrastructure, platform, runtime, and the application itself. You configure it, extend it, and build on top of it. Power Platform — Power Apps, Power Automate, Dataverse, Dynamics 365 — is SaaS. You don't install it. You don't patch it. You don't manage the servers it runs on.</p>
+
+  <p>Here's what SaaS doesn't mean: it doesn't mean "no discipline required." It means the discipline <em>shifts</em>. You're no longer responsible for the infrastructure. You're entirely responsible for the solution you build on top of it — how it's structured, how it's governed, how it moves from development to production. That responsibility doesn't disappear. It just looks different.</p>
+
+  <p>And in Power Platform, that discipline starts with environments.</p>
+
+  <h3>The Software Development Lifecycle — And Where Environments Live In It</h3>
+
+  <p>Every software project — regardless of language, stack, or platform — moves through the same lifecycle. It doesn't matter if you're building a nuclear plant control system in C++ or a canvas app in Power Platform. The phases are the same.</p>
+
+  <!-- SDLC diagram -->
+  <div class="post-figure">
+    <svg width="100%" viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr-sdlc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#c8bfb0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+
+      <!-- Phase boxes -->
+      <!-- Plan -->
+      <rect x="20" y="60" width="100" height="56" rx="8" fill="#f1eeea" stroke="#c8bfb0" stroke-width="0.5"/>
+      <text x="70" y="85" text-anchor="middle" font-size="13" font-weight="500" fill="#4a3d30" font-family="inherit">Plan</text>
+      <text x="70" y="103" text-anchor="middle" font-size="10" fill="#7a6f60" font-family="inherit">Architecture</text>
+      <text x="70" y="115" text-anchor="middle" font-size="10" fill="#7a6f60" font-family="inherit">Environments</text>
+
+      <!-- Arrow -->
+      <line class="flow-arrow" x1="122" y1="88" x2="140" y2="88" stroke="#c8bfb0" stroke-width="1.5" marker-end="url(#arr-sdlc)" fill="none"/>
+
+      <!-- Build -->
+      <rect x="142" y="60" width="100" height="56" rx="8" fill="#f1eeea" stroke="#c8bfb0" stroke-width="0.5"/>
+      <text x="192" y="85" text-anchor="middle" font-size="13" font-weight="500" fill="#4a3d30" font-family="inherit">Build</text>
+      <text x="192" y="103" text-anchor="middle" font-size="10" fill="#7a6f60" font-family="inherit">Dev environment</text>
+      <text x="192" y="115" text-anchor="middle" font-size="10" fill="#7a6f60" font-family="inherit">Sprints · Reviews</text>
+
+      <!-- Arrow -->
+      <line class="flow-arrow" x1="244" y1="88" x2="262" y2="88" stroke="#c8bfb0" stroke-width="1.5" marker-end="url(#arr-sdlc)" fill="none"/>
+
+      <!-- Test -->
+      <rect x="264" y="60" width="100" height="56" rx="8" fill="#f1eeea" stroke="#c8bfb0" stroke-width="0.5"/>
+      <text x="314" y="85" text-anchor="middle" font-size="13" font-weight="500" fill="#4a3d30" font-family="inherit">Test</text>
+      <text x="314" y="103" text-anchor="middle" font-size="10" fill="#7a6f60" font-family="inherit">SIT · UAT</text>
+      <text x="314" y="115" text-anchor="middle" font-size="10" fill="#7a6f60" font-family="inherit">Sign-off</text>
+
+      <!-- Arrow -->
+      <line class="flow-arrow" x1="366" y1="88" x2="384" y2="88" stroke="#9c5a2e" stroke-width="1.5" marker-end="url(#arr-sdlc)" fill="none"/>
+
+      <!-- Deploy — highlighted -->
+      <rect x="386" y="48" width="110" height="80" rx="8" fill="#f5ebe0" stroke="#9c5a2e" stroke-width="1.5"/>
+      <text x="441" y="76" text-anchor="middle" font-size="13" font-weight="600" fill="#7a3e10" font-family="inherit">Deploy</text>
+      <text x="441" y="96" text-anchor="middle" font-size="10" fill="#9c5a2e" font-family="inherit">Pre-Prod · Prod</text>
+      <text x="441" y="110" text-anchor="middle" font-size="10" fill="#c47a4a" font-family="inherit">← We are here</text>
+      <text x="441" y="122" text-anchor="middle" font-size="9" fill="#c47a4a" font-family="inherit">(where it breaks)</text>
+
+      <!-- Arrow -->
+      <line class="flow-arrow" x1="498" y1="88" x2="516" y2="88" stroke="#c8bfb0" stroke-width="1.5" marker-end="url(#arr-sdlc)" fill="none"/>
+
+      <!-- Maintain -->
+      <rect x="518" y="60" width="110" height="56" rx="8" fill="#f1eeea" stroke="#c8bfb0" stroke-width="0.5"/>
+      <text x="573" y="85" text-anchor="middle" font-size="13" font-weight="500" fill="#4a3d30" font-family="inherit">Maintain</text>
+      <text x="573" y="103" text-anchor="middle" font-size="10" fill="#7a6f60" font-family="inherit">Monitor · Patch</text>
+      <text x="573" y="115" text-anchor="middle" font-size="10" fill="#7a6f60" font-family="inherit">Iterate</text>
+
+      <!-- Bottom note -->
+      <text x="340" y="170" text-anchor="middle" font-size="11" fill="#a89880" font-family="inherit">Environments exist in every phase — but the decisions about them must happen in Plan</text>
+    </svg>
+    <p class="figure-caption">Fig. 3 — The SDLC. Deploy is where projects break. But the decisions that break it were made in Plan.</p>
+  </div>
+
+  <p><strong>Plan</strong> — Requirements, architecture, decisions. This is where environment strategy belongs. Not after the first sprint. Not "once we know what we're building." Before anything else. The decisions made here are largely irreversible.</p>
+
+  <p><strong>Build</strong> — Development. Your dev environment is the workspace. This is where months of work happen — sprints, code reviews, demos, iterations.</p>
+
+  <p><strong>Test</strong> — System integration testing, UAT, sign-off. Your test and UAT environments live here. Business users are in the system. The client is forming opinions about the product.</p>
+
+  <p><strong>Deploy</strong> — Moving the solution to pre-production and production. This is where environment mistakes surface. The wrong URL. The missing security group. The toggle that can't be enabled. All of it shows up here, after months of work, when there's no time to fix it cleanly.</p>
+
+  <p><strong>Maintain</strong> — Live operation. Monitoring, patching, hotfixes, new features. Your production environment lives here permanently. Every configuration decision you made in Plan is now load-bearing.</p>
+
+  <p>The insight is this: <strong>we're fixing the Deploy phase. But the decisions that break Deploy were made — or not made — in Plan.</strong> That's why this post exists before any of the pipeline or deployment posts. You cannot fix deployment problems with deployment tools if the environments themselves were set up wrong.</p>
+
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- WHAT IS AN ENVIRONMENT                          -->
+  <!-- ═══════════════════════════════════════════════ -->
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-mark">§ 03</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <h2>What Is an Environment, Actually</h2>
+
+  <p>Before we talk about environment strategy in Power Platform, we need a clear answer to a question most developers have never been asked to articulate: what is an environment?</p>
+
+  <p>Think about a developer's physical workspace. They have a desk where they do their work — messy, in-progress, half-broken things everywhere, nobody else should touch this. Then there's a meeting room where they present — cleaned up, structured, ready for other people to see. Then there's the actual product that ships to customers — stable, tested, locked down.</p>
+
+  <p>An environment in software is the same idea, applied to a running application. It's an isolated container where your software lives at a specific stage of its lifecycle. You don't build in the same place you show clients. You don't test in the same place you run live transactions. You don't let everyone access everything at every stage.</p>
+
+  <p>In Power Platform, an environment is all of that — plus three things at once:</p>
+
+  <!-- Environment triple boundary diagram -->
+  <div class="post-figure">
+    <svg width="100%" viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer environment boundary -->
+      <rect x="40" y="30" width="600" height="160" rx="12" fill="#f5ebe0" stroke="#9c5a2e" stroke-width="1"/>
+      <text x="340" y="54" text-anchor="middle" font-size="12" font-weight="500" fill="#7a3e10" font-family="inherit">Power Platform Environment</text>
+
+      <!-- Three boundary boxes -->
+      <rect x="60" y="68" width="172" height="100" rx="8" fill="#faf7f1" stroke="#c8bfb0" stroke-width="0.5"/>
+      <text x="146" y="96" text-anchor="middle" font-size="20" font-family="inherit">🔒</text>
+      <text x="146" y="118" text-anchor="middle" font-size="12" font-weight="500" fill="#4a3d30" font-family="inherit">Security Boundary</text>
+      <text x="146" y="136" text-anchor="middle" font-size="10" fill="#7a6f60" font-family="inherit">Who can access</text>
+      <text x="146" y="150" text-anchor="middle" font-size="10" fill="#7a6f60" font-family="inherit">Security groups · Roles</text>
+
+      <rect x="254" y="68" width="172" height="100" rx="8" fill="#faf7f1" stroke="#c8bfb0" stroke-width="0.5"/>
+      <text x="340" y="96" text-anchor="middle" font-size="20" font-family="inherit">📦</text>
+      <text x="340" y="118" text-anchor="middle" font-size="12" font-weight="500" fill="#4a3d30" font-family="inherit">Deployment Boundary</text>
+      <text x="340" y="136" text-anchor="middle" font-size="10" fill="#7a6f60" font-family="inherit">What can be deployed</text>
+      <text x="340" y="150" text-anchor="middle" font-size="10" fill="#7a6f60" font-family="inherit">Solutions · Pipelines</text>
+
+      <rect x="448" y="68" width="172" height="100" rx="8" fill="#faf7f1" stroke="#c8bfb0" stroke-width="0.5"/>
+      <text x="534" y="96" text-anchor="middle" font-size="20" font-family="inherit">💳</text>
+      <text x="534" y="118" text-anchor="middle" font-size="12" font-weight="500" fill="#4a3d30" font-family="inherit">Licensing Boundary</text>
+      <text x="534" y="136" text-anchor="middle" font-size="10" fill="#7a6f60" font-family="inherit">What it costs to run</text>
+      <text x="534" y="150" text-anchor="middle" font-size="10" fill="#7a6f60" font-family="inherit">Capacity · Premium</text>
+    </svg>
+    <p class="figure-caption">Fig. 4 — A Power Platform environment is three boundaries in one: security, deployment, and licensing — all decisions made at creation time.</p>
+  </div>
+
+  <p>A <strong>security boundary</strong> — who can access this environment, what they can do, and what data they can see. Controlled by security groups and Dataverse security roles.</p>
+
+  <p>A <strong>deployment boundary</strong> — what solutions live here, how they got here, and how changes move in and out. Every environment in your topology has a specific role in the deployment chain.</p>
+
+  <p>A <strong>licensing boundary</strong> — what capabilities are available and what they cost to run. Managed Environments, Dataverse capacity, premium connectors — all scoped to the environment.</p>
+
+  <p>And the critical part: <strong>most of the decisions that define these three boundaries are made at environment creation time and cannot be changed later.</strong> You can't add Dataverse to an environment that was created without it. You can't enable Dynamics 365 apps on an environment that was created without that toggle. You can't change the region. These aren't settings — they're architecture choices baked into the environment at birth.</p>
+
+  <p>This is why environment strategy is an architecture decision. Not a configuration task. Not something you sort out in the first sprint. An architecture decision — made before anything else.</p>
+
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- SINGLE VS MULTIPLE DEV ENVIRONMENTS             -->
+  <!-- ═══════════════════════════════════════════════ -->
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-mark">§ 04</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <h2>Single vs. Multiple Dev Environments — When Does It Matter?</h2>
+
+  <p>The first environment question every project needs to answer is: how many dev environments do we actually need?</p>
+
+  <p>The default answer — and the right answer for most projects — is one. One shared dev environment, where the team works together, and solutions are the mechanism for isolating individual workstreams. This is what Power Platform is designed for. It's clean, it's simple, and it's manageable.</p>
+
+  <p>But there are real situations where a single dev environment becomes a collision zone. And when that happens, the right answer is multiple dev environments — each with their own lifecycle — converging at a single Test/SIT environment where integration is validated for the first time.</p>
+
+  <!-- Single vs Multiple diagram -->
+  <div class="post-figure">
+    <svg width="100%" viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr-devenv" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+
+      <!-- LEFT: Single Dev -->
+      <text x="160" y="24" text-anchor="middle" font-size="11" fill="#a89880" font-family="inherit">Single Dev Environment</text>
+      <text x="160" y="38" text-anchor="middle" font-size="10" fill="#b5a99a" font-family="inherit">Small team · Clear solution boundaries</text>
+
+      <rect x="40" y="50" width="240" height="64" rx="8" fill="#ede8f5" stroke="#9b84cc" stroke-width="0.5"/>
+      <text x="160" y="76" text-anchor="middle" font-size="13" font-weight="500" fill="#4a3580" font-family="inherit">Dev</text>
+      <text x="160" y="94" text-anchor="middle" font-size="10" fill="#7a68aa" font-family="inherit">All developers · All workstreams</text>
+      <text x="160" y="108" text-anchor="middle" font-size="10" fill="#7a68aa" font-family="inherit">Solutions as isolation mechanism</text>
+
+      <line class="flow-arrow" x1="160" y1="116" x2="160" y2="154" stroke="#9b84cc" stroke-width="1.5" marker-end="url(#arr-devenv)" fill="none"/>
+
+      <rect x="40" y="156" width="240" height="56" rx="8" fill="#e4f0ea" stroke="#5a9e72" stroke-width="0.5"/>
+      <text x="160" y="180" text-anchor="middle" font-size="13" font-weight="500" fill="#1e5c35" font-family="inherit">Test / SIT</text>
+      <text x="160" y="198" text-anchor="middle" font-size="10" fill="#3a7a50" font-family="inherit">One converge point · Clean</text>
+
+      <line class="flow-arrow" x1="160" y1="214" x2="160" y2="244" stroke="#5a9e72" stroke-width="1.5" marker-end="url(#arr-devenv)" fill="none"/>
+
+      <rect x="80" y="246" width="160" height="28" rx="6" fill="#1e5c35"/>
+      <text x="160" y="264" text-anchor="middle" font-size="11" font-weight="500" fill="#fff" font-family="inherit">Production →</text>
+
+      <!-- Divider -->
+      <line x1="340" y1="20" x2="340" y2="280" stroke="#e0d9cc" stroke-width="0.5" stroke-dasharray="4 3"/>
+
+      <!-- RIGHT: Multiple Dev -->
+      <text x="510" y="24" text-anchor="middle" font-size="11" fill="#a89880" font-family="inherit">Multiple Dev Environments</text>
+      <text x="510" y="38" text-anchor="middle" font-size="10" fill="#b5a99a" font-family="inherit">Parallel workstreams · Different lifecycles</text>
+
+      <rect x="360" y="50" width="140" height="56" rx="8" fill="#ede8f5" stroke="#9b84cc" stroke-width="0.5"/>
+      <text x="430" y="74" text-anchor="middle" font-size="12" font-weight="500" fill="#4a3580" font-family="inherit">Dev — Team A</text>
+      <text x="430" y="92" text-anchor="middle" font-size="10" fill="#7a68aa" font-family="inherit">Canvas App + Dataverse</text>
+
+      <rect x="520" y="50" width="140" height="56" rx="8" fill="#ede8f5" stroke="#9b84cc" stroke-width="0.5"/>
+      <text x="590" y="74" text-anchor="middle" font-size="12" font-weight="500" fill="#4a3580" font-family="inherit">Dev — Team B</text>
+      <text x="590" y="92" text-anchor="middle" font-size="10" fill="#7a68aa" font-family="inherit">F&amp;O Integration</text>
+
+      <line class="flow-arrow" x1="430" y1="108" x2="490" y2="154" stroke="#9b84cc" stroke-width="1.5" marker-end="url(#arr-devenv)" fill="none"/>
+      <line class="flow-arrow" x1="590" y1="108" x2="530" y2="154" stroke="#9b84cc" stroke-width="1.5" marker-end="url(#arr-devenv)" fill="none"/>
+
+      <rect x="390" y="156" width="240" height="56" rx="8" fill="#e4f0ea" stroke="#5a9e72" stroke-width="0.5"/>
+      <text x="510" y="180" text-anchor="middle" font-size="13" font-weight="500" fill="#1e5c35" font-family="inherit">Test / SIT</text>
+      <text x="510" y="198" text-anchor="middle" font-size="10" fill="#3a7a50" font-family="inherit">First full integration · Validate together</text>
+
+      <line class="flow-arrow" x1="510" y1="214" x2="510" y2="244" stroke="#5a9e72" stroke-width="1.5" marker-end="url(#arr-devenv)" fill="none"/>
+
+      <rect x="430" y="246" width="160" height="28" rx="6" fill="#1e5c35"/>
+      <text x="510" y="264" text-anchor="middle" font-size="11" font-weight="500" fill="#fff" font-family="inherit">Production →</text>
+    </svg>
+    <p class="figure-caption">Fig. 5 — Single vs. multiple dev environments. Both converge at Test/SIT — that's where integration is validated for the first time, regardless of how many dev environments feed into it.</p>
+  </div>
+
+  <h3>When multiple dev environments are actually justified</h3>
+
+  <p><strong>Parallel workstreams with different rhythms.</strong> You have two teams moving at genuinely different speeds on genuinely independent pieces of work. Team A owns the Canvas App and Dataverse model. Team B owns the F&O integration layer — Logic Apps, custom APIs, data sync. Team B's half-wired integrations are constantly breaking Team A's app testing in a shared environment. Two dev environments, each team works clean, they converge at Test/SIT where the full solution is assembled and validated for the first time.</p>
+
+  <p><strong>Base product + consumer project built simultaneously.</strong> You're building a reusable managed solution — a framework other projects will consume. A second team is building the first project on top of it at the same time. They can't share dev because the base layer is actively changing under the consuming layer. The base has its own dev environment. The consumer has their own. They meet at Test where the import chain — base first, consumer second — is validated end to end.</p>
+
+  <p><strong>Hotfix in production while feature development is in flight.</strong> Production breaks. You need to patch it. But your dev environment has three half-finished features in it that can't go to production yet. If you only have one dev environment, you're stuck — you can't build a clean hotfix without contaminating it with incomplete work. A second environment — a hotfix track — is the only clean answer. This isn't always planned upfront, but it's a scenario worth anticipating on long-running projects.</p>
+
+  <p>The pattern across all three: <strong>multiple dev environments exist to protect different lifecycles from each other.</strong> They're not about team size. They're about isolation when two workstreams genuinely can't share the same space without breaking each other.</p>
+
+  <p>If you don't have that problem — and most projects don't — one dev environment is the right answer. Don't add complexity you don't need.</p>
+
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- ENVIRONMENT STRATEGY TOOLKIT                    -->
+  <!-- ═══════════════════════════════════════════════ -->
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-mark">§ 05</div>
+    <div class="divider-line"></div>
+  </div>
+
+  <h2>Your Environment Strategy Toolkit in Power Platform</h2>
+
+  <p>Now that we understand what environments are and why they matter, let's look at the four platform features that define how you architect and govern them. These aren't advanced features — they're the baseline. Every serious Power Platform project uses all four.</p>
+
+  <div class="callout">
+    <div class="callout-label">Four features, one goal</div>
+    <p><strong>Managed Environments</strong> — unlocks governance capabilities and is required for pipelines. <strong>Security Groups</strong> — controls who can access each environment. <strong>Environment Routing</strong> — prevents makers from landing in the default environment. <strong>Managed Capacity</strong> — gives you visibility and control over storage and consumption across environments. Together, these four features are your environment governance framework.</p>
+  </div>
+
+  <p>We'll go deeper on each of these as we encounter them in the sections below — Managed Environments in the topology section, Security Groups in Mistake 02, Environment Routing in Mistake 01, and Managed Capacity in the checklist. For now, know that these four exist, and that a project without all four configured is a project with governance gaps.</p>
+
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- WHY ENVIRONMENTS ARE AN ARCHITECTURE DECISION   -->
+  <!-- ═══════════════════════════════════════════════ -->
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-mark">§ 06</div>
+    <div class="divider-line"></div>
+  </div>
+
   <h2>Why Environments Are an Architecture Decision</h2>
 
   <p>Most developers treat environments like parking spaces — you just grab one and start. But in Power Platform, <strong>every environment is a deployment boundary, a security boundary, and a licensing boundary all at once.</strong></p>
 
-  <p>The choices you make when creating an environment are largely irreversible. You can't move a production Dataverse database to a different environment. You can't add Dynamics 365 apps to an environment that wasn't created with that option enabled. And you can't rename the organization URL — not without Microsoft support, not without downtime, and sometimes not at all.</p>
+  <p>The choices you make when creating an environment are largely irreversible. You can't move a production Dataverse database to a different environment. You can't add Dynamics 365 apps to an environment that wasn't created with that option enabled. You can't change the region. These aren't settings you tune later — they're architecture decisions baked in at creation time.</p>
 
-  <p>So let's talk about what these decisions actually are.</p>
+  <p>So let's talk about what those decisions actually are.</p>
 
   <h3>The Environment Types You Need to Know</h3>
 
@@ -815,13 +992,13 @@
         <td class="td-env">Sandbox</td>
         <td>Optional</td>
         <td>Optional</td>
-        <td>The correct choice for shared team testing. Can be reset — which wipes everything, including data your UAT users are actively entering. Should mirror production config.</td>
+        <td>The correct choice for short-lived spike or experiment environments. Can be reset — which wipes everything. Should not be used for team dev, Test, UAT, or anything in your deployment pipeline.</td>
       </tr>
       <tr>
         <td class="td-env">Production</td>
         <td>Optional</td>
         <td>Optional</td>
-        <td>Live workloads only. Cannot be reset. Full backup and SLA. Note: for any serious solution, Dataverse is effectively required — "optional" only applies to simple automation-only workloads.</td>
+        <td>The right type for Dev, Test, UAT, Pre-Prod, and Production environments in your ALM topology. Cannot be reset. Full backup and SLA.</td>
       </tr>
       <tr>
         <td class="td-env">Trial</td>
@@ -832,14 +1009,19 @@
     </tbody>
   </table>
 
-  <div class="callout">
-    <div class="callout-label">A note on environment types for ALM</div>
-    <p>Your Dev, Test, UAT, and integration environments should all be provisioned as production-type environments — not Sandbox. Sandbox environments can be reset and have no SLA. Use production-type environments for any environment that holds team work or is part of your deployment pipeline. Sandbox type is fine for short-lived spike or experiment environments.</p>
+  <div class="callout warn">
+    <div class="callout-label">The sandbox misconception</div>
+    <p>Most teams use Sandbox environments for their Dev and Test environments because the name implies "non-production." That's exactly wrong. Sandbox environments can be reset — which wipes all data and customizations with no recovery path. They also have no SLA. Use Production-type environments for every environment in your deployment pipeline. Sandbox type is for short-lived experiments only.</p>
   </div>
+
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- TOPOLOGY                                        -->
+  <!-- ═══════════════════════════════════════════════ -->
 
   <div class="divider">
     <div class="divider-line"></div>
-    <div class="divider-mark">§ 02</div>
+    <div class="divider-mark">§ 07</div>
     <div class="divider-line"></div>
   </div>
 
@@ -848,22 +1030,12 @@
   <p>For any serious Power Platform project, here's the minimum environment layout I recommend. Everything to the left is unmanaged — developers work there freely. Everything to the right receives only managed solutions, deployed through pipelines.</p>
 
   <div class="post-figure">
-  <style>
-  @keyframes flowPulse { 0% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -40; } }
-  .flow-arrow { stroke-dasharray: 8 6; animation: flowPulse 1.4s linear infinite; }
-  .flow-arrow-slow { stroke-dasharray: 8 6; animation: flowPulse 2s linear infinite; }
-  @media (prefers-reduced-motion: reduce) {
-    .flow-arrow, .flow-arrow-slow { animation: none; stroke-dasharray: none; }
-  }
-  </style>
   <svg width="100%" viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <marker id="arr-topo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
         <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </marker>
     </defs>
-    <rect x="40" y="60" width="600" height="200" rx="16" fill="none" stroke="#c8bfb0" stroke-width="0.5" stroke-dasharray="6 4"/>
-    <text x="340" y="48" text-anchor="middle" font-size="12" fill="#a89880" font-family="inherit">Power Platform project environments</text>
     <rect x="40" y="60" width="290" height="200" rx="16" fill="#faf7f2" stroke="#e0d9cc" stroke-width="0.5"/>
     <text x="185" y="82" text-anchor="middle" font-size="11" fill="#a89880" font-family="inherit">Unmanaged zone</text>
     <rect x="350" y="60" width="290" height="200" rx="16" fill="#faf7f2" stroke="#e0d9cc" stroke-width="0.5"/>
@@ -877,122 +1049,110 @@
     <rect x="370" y="96" width="100" height="56" rx="8" fill="#f1eeea" stroke="#c8bfb0" stroke-width="0.5"/>
     <text x="420" y="118" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#4a3d30" font-family="inherit">UAT</text>
     <text x="420" y="138" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#8a7060" font-family="inherit">Business testing</text>
-    <rect x="500" y="96" width="120" height="56" rx="8" fill="#e4f0ea" stroke="#5a9e72" stroke-width="0.5"/>
-    <text x="560" y="118" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#1e5c35" font-family="inherit">Production</text>
-    <text x="560" y="138" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#3a7a50" font-family="inherit">No direct changes</text>
+    <rect x="490" y="80" width="130" height="56" rx="8" fill="#fef3e2" stroke="#e6a830" stroke-width="0.5"/>
+    <text x="555" y="102" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#7a4f00" font-family="inherit">Pre-Prod</text>
+    <text x="555" y="122" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#a06800" font-family="inherit">Final validation</text>
+    <rect x="490" y="160" width="130" height="56" rx="8" fill="#e4f0ea" stroke="#5a9e72" stroke-width="0.5"/>
+    <text x="555" y="182" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#1e5c35" font-family="inherit">Production</text>
+    <text x="555" y="202" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#3a7a50" font-family="inherit">No direct changes</text>
     <line class="flow-arrow" x1="162" y1="124" x2="183" y2="124" stroke="#9b84cc" stroke-width="1.5" marker-end="url(#arr-topo)" fill="none"/>
     <line class="flow-arrow-slow" x1="307" y1="124" x2="368" y2="124" stroke="#c8bfb0" stroke-width="1.5" marker-end="url(#arr-topo)" fill="none"/>
-    <line class="flow-arrow" x1="472" y1="124" x2="498" y2="124" stroke="#c8bfb0" stroke-width="1.5" marker-end="url(#arr-topo)" fill="none"/>
+    <line class="flow-arrow" x1="472" y1="110" x2="488" y2="108" stroke="#c8bfb0" stroke-width="1.5" marker-end="url(#arr-topo)" fill="none"/>
+    <line class="flow-arrow" x1="472" y1="138" x2="488" y2="175" stroke="#c8bfb0" stroke-width="1.5" marker-end="url(#arr-topo)" fill="none"/>
     <line x1="330" y1="72" x2="330" y2="248" stroke="#c8bfb0" stroke-width="0.5" stroke-dasharray="3 3"/>
     <rect x="185" y="190" width="120" height="48" rx="8" fill="#fef3e2" stroke="#e6a830" stroke-width="0.5"/>
     <text x="245" y="208" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#7a4f00" font-family="inherit">Integration</text>
     <text x="245" y="226" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#a06800" font-family="inherit">F&amp;O projects only</text>
     <path d="M245 152 L245 188" fill="none" stroke="#e6a830" stroke-width="0.5" stroke-dasharray="4 3" marker-end="url(#arr-topo)"/>
-    <text x="60" y="290" font-size="11" fill="#a89880" font-family="inherit">Deployment flows left to right only — no exceptions</text>
-    <text x="60" y="308" font-size="11" fill="#a89880" font-family="inherit">Amber = optional, only needed when external system integrations are in scope</text>
+    <text x="60" y="285" font-size="11" fill="#a89880" font-family="inherit">Deployment flows left to right only — no exceptions</text>
+    <text x="60" y="303" font-size="11" fill="#a89880" font-family="inherit">Amber = optional, only needed when external system integrations are in scope</text>
   </svg>
-  <p class="figure-caption">Fig. 1 — Recommended environment topology. Arrows animate left to right to reinforce the one-way deployment rule.</p>
+  <p class="figure-caption">Fig. 6 — Recommended environment topology. Dev → Test → UAT → Pre-Prod → Production. Arrows flow left to right only.</p>
   </div>
 
   <div class="callout warn">
     <div class="callout-label">Managed Environments — What It Is and Why It Matters</div>
     <p>Managed Environments is a premium governance capability that unlocks features you need for any serious project: solution checker enforcement as a deployment gate, sharing limits on canvas apps, maker welcome content, environment-level analytics, and — critically — the ability to use Power Platform Pipelines.</p>
-    <p>As of early 2026, Pipelines require all target environments to be Managed Environments. This isn't a soft recommendation — if your Test, UAT, or Production environments aren't managed, you can't use pipelines to deploy to them. Plan for this upfront.</p>
-    <p>What Managed Environments does NOT automatically do: it doesn't turn itself on across all your environments. You enable it per environment, in the Power Platform Admin Center, under each environment's settings. The cost is covered by your existing Power Apps/Power Automate premium licenses for users running assets in those environments.</p>
+    <p>As of 2026, Pipelines require all target environments to be Managed Environments. This isn't a soft recommendation — if your Test, UAT, Pre-Prod, or Production environments aren't managed, you can't use pipelines to deploy to them. Plan for this upfront.</p>
+    <p>What Managed Environments does NOT automatically do: it doesn't turn itself on. You enable it per environment, in the Power Platform Admin Center, under each environment's settings. The cost is covered by your existing Power Apps/Power Automate premium licenses for users running assets in those environments.</p>
     <p>If you're using Environment Groups, all environments assigned to a group inherit the group's Managed Environments rules automatically. This is the cleanest way to ensure consistent governance without configuring each environment by hand.</p>
   </div>
 
-  <p>For projects that integrate with external systems — Dynamics 365 F&O, third-party ERPs, legacy APIs, Azure services — you'll also want a dedicated <strong>Integration / Staging</strong> environment between Dev and Test. This gives you a stable, isolated target for integration testing that doesn't pollute your main test environment with data sync noise, incomplete reference data, or webhook misfires. F&O is the most common case, but it's not the only one. If your project has any external system dependency that runs its own test environment, plan for an Integration environment.</p>
+  <p>For projects that integrate with external systems — Dynamics 365 F&O, third-party ERPs, legacy APIs, Azure services — you'll also want a dedicated <strong>Integration / Staging</strong> environment between Dev and Test. This gives you a stable, isolated target for integration testing that doesn't pollute your main test environment with data sync noise, incomplete reference data, or webhook misfires.</p>
 
   <h3>Environment Groups</h3>
 
-  <p>One more thing to plan before you create anything: how your environments will be governed together. Environment Groups — now generally available — let you group related environments and apply a consistent set of governance rules across all of them in one place: sharing limits, solution checker enforcement, AI-generated summaries, and more. Every environment in the group inherits the same baseline configuration automatically, with no manual setup per environment.</p>
+  <p>Plan your Environment Group structure before you create anything. Environment Groups let you group related environments and apply consistent governance rules across all of them in one place — sharing limits, solution checker enforcement, and more. Every environment in the group inherits the same baseline configuration automatically.</p>
 
-  <p>For a typical project, create one group covering your Test, UAT, and Production environments. Your Dev environments can live in a separate group with relaxed rules, or be individually managed. Plan the group structure before you create the environments — moving environments between groups later is possible, but retrofitting governance to environments that have already been in active use is painful.</p>
+  <p>For a typical project, create one group covering your Test, UAT, Pre-Prod, and Production environments. Dev environments can live in a separate group with relaxed rules. Plan the group structure before you create the environments — retrofitting governance to environments already in active use is painful.</p>
+
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- THE FOUR MISTAKES                               -->
+  <!-- ═══════════════════════════════════════════════ -->
 
   <div class="divider">
     <div class="divider-line"></div>
-    <div class="divider-mark">§ 03</div>
+    <div class="divider-mark">§ 08</div>
     <div class="divider-line"></div>
   </div>
 
   <h2>The Four Mistakes That Will Haunt You</h2>
 
-  <p>Every one of these I've seen on real projects. I'm documenting them here so you don't have to learn them the same way.</p>
+  <p>Every one of these I've seen on real projects. Some I've made myself. I'm documenting them here so you don't have to learn them the same way.</p>
 
   <!-- Mistake 1 -->
   <div class="mistake-card">
     <div class="mistake-number">Mistake 01</div>
     <div class="mistake-title">Building in the Default Environment</div>
-    <p>The default environment is always there, always accessible, and always a trap. It's shared across your entire tenant. Everyone with a Power Platform license can see it. There are no security groups, no deployment boundaries, and no clean way to move what you build out of it later.</p>
-    <p>I've seen teams build entire applications in the default environment because it was "just a proof of concept" — and then the client loved it and wanted it in production. The migration is painful. The cleanup is worse. Budget two to three weeks you didn't plan for, on work that produces nothing new.</p>
+    <p>The default environment is always there, always accessible, and always a trap. It's shared across your entire tenant. Every licensed user can see it. There are no security groups, no deployment boundaries, and no clean way to move what you build out of it later.</p>
+    <p>I've seen teams build entire applications in the default environment because it was "just a proof of concept" — and then the client loved it and wanted it in production. The migration is painful. Budget two to three weeks you didn't plan for, on work that produces nothing new.</p>
     <div class="fix-label">✓ The fix</div>
     <p>Create a dedicated environment for every project from day one. Reserve the default environment for individual, personal experimentation only, and enforce what can and cannot be built there with a DLP policy.</p>
-    <p>If you're managing a team or a whole tenant — not just a single project — there's now a better answer: Environment Routing. This is a tenant-level setting that automatically redirects any maker who visits the Power Apps or Power Automate portal into their own personal developer environment, instead of the default. The default environment stops being a dumping ground by default, without relying on everyone reading a governance policy and doing the right thing.</p>
-    <p>Environment Routing is generally available and is enabled in the Power Platform Admin Center under Tenant Settings. You can scope it to all makers or to specific security groups. Newly created developer environments through routing are Managed Environments by default and can be automatically assigned to an Environment Group. For teams with more than a handful of makers, this is the right answer to Mistake 01 — not just a policy reminder.</p>
-    <p>One important note: developer environments created through routing require premium licensing to run assets, even without premium connectors. Make sure your licensing plan accounts for this before you enable it broadly.</p>
+    <p>For tenants with multiple makers, the better answer is <strong>Environment Routing</strong> — a tenant-level setting that automatically redirects any maker who visits the Power Apps or Power Automate portal into their own personal developer environment, instead of the default. The default environment stops being a dumping ground by default, without relying on everyone reading a governance policy and doing the right thing. Enable it in the Power Platform Admin Center under Tenant Settings.</p>
   </div>
 
   <!-- Mistake 2 -->
   <div class="mistake-card">
     <div class="mistake-number">Mistake 02</div>
     <div class="mistake-title">No Security Group on the Environment</div>
-    <p>When you create an environment without assigning a security group, <strong>every licensed user in your tenant can access it.</strong> This isn't a hypothetical risk — it means developers can stumble into a UAT environment, users can access a test environment with incomplete configurations, and there's no clear boundary between who belongs where.</p>
+    <p>When you create an environment without assigning a security group, <strong>every licensed user in your tenant can access it.</strong> Developers stumble into UAT. Users access test environments with incomplete configurations. The client's CEO logs in to a sprint-in-progress. There's no boundary — because you didn't create one.</p>
 
     <div class="post-figure">
-    <style>
-    @keyframes pulse-warn { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
-    .warn-pulse { animation: pulse-warn 2s ease-in-out infinite; }
-    @media (prefers-reduced-motion: reduce) { .warn-pulse { animation: none; opacity: 0.8; } }
-    </style>
-    <svg width="100%" viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <marker id="arr-sec" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </marker>
-      </defs>
+    <svg width="100%" viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg">
       <text x="168" y="28" text-anchor="middle" font-size="11" fill="#a89880" font-family="inherit">Correctly configured</text>
       <text x="520" y="28" text-anchor="middle" font-size="11" fill="#a89880" font-family="inherit">No security group assigned</text>
-      <rect x="40" y="44" width="256" height="220" rx="12" fill="#e4f0ea" stroke="#5a9e72" stroke-width="0.5"/>
-      <text x="168" y="68" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#1e5c35" font-family="inherit">Production</text>
+      <rect x="40" y="44" width="256" height="200" rx="12" fill="#e4f0ea" stroke="#5a9e72" stroke-width="0.5"/>
+      <text x="168" y="68" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#1e5c35" font-family="inherit">UAT Environment</text>
       <rect x="60" y="88" width="216" height="44" rx="6" fill="#c8e4d0" stroke="#5a9e72" stroke-width="0.5"/>
-      <text x="168" y="106" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#1e5c35" font-family="inherit">PP-Prod-EndUsers</text>
-      <text x="168" y="122" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#3a7a50" font-family="inherit">42 licensed members</text>
+      <text x="168" y="106" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#1e5c35" font-family="inherit">PP-Contoso-UAT-Users</text>
+      <text x="168" y="122" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#3a7a50" font-family="inherit">42 business users</text>
       <rect x="60" y="144" width="216" height="44" rx="6" fill="#c8e4d0" stroke="#5a9e72" stroke-width="0.5"/>
-      <text x="168" y="162" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#1e5c35" font-family="inherit">PP-Prod-Admins</text>
+      <text x="168" y="162" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#1e5c35" font-family="inherit">PP-Contoso-UAT-Admins</text>
       <text x="168" y="178" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#3a7a50" font-family="inherit">3 admins only</text>
-      <text x="168" y="238" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#3a7a50" font-family="inherit">Only group members can access</text>
-      <rect x="384" y="44" width="256" height="220" rx="12" fill="#fef0f0" stroke="#d9534f" stroke-width="0.5"/>
-      <text x="512" y="68" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#8b1a1a" font-family="inherit">Test / UAT</text>
-      <rect class="warn-pulse" x="404" y="88" width="216" height="88" rx="6" fill="#fde8e8" stroke="#d9534f" stroke-width="0.5"/>
+      <text x="168" y="222" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#3a7a50" font-family="inherit">Only group members can access</text>
+      <rect x="384" y="44" width="256" height="200" rx="12" fill="#fef0f0" stroke="#d9534f" stroke-width="0.5"/>
+      <text x="512" y="68" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#8b1a1a" font-family="inherit">UAT Environment</text>
+      <rect class="warn-pulse" x="404" y="88" width="216" height="100" rx="6" fill="#fde8e8" stroke="#d9534f" stroke-width="0.5"/>
       <text x="512" y="120" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#8b1a1a" font-family="inherit">No security group</text>
       <text x="512" y="140" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#b03030" font-family="inherit">All licensed tenant users</text>
       <text x="512" y="156" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#b03030" font-family="inherit">can access this environment</text>
       <text x="512" y="210" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#b03030" font-family="inherit">Developers, business users,</text>
-      <text x="512" y="226" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#b03030" font-family="inherit">admins — no boundary at all</text>
-      <text x="512" y="252" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#8b1a1a" font-family="inherit">Set the group at creation time</text>
-      <line x1="300" y1="154" x2="380" y2="154" stroke="#c8bfb0" stroke-width="0.5" stroke-dasharray="4 3"/>
-      <text x="40" y="298" font-size="11" fill="#a89880" font-family="inherit">Name groups consistently: PP-[Project]-[Env]-[Role]</text>
-      <text x="40" y="316" font-size="11" fill="#a89880" font-family="inherit">Create groups in Entra ID before creating the environment — not after</text>
+      <text x="512" y="226" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#b03030" font-family="inherit">executives — no boundary at all</text>
+      <text x="40" y="265" font-size="11" fill="#a89880" font-family="inherit">Naming convention: PP-[Project]-[Env]-[Role] · Create groups in Entra ID before creating the environment</text>
     </svg>
-    <p class="figure-caption">Fig. 2 — The pulsing red zone illustrates that without a security group, the environment boundary does not exist.</p>
+    <p class="figure-caption">Fig. 7 — Without a security group, the environment has no access boundary. Every licensed user in the tenant can walk in.</p>
     </div>
 
     <figure class="post-figure post-figure--screenshot">
-      <img
-        src="../assets/screenshots/post01/security-group.png"
-        alt="Power Platform Admin Center — Security group field during environment creation"
-        class="post-screenshot"
-        loading="lazy"
-      />
-      <p class="figure-caption">Fig. 3 — The security group field in Admin Center. Create the group in Entra ID first, then assign it here at creation time.</p>
+      <img src="../assets/screenshots/post01/security-group.png" alt="Power Platform Admin Center — Security group field during environment creation" class="post-screenshot" loading="lazy"/>
+      <p class="figure-caption">Fig. 8 — The security group field in Admin Center. Create the group in Entra ID first, then assign it here at creation time.</p>
     </figure>
 
     <div class="callout ok">
       <div class="callout-label">The fix — 5 minutes upfront, hours saved at go-live</div>
-      <p>Before you create the environment, create the security groups in Entra ID. Name them consistently — something like <code>PP-[Project]-[Env]-[Role]</code>. Assign them at environment creation time. If you skip this and need to add a security group later, you can — but every user currently in the environment without a license or role assignment gets removed, which means an unplanned access-restoration exercise mid-project.</p>
+      <p>Before you create the environment, create the security groups in Entra ID. Name them consistently — <code>PP-[Project]-[Env]-[Role]</code> — e.g. <code>PP-Contoso-UAT-Users</code>. Assign them at environment creation time. If you skip this and add a security group later, every user currently in the environment without a proper license or role assignment gets removed — an unplanned access-restoration exercise mid-project.</p>
     </div>
-
   </div>
 
   <!-- Mistake 3 -->
@@ -1003,34 +1163,29 @@
     <p><strong>You cannot enable Dynamics 365 apps on an existing environment that was created without this option.</strong> You have to create a new environment, migrate everything, and update every integration. I've seen projects delayed by weeks because of this single skipped toggle.</p>
 
     <figure class="post-figure post-figure--screenshot">
-      <img
-        src="../assets/screenshots/post01/enable-dynamics-apps.png"
-        alt="Power Platform Admin Center — Enable Dynamics 365 apps toggle during environment creation"
-        class="post-screenshot"
-        loading="lazy"
-      />
-      <p class="figure-caption">Fig. 4 — The toggle is off by default and cannot be changed after environment creation. Admin Center → Environments → New → scroll to "Enable Dynamics 365 apps".</p>
+      <img src="../assets/screenshots/post01/enable-dynamics-apps.png" alt="Power Platform Admin Center — Enable Dynamics 365 apps toggle during environment creation" class="post-screenshot" loading="lazy"/>
+      <p class="figure-caption">Fig. 9 — The toggle is off by default and cannot be changed after environment creation.</p>
     </figure>
 
     <div class="callout warn">
       <div class="callout-label">What I saw on a real project</div>
-      <p>A client was six months into a Power Apps build when the business decided to add Dynamics 365 Sales. The environment had been created without the toggle enabled. We spent two weeks planning and executing a migration — exporting solutions, recreating the environment from scratch, re-importing, updating every integration endpoint, reassigning security roles. Two weeks of engineering time, no new functionality delivered, and a go-live pushed back a month. All for a checkbox that takes three seconds to enable at creation time.</p>
+      <p>A client was six months into a Power Apps build when the business decided to add Dynamics 365 Sales. The environment had been created without the toggle enabled. We spent two weeks planning and executing a migration — recreating the environment, re-importing every solution, updating every integration endpoint, reassigning security roles. Two weeks of engineering time, no new functionality delivered, go-live pushed back a month. All for a checkbox that takes three seconds to enable at creation time.</p>
       <p>Enable it if there is any chance — any chance at all — that Dynamics 365 apps will be needed. The cost at creation time is zero. The cost of not enabling it is measured in weeks.</p>
     </div>
-
   </div>
 
   <!-- Mistake 4 -->
   <div class="mistake-card">
     <div class="mistake-number">Mistake 04</div>
     <div class="mistake-title">Not Setting the Organization URL</div>
-    <p>When you create an environment, Power Platform auto-generates an organization URL — something like <code>org32737.crm4.dynamics.com</code>. Nobody changes it because nobody notices it. And then it ends up in production, in API calls, in documentation, in client-facing URLs, and in the browser tabs of every user on the project.</p>
-    <p>Changing it later requires a Microsoft support request, planned downtime, and updates to every integration that references the URL. On some configurations it can't be changed at all without recreating the environment.</p>
+    <p>When you create an environment, Power Platform auto-generates an organization URL — something like <code>org2032013.crm4.dynamics.com</code>. Nobody changes it because nobody notices it. And then it ends up in production: in API calls, in documentation, in client-facing URLs, in the browser bookmarks of every user on the project.</p>
+    <p>Six months into the project, someone asks for the environment URL. You send it over. They look at it and say — <em>"is this really what's going into the integration config? Into the client's documentation?"</em></p>
+    <p>Changing it is possible from the Admin Center. But every integration that references the old URL breaks the moment you do. Every bookmark, every API config, every piece of documentation needs updating. The URL itself is easy to change. The blast radius isn't.</p>
 
     <div class="url-compare">
       <div class="url-box bad">
         <div class="url-box-label">✗ Auto-generated (don't use)</div>
-        <div class="url-value">org32737.crm4.dynamics.com</div>
+        <div class="url-value">org2032013.crm4.dynamics.com</div>
       </div>
       <div class="url-box good">
         <div class="url-box-label">✓ Set at creation (always do this)</div>
@@ -1039,22 +1194,31 @@
     </div>
 
     <figure class="post-figure post-figure--screenshot">
-      <img
-        src="../assets/screenshots/post01/org-url.png"
-        alt="Power Platform Admin Center — Organization URL field during environment creation"
-        class="post-screenshot"
-        loading="lazy"
-      />
-      <p class="figure-caption">Fig. 5 — The org URL field in Admin Center. Set it manually at creation time — it cannot be changed later without a support request.</p>
+      <img src="../assets/screenshots/post01/org-url.png" alt="Power Platform Admin Center — Organization URL field during environment creation" class="post-screenshot" loading="lazy"/>
+      <p class="figure-caption">Fig. 10 — The org URL field in Admin Center. Set it manually at creation time.</p>
     </figure>
 
     <div class="fix-label">✓ The fix</div>
     <p>Always set the URL manually at creation time. Use a consistent naming convention: <code>[client]-[env]</code> — e.g. <code>contoso-dev</code>, <code>contoso-uat</code>, <code>contoso-prod</code>. Two minutes of work, permanent benefit.</p>
   </div>
 
+  <!-- Mr. YOLO image #3 -->
+  <div class="yolo-moment" style="margin: 40px 0;">
+    <img src="../assets/yolo/post01-yolo-org-url.png" alt="Mr. YOLO — org2032013 in browser tab, client standing behind him" />
+    <div class="yolo-moment-text">
+      <div class="yolo-moment-label">Mr. YOLO — Go-Live Day</div>
+      <div class="yolo-moment-quote">"Nobody told me I had to set the URL. There was no warning. There was no red light."</div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- DLP                                             -->
+  <!-- ═══════════════════════════════════════════════ -->
+
   <div class="divider">
     <div class="divider-line"></div>
-    <div class="divider-mark">§ 03.5</div>
+    <div class="divider-mark">§ 08.5</div>
     <div class="divider-line"></div>
   </div>
 
@@ -1064,35 +1228,36 @@
 
   <p>Data Loss Prevention policies are as foundational as the environment itself. A DLP policy defines which connectors are available in an environment, which ones can work together, and which ones are blocked entirely. No DLP policy means makers can build flows that send your Dataverse customer records to a personal Gmail account, pull data into a public-facing HTTP endpoint, or connect internal systems to consumer services that have no place near your data.</p>
 
-  <p>This isn't hypothetical. It's the most common governance gap I see on projects that got the environments right but skipped the policies.</p>
-
   <h3>How DLP policies work</h3>
 
-  <p>Every connector gets assigned to one of three buckets: Business, Non-Business, or Blocked. The rule is simple: connectors from different buckets can't be used together in the same app or flow. You configure policies at two levels:</p>
+  <p>Every connector gets assigned to one of three buckets: Business, Non-Business, or Blocked. Connectors from different buckets can't be used together in the same app or flow. You configure policies at two levels:</p>
 
-  <p><strong>Tenant-level policy</strong> — applies to all environments in your tenant. Use this for universal high-risk blocks (personal email, social media, consumer storage). This is your wall.</p>
+  <p><strong>Tenant-level policy</strong> — applies to all environments. Use this for universal high-risk blocks: personal email, social media, consumer storage. This is your wall.</p>
 
-  <p><strong>Environment-level policy</strong> — applies to a specific environment only. Use this to restrict further or to allow specific connectors for a project's needs.</p>
-
-  <p>Environment-level policies can only make things more restrictive than the tenant policy — they cannot grant permissions the tenant policy has blocked.</p>
+  <p><strong>Environment-level policy</strong> — applies to a specific environment only. Use this to restrict further or allow specific connectors for a project's needs. Environment-level policies can only make things more restrictive than the tenant policy — they cannot grant permissions the tenant policy has blocked.</p>
 
   <h3>What to do before you hand the environment to a maker</h3>
 
-  <p>Define your DLP policy before a single maker has access to the environment. For most project environments the starting position is: put all Microsoft/Dataverse connectors in Business, move all third-party and consumer connectors to Blocked, then work with your integration requirements to move specific connectors to Business as needed. Lock the default group to Blocked so any new connector added by Microsoft lands in the restricted bucket until you explicitly approve it.</p>
+  <p>Define your DLP policy before a single maker has access to the environment. Starting position for most projects: put all Microsoft/Dataverse connectors in Business, move all third-party and consumer connectors to Blocked, then work with your integration requirements to move specific connectors to Business as needed. Lock the default group to Blocked so any new connector added by Microsoft lands in the restricted bucket until you explicitly approve it.</p>
 
-  <p>The default environment needs its own strict DLP policy — the most restrictive one in your tenant. It's accessible to everyone, has no security group, and is exactly where an untrained maker will go if Environment Routing isn't enabled.</p>
+  <p>The default environment needs the most restrictive DLP policy in your tenant — it's accessible to everyone and is exactly where an untrained maker will go if Environment Routing isn't enabled.</p>
 
   <p>DLP is a continuous process, not a setup-and-forget step. New connectors are added to the platform regularly. Make reviewing your DLP policies part of your project governance cadence.</p>
 
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- CHECKLIST                                       -->
+  <!-- ═══════════════════════════════════════════════ -->
+
   <div class="divider">
     <div class="divider-line"></div>
-    <div class="divider-mark">§ 04</div>
+    <div class="divider-mark">§ 09</div>
     <div class="divider-line"></div>
   </div>
 
   <h2>The Pre-Start Checklist</h2>
 
-  <p>Before you create a single environment on your next project, go through this list. It takes less than 30 minutes and prevents the issues above entirely.</p>
+  <p>Before you create a single environment on your next project, go through this list. It takes less than 30 minutes and prevents all of the above entirely.</p>
 
   <div class="interactive-checklist">
     <div class="cl-progress-row">
@@ -1104,7 +1269,7 @@
       <div class="cl-phase-label">Planning — Owner: Solution Architect / PP Lead</div>
       <div class="cl-item" onclick="clToggle(this)">
         <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div><div class="cl-text">Define your environment topology before any work starts</div><div class="cl-note">Dev, Test, UAT, Prod at minimum — add Integration/Staging for any project with external system dependencies</div></div>
+        <div><div class="cl-text">Define your environment topology before any work starts</div><div class="cl-note">Dev, Test, UAT, Pre-Prod, Prod at minimum — add Integration/Staging for any project with external system dependencies</div></div>
       </div>
       <div class="cl-item" onclick="clToggle(this)">
         <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
@@ -1120,7 +1285,7 @@
       </div>
       <div class="cl-item" onclick="clToggle(this)">
         <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div><div class="cl-text">Plan your Environment Group structure</div><div class="cl-note">Which environments belong together? Test + UAT + Prod in one group, Dev environments in another. Define this before creating anything.</div></div>
+        <div><div class="cl-text">Plan your Environment Group structure</div><div class="cl-note">Test + UAT + Pre-Prod + Prod in one group. Dev in another. Define this before creating anything.</div></div>
       </div>
       <div class="cl-item" onclick="clToggle(this)">
         <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
@@ -1166,9 +1331,14 @@
     <p>A well-configured environment takes a few hours of deliberate work across a few people — architect, Entra admin, Power Platform admin. The decisions made in that window are largely permanent. A poorly-set environment doesn't just cost you time at go-live. It costs you credibility, client trust, and sometimes the project. This is where quality starts.</p>
   </div>
 
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- WHAT'S NEXT                                     -->
+  <!-- ═══════════════════════════════════════════════ -->
+
   <div class="divider">
     <div class="divider-line"></div>
-    <div class="divider-mark">§ 05</div>
+    <div class="divider-mark">§ 10</div>
     <div class="divider-line"></div>
   </div>
 
@@ -1176,15 +1346,15 @@
 
   <p>Most teams that get this right — environments set up cleanly, security groups in place, DLP configured before anyone touches a connector — then undo half of it in their first sprint. Not by changing the environments. By making a decision that feels completely natural: putting everything in one solution.</p>
 
-  <p>In <strong>Post 2</strong>, I'll show you what that decision costs. Why a single-solution project looks perfectly reasonable until you try to deploy it. What actually happens when your test environment has a managed solution and a developer pushes a change that touches a shared component. And what a layered solution architecture looks like when it's working — not on a whiteboard, but in a real pipeline.</p>
+  <p>In <strong>Post 02</strong>, I'll show you what that decision costs. Why a single-solution project looks perfectly reasonable until you try to deploy it. What a layered solution architecture looks like when it's working — not on a whiteboard, but in a real pipeline.</p>
 
   <p>If you've seen environment setup go wrong in ways I haven't covered here — find me on LinkedIn.</p>
 
   <!-- Series Nav -->
   <div class="series-nav">
     <div>
-      <div class="series-nav-label">Current</div>
-      <span style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--ink-soft);">Post 01 — Environment Strategy</span>
+      <div class="series-nav-label">Previous</div>
+      <a href="post00-mr-yolo.html" class="series-nav-link">Post 00 — Meet Mr. YOLO</a>
     </div>
     <div style="text-align:right">
       <div class="series-nav-label">Next in series</div>
@@ -1207,7 +1377,7 @@
     <img src="../assets/photo.jpg" alt="Ahmed El-Khatib" style="width:52px;height:52px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--border2);flex-shrink:0;" />
     <div>
       <div class="author-name">Ahmed El-Khatib</div>
-      <div class="author-title">Power Platform Lead</div>
+      <div class="author-title">Power Platform Lead · Khatib365</div>
       <p class="author-bio">Sharing what I know from the field — because I wish someone had written this down when I needed it.</p>
     </div>
   </div>
@@ -1215,6 +1385,13 @@
 </div>
 
 <script>
+// Nav shadow on scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('siteNav').style.boxShadow =
+    window.scrollY > 40 ? '0 2px 24px rgba(28,24,18,0.07)' : 'none';
+});
+
+// Interactive checklist
 function clToggle(el) {
   el.classList.toggle('done');
   const items = document.querySelectorAll('.cl-item');
@@ -1222,6 +1399,24 @@ function clToggle(el) {
   document.getElementById('cl-bar').style.width = (done / items.length * 100) + '%';
   document.getElementById('cl-count').textContent = done + ' / ' + items.length;
 }
+
+// Era timeline dot animation on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const dots = entry.target.querySelectorAll('.era-dot');
+      dots.forEach((dot, i) => {
+        setTimeout(() => {
+          dot.style.transition = 'r 0.3s ease, fill 0.3s ease';
+          dot.style.r = i === 4 ? '10' : '8';
+        }, i * 200);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+
+const timeline = document.getElementById('era-timeline');
+if (timeline) observer.observe(timeline);
 </script>
 </body>
 </html>
