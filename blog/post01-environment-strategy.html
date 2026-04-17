@@ -76,10 +76,38 @@
 
   /* ── Layout ── */
   .page {
-    max-width: 780px;
+    max-width: 1060px;
     margin: 0 auto;
     padding: 40px 32px 120px;
   }
+
+  .content-layout {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  /* ── TOC Sidebar ── */
+  .toc-inner {
+    position: sticky;
+    top: 80px;
+  }
+  .toc-label {
+    font-family: 'Fira Code', monospace;
+    font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--ink-light); margin-bottom: 14px;
+  }
+  .toc-nav { display: flex; flex-direction: column; gap: 0; }
+  .toc-link {
+    font-family: 'Fira Code', monospace; font-size: 11px;
+    color: var(--ink-mid); text-decoration: none; line-height: 1.5;
+    padding: 5px 0 5px 10px;
+    border-left: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    display: block;
+  }
+  .toc-link:hover { color: var(--copper); border-left-color: var(--copper-l); }
 
   /* ── Header ── */
   .blog-header {
@@ -360,6 +388,15 @@
     .era-appear { opacity: 1; }
   }
 
+  @media (max-width: 900px) {
+    .content-layout { grid-template-columns: 1fr; }
+    .toc-inner {
+      position: static;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 6px; padding: 16px 20px; margin-bottom: 36px;
+    }
+  }
+
   @media (max-width: 600px) {
     .url-compare { grid-template-columns: 1fr; }
     .sg-diagram { grid-template-columns: 1fr; }
@@ -414,6 +451,28 @@
     </div>
   </header>
 
+  <div class="content-layout">
+
+    <aside class="toc-sidebar">
+      <div class="toc-inner">
+        <div class="toc-label">In this post</div>
+        <nav class="toc-nav">
+          <a href="#section-01" class="toc-link">§ 01 — A History of Environments</a>
+          <a href="#section-02" class="toc-link">§ 02 — PP in the Software World</a>
+          <a href="#section-03" class="toc-link">§ 03 — What Is an Environment</a>
+          <a href="#section-04" class="toc-link">§ 04 — Single vs. Multiple Dev</a>
+          <a href="#section-05" class="toc-link">§ 05 — Toolkit Overview</a>
+          <a href="#section-06" class="toc-link">§ 06 — Architecture Decision</a>
+          <a href="#section-07" class="toc-link">§ 07 — Topology</a>
+          <a href="#section-08" class="toc-link">§ 08 — The Four Mistakes</a>
+          <a href="#section-09" class="toc-link">§ 09 — DLP Policy</a>
+          <a href="#section-10" class="toc-link">§ 10 — Pre-Start Checklist</a>
+          <a href="#section-11" class="toc-link">§ 11 — What's Next</a>
+        </nav>
+      </div>
+    </aside>
+
+    <article class="post-body">
 
   <!-- ═══════════════════════════════════════════════ -->
   <!-- OPENING PROVOCATION                             -->
@@ -456,7 +515,7 @@
     <div class="divider-line"></div>
   </div>
 
-  <h2>A Brief History of Environments — From the Server Room to the Cloud</h2>
+  <h2 id="section-01">A Brief History of Environments — From the Server Room to the Cloud</h2>
 
   <p>The Power Platform Admin Center in 2026 gives you everything you need to govern environments properly. Security groups. DLP policies. Managed Environments. Environment Routing. Pipelines. The full toolkit.</p>
 
@@ -627,7 +686,7 @@
     <div class="divider-line"></div>
   </div>
 
-  <h2>Power Platform in the Software World</h2>
+  <h2 id="section-02">Power Platform in the Software World</h2>
 
   <p>Before we talk about environment strategy, we need a shared mental model. Because the reason most teams get environments wrong isn't technical — it's conceptual. They don't have a clear picture of what kind of software Power Platform actually is, and what that means for how they should work with it.</p>
 
@@ -725,7 +784,7 @@
     <div class="divider-line"></div>
   </div>
 
-  <h2>What Is an Environment, Actually</h2>
+  <h2 id="section-03">What Is an Environment, Actually</h2>
 
   <p>Before we talk about environment strategy in Power Platform, we need a clear answer to a question most developers have never been asked to articulate: what is an environment?</p>
 
@@ -785,7 +844,7 @@
     <div class="divider-line"></div>
   </div>
 
-  <h2>Single vs. Multiple Dev Environments — When Does It Matter?</h2>
+  <h2 id="section-04">Single vs. Multiple Dev Environments — When Does It Matter?</h2>
 
   <p>The first environment question every project needs to answer is: how many dev environments do we actually need?</p>
 
@@ -875,7 +934,7 @@
     <div class="divider-line"></div>
   </div>
 
-  <h2>Your Environment Strategy Toolkit in Power Platform</h2>
+  <h2 id="section-05">Your Environment Strategy Toolkit in Power Platform</h2>
 
   <p>Now that we understand what environments are and why they matter, let's look at the four platform features that define how you architect and govern them. These aren't advanced features — they're the baseline. Every serious Power Platform project uses all four.</p>
 
@@ -897,7 +956,7 @@
     <div class="divider-line"></div>
   </div>
 
-  <h2>Why Environments Are an Architecture Decision</h2>
+  <h2 id="section-06">Why Environments Are an Architecture Decision</h2>
 
   <p>Most developers treat environments like parking spaces — you just grab one and start. But in Power Platform, <strong>every environment is a deployment boundary, a security boundary, and a licensing boundary all at once.</strong></p>
 
@@ -966,7 +1025,7 @@
     <div class="divider-line"></div>
   </div>
 
-  <h2>The Environment Topology That Actually Works</h2>
+  <h2 id="section-07">The Environment Topology That Actually Works</h2>
 
   <p>For any serious Power Platform project, here's the minimum environment layout I recommend. Everything to the left is unmanaged — developers work there freely. Everything to the right receives only managed solutions, deployed through pipelines.</p>
 
@@ -1049,7 +1108,7 @@
     <div class="divider-line"></div>
   </div>
 
-  <h2>The Four Mistakes That Will Haunt You</h2>
+  <h2 id="section-08">The Four Mistakes That Will Haunt You</h2>
 
   <p>Every one of these I've seen on real projects. Some I've made myself. I'm documenting them here so you don't have to learn them the same way.</p>
 
@@ -1183,7 +1242,7 @@
     <div class="divider-line"></div>
   </div>
 
-  <h2>The Fifth Mistake Nobody Talks About: No DLP Policy</h2>
+  <h2 id="section-09">The Fifth Mistake Nobody Talks About: No DLP Policy</h2>
 
   <p>I said four mistakes. There's a fifth one I left off the numbered list because it doesn't happen at environment creation time — it happens in the two hours after. And by then, makers are already inside the environment, building things, connecting things, and moving data in directions you haven't thought about yet.</p>
 
@@ -1216,7 +1275,7 @@
     <div class="divider-line"></div>
   </div>
 
-  <h2>The Pre-Start Checklist</h2>
+  <h2 id="section-10">The Pre-Start Checklist</h2>
 
   <p>Before you create a single environment on your next project, go through this list. It takes less than 30 minutes and prevents all of the above entirely.</p>
 
@@ -1303,7 +1362,7 @@
     <div class="divider-line"></div>
   </div>
 
-  <h2>What's Next</h2>
+  <h2 id="section-11">What's Next</h2>
 
   <p>Most teams that get this right — environments set up cleanly, security groups in place, DLP configured before anyone touches a connector — then undo half of it in their first sprint. Not by changing the environments. By making a decision that feels completely natural: putting everything in one solution.</p>
 
@@ -1323,15 +1382,8 @@
     </div>
   </div>
 
-  <!-- Disclaimer -->
-  <div class="post-disclaimer">
-    <p>
-      Everything here is from the field. My experience, my take, my mistakes.
-      Not my employer's. Not Microsoft's.
-      If something has changed or you've seen it play out differently, I'd like to hear it.
-      Find me on <a href="https://linkedin.com/in/ahmed-el-khatib" target="_blank" rel="noopener">LinkedIn</a>.
-    </p>
-  </div>
+    </article><!-- /.post-body -->
+  </div><!-- /.content-layout -->
 
   <!-- Author -->
   <div class="author-block">
@@ -1341,6 +1393,16 @@
       <div class="author-title">Power Platform Lead · Khatib365</div>
       <p class="author-bio">Sharing what I know from the field — because I wish someone had written this down when I needed it.</p>
     </div>
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="post-disclaimer">
+    <p>
+      Everything here is from the field. My experience, my take, my mistakes.
+      Not my employer's. Not Microsoft's.
+      If something has changed or you've seen it play out differently, I'd like to hear it.
+      Find me on <a href="https://linkedin.com/in/ahmed-el-khatib" target="_blank" rel="noopener">LinkedIn</a>.
+    </p>
   </div>
 
 </div>
