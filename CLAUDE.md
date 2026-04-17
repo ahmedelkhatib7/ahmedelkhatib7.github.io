@@ -1,262 +1,75 @@
-# Khatib365 — Claude Code Instructions
+# Khatib365
 
-## Who You Are Working With
+Ahmed El-Khatib's personal brand and blog. Static HTML/CSS/JS on GitHub Pages at `https://khatib365.github.io`. The quality of this site reflects Ahmed's professional reputation — treat every file accordingly.
 
-You are working on **Ahmed El-Khatib's** personal brand and blog — **Khatib365**.
-This is a professional portfolio and technical blog hosted on GitHub Pages at `https://khatib365.github.io`.
-The quality of this work directly reflects Ahmed's professional reputation. Treat every file you touch accordingly.
+## Stack
 
----
+- Pure HTML + CSS + JS. No frameworks, no build step, no npm.
+- Hosted on GitHub Pages from the repo root. Works as plain files in a browser.
 
-## The Site
-
-- **Stack**: Static HTML + CSS only. No frameworks, no build tools, no npm, no bundlers.
-- **Hosting**: GitHub Pages — everything must work as plain files in the browser.
-- **Repo**: You have full access. Read the existing files before writing anything new.
-
----
-
-## Folder Structure — Source of Truth
-
-This is the complete, canonical folder structure for the repo. Follow it exactly. Do not create folders outside this structure without asking first.
+## Repo Map
 
 ```
-khatib365.github.io/
-│
-├── index.html                          → Homepage / portfolio
-├── 404.html                            → Custom 404 page
-├── CLAUDE.md                           → This file
-├── README.md                           → Repo readme
-│
-├── blog/                               → All blog posts
-│   ├── index.html                      → Blog listing page
-│   ├── post00-mr-yolo.html             → Post 00 — Meet Mr. YOLO
-│   ├── post01-environment-strategy.html → Post 01 — Environment Strategy
-│   ├── post02-dlp-policies.html        → Post 02 (future)
-│   ├── post03-solutions-101.html       → Post 03 (future)
-│   └── ...                             → Follow same naming pattern
-│
-├── assets/
-│   ├── photo.jpg                       → Ahmed's profile photo (used site-wide)
-│   ├── favicon.svg                     → Site favicon
-│   │
-│   ├── badges/                         → Microsoft certification badge images
-│   │   └── *.png
-│   │
-│   ├── icons/                          → UI icons used across the site
-│   │   └── *.svg
-│   │
-│   └── screenshots/                    → All blog post images, organized by post
-│       ├── post00/                     → Images for Post 00
-│       │   ├── yolo-character-card.png
-│       │   ├── yolo-story-begins.png
-│       │   └── yolo-three-pillars.png
-│       ├── post01/                     → Images for Post 01
-│       │   ├── enable-dynamics-apps.png
-│       │   ├── org-url.png
-│       │   └── security-group.png
-│       └── post02/                     → Images for Post 02 (create when needed)
-│
-├── css/                                → Global stylesheets
-│   └── *.css
-│
-└── js/                                 → Global JavaScript
-    └── *.js
+/index.html              homepage & portfolio
+/404.html                custom 404
+/blog/                   all posts — postNN-slug.html
+/blog/index.html         blog listing
+/assets/photo.jpg        Ahmed's profile photo (sitewide)
+/assets/favicon.svg
+/assets/badges/          cert badges (.png)
+/assets/icons/           UI icons (.svg)
+/assets/screenshots/postNN/   all post images, scoped per post
+/css/                    global stylesheets
+/js/                     global scripts
+/docs/                   agent reference files (read on demand — see below)
 ```
 
----
+## How to Work
 
-### File Naming Rules
+**Default loop:** read → plan → execute → commit. Work autonomously on clear tasks. Do not narrate intent before doing it.
 
-- All filenames are **kebab-case** — no spaces, no underscores, no camelCase
-- Blog posts: `post00-slug.html`, `post01-slug.html` — zero-padded number + short descriptive slug
-- Screenshots: always inside `assets/screenshots/postXX/` — never in the root screenshots folder
-- Never use generic names like `image1.png`, `screenshot.png`, `final.png`
+**Only stop and ask when:**
+- A decision affects brand or content direction
+- The existing codebase is broken in a way that blocks the task
+- Two approaches diverge significantly and the wrong choice forces rework
 
----
+Do **not** ask permission to proceed on clear tasks. Do not ask what you can answer by reading files.
 
-## Visual Identity — Non-Negotiable
+## Rules That Apply to Every Session
 
-Before writing a single line of HTML, read the existing `post01-environment-strategy.html` and the homepage `index.html` in full. The visual identity is:
+- **No real client names anywhere on the site.** Use `contoso` as the placeholder (`contoso-dev`, `contoso-uat`, `contoso-prod`).
+- All internal links are **absolute from root** (`/blog/index.html`, not `../index.html`). This repo is the apex site, not a project page.
+- Filenames are **kebab-case**. Blog posts: `postNN-slug.html` with zero-padded numbers.
+- Screenshots go in `/assets/screenshots/postNN/` — never in the screenshots root.
+- Dates use the format `March 2026`. Section headings use `§ 01`, `§ 02`, etc.
+- Commit messages are specific: `Add Post 02 — DLP Policies`, not `update files`. One logical change per commit.
+- Never commit broken HTML. Open the file and verify structure before committing.
 
-- **Fonts**: Cormorant Garamond (display/headings) + Jost (body) + JetBrains Mono (code)
-- **Colors**:
-  - Background: `#FAF6EF` (parchment)
-  - Ink: `#1C1814` / `#3D3530`
-  - Accent: `#A0522D` (terracotta) / `#B87333` (copper) / `#C9A84C` (gold)
-  - Border: `#DDD0BC`
-- **Tone**: Craftsman. Warm but authoritative. Editorial without being academic.
-- **Every new page must be visually indistinguishable from the existing pages.** Match spacing, typography, nav, breadcrumb, footer — exactly.
+## Progressive Disclosure — Read These On Demand
 
----
+Before working on a task, decide which of these you need and read only those:
 
-## How You Work
+- **`/docs/visual-identity.md`** — fonts, color tokens, spacing, tone. Read before creating or restyling a page. Otherwise inferable from any existing page.
+- **`/docs/post-template.md`** — required structure every blog post must follow (nav, breadcrumb, hero, TOC, sections, post footer, disclaimer). Read before creating a new post.
+- **`/docs/series-roadmap.md`** — full list of posts in the Power Platform Deployment Series, linking rules, and the Mr. YOLO character brief. Read when writing a post or adding cross-links.
+- **`/blog/post01-environment-strategy.html`** — the reference implementation. When in doubt about layout, structure, or voice, match this file.
 
-### Autonomy
-- **Work autonomously.** Do not ask for permission before each step.
-- Read → Plan → Execute → Commit. That is your default loop.
-- If a task is clear, do it. Do not narrate what you are about to do before doing it.
+**Prefer pointers to copies.** If you need a pattern, read the reference file directly — don't reproduce it from memory.
 
-### When to Stop and Ask
-Only pause and ask Ahmed when you hit one of these:
-- You need a decision that affects content or brand direction (e.g. "should this section say X or Y?")
-- You find something broken or inconsistent in the existing codebase that affects your task
-- A task requires credentials, secrets, or external access you don't have
-- You are genuinely unsure which of two approaches is correct and the wrong choice would require significant rework
+## Definition of Done
 
-**Do not ask for permission to proceed on clear tasks. Do not ask clarifying questions that you can answer by reading the existing files.**
+- HTML is valid and renders correctly
+- Page is visually consistent with `post01-environment-strategy.html`
+- All internal and external links resolve
+- No real client names anywhere
+- Blog index updated if a new post was added
+- Committed with a clear, specific message
+- Pushed to `main` (GitHub Pages deploys automatically)
 
-### Token Efficiency
-- Read files once, extract everything you need, then act.
-- Do not re-read the same file multiple times unless it has changed.
-- Do not make exploratory commits. Commit when a task is complete and verified.
-- If you are stuck on something minor, solve it yourself. Only escalate blockers.
+## Escalation Format
 
----
+When you do need to ask, be specific and include your proposed answer:
 
-## Coding Standards
+> "The blog index uses a card layout but I can't find a consistent date format in the existing posts — should I use 'March 2026' or 'Mar 2026'? Proposing 'March 2026' to match post01."
 
-### HTML
-- Semantic HTML5 — use `<article>`, `<nav>`, `<aside>`, `<section>`, `<main>` correctly
-- Every page must have correct `<title>`, `<meta name="description">`, and `<meta name="viewport">`
-- All internal links must be absolute from root (e.g. `/blog/index.html` not `../index.html`)
-- Images must have descriptive `alt` attributes
-- No inline styles except for one-off overrides — use CSS classes
-
-### CSS
-- Use CSS custom properties (variables) for all colors and fonts — never hardcode hex values in new rules
-- Mobile-first. Every layout must be responsive. Test mentally at 375px, 768px, and 1280px.
-- No `!important` unless overriding a third-party style
-- Class names are kebab-case and descriptive (`.post-meta`, `.series-table-wrap` — not `.div1`, `.red-text`)
-
-### Content
-- **Never use a real client name anywhere on the site.** Use `contoso` as the fictional placeholder throughout — `contoso-dev`, `contoso-uat`, `contoso-prod`.
-- All dates use the format: `March 2026`
-- Read time estimates: count words, divide by 200, round to nearest minute
-- Section numbers use the `§` symbol: `§ 01`, `§ 02`, etc.
-
-### Git
-- Commit messages are clear and specific: `Add Post 00 — Meet Mr. YOLO` not `update files`
-- One logical change per commit — do not bundle unrelated changes
-- Never commit broken HTML. Validate structure before committing.
-- Branch if the change is large or risky. PR for anything that touches more than 2 files.
-
----
-
-## Blog Post Standards
-
-Every blog post must have:
-
-1. **Nav** — identical to existing posts (sticky, logo + links)
-2. **Breadcrumb** — `Home / Writing / Post XX — Title`
-3. **Hero** — series label, post title, tagline, author meta (photo + name + date + read time)
-4. **Table of Contents** — sticky sidebar on desktop, inline on mobile, links to all `§` sections
-5. **Article body** — sections numbered with `§`, h2 for sections, h3 for subsections
-6. **Post footer** — Ahmed's photo, name, bio line
-7. **Disclaimer** — "Everything in this post reflects my own experience and opinions. Not my employer's, not Microsoft's — mine."
-
-Post structure in the file:
-```
-nav → breadcrumb → hero → [sidebar TOC + article] → post footer → disclaimer
-```
-
----
-
-## The Series
-
-This is the **Power Platform Deployment Series**. Every post is part of this series. The full roadmap:
-
-| Post | Topic |
-|------|-------|
-| 00 | Meet Mr. YOLO — series intro |
-| 01 | Environment Strategy |
-| 02 | DLP Policies |
-| 03 | Solutions 101 — Managed, Unmanaged, Publishers & Naming |
-| 04 | Solution Architecture & Segmentation |
-| 05 | ALM Foundations |
-| 06 | Deployment Methods — The Decision Guide |
-| 07 | Pipelines Deep-Dive: Power Platform Pipelines |
-| 08 | Pipelines Deep-Dive: Azure DevOps & Build Tools |
-| 09 | Pipelines Deep-Dive: GitHub Actions |
-| 10 | Pipelines Deep-Dive: ALM Accelerator |
-| 11 | Pipelines Deep-Dive: Solution Packager & CLI |
-| 12 | Environment Variables & Connection References |
-| ★  | Bonus — Solution XML Anatomy |
-
-When linking between posts, always use the correct relative path from `/blog/`.
-When a future post doesn't exist yet, do not create a dead link — render it as plain text with a "coming soon" tag.
-
----
-
-## Mr. YOLO — Character Reference
-
-Mr. YOLO is the recurring character throughout the series. He appears in every post making the mistake that the post then fixes.
-
-- He is not a villain. He is a mirror.
-- He is fast, creative, and well-intentioned — just undisciplined.
-- His mistakes are recognizable, not cartoonish.
-- Tone when writing him: warm, slightly self-deprecating humor. Never condescending.
-- Every post has one "Mr. YOLO mistake" — the thing he does that the post fixes.
-
----
-
-## Post 00 — Images
-
-Three images must be embedded in Post 00. They are located at:
-
-```
-/assets/screenshots/post00/yolo-character-card.png
-/assets/screenshots/post00/yolo-story-begins.png
-/assets/screenshots/post00/yolo-three-pillars.png
-```
-
-**Do not reference the ALM session or any speaking event in the captions.** The session has not happened yet. Treat these as standalone post illustrations only.
-
-### Placement & captions
-
-**Image 1 — `assets/screenshots/post00/yolo-character-card.png`**
-- Place in **§ 01 — Who Is Mr. YOLO?** immediately after the opening character description paragraph
-- Caption: *Mr. YOLO — Speed 8/10. Confidence 10/10. Testing 2/10. Documentation 1/10. YOLO Factor 10/10.*
-- Display at full content width with subtle border-radius matching the site style
-
-**Image 2 — `assets/screenshots/post00/yolo-story-begins.png`**
-- Place in **§ 01** immediately after Image 1
-- Caption: *4:44 PM — "5 minutes. Easy." · 4:53 PM — APPLICATION DOWN, ERROR 500.*
-- Display at full content width
-
-**Image 3 — `assets/screenshots/post00/yolo-three-pillars.png`**
-- Place in **§ 02 — What This Series Covers** after the series roadmap table
-- Caption: *Environments. Solutions. Automation. Get these three right and deployment becomes something you trust any day of the week.*
-- Display at full content width
-
-### Image styling rules
-- Wrap every image in a `<figure>` with a `<figcaption>` underneath
-- `<figcaption>` uses the same muted style as existing figure captions on the site (`font-size: 0.82rem`, `color: var(--ink-faint)`, `font-style: italic`, centered)
-- Images are `width: 100%`, `border-radius: 4px`, `display: block`
-- Add `loading="lazy"` to all three
-- These images have a dark navy background — add a subtle `1px solid var(--border)` around them so they don't bleed into the parchment page background
-
----
-
-## What "Done" Looks Like
-
-A task is done when:
-- [ ] The HTML is valid and renders correctly in a browser
-- [ ] The page is visually consistent with existing pages
-- [ ] All links work (internal and external)
-- [ ] No real client names appear anywhere
-- [ ] The blog index is updated to reflect the new post
-- [ ] Changes are committed with a clear commit message
-- [ ] The live site at `https://khatib365.github.io` reflects the changes
-
----
-
-## Questions & Escalation
-
-If you need to ask Ahmed something, be specific and efficient:
-
-**Good:** "The blog index uses a card layout but I can't find a consistent date format in the existing posts — should I use 'March 2026' or 'Mar 2026'?"
-
-**Bad:** "Should I proceed with creating the file?" / "Is this the right approach?" / "Let me know when you're ready for me to continue."
-
-One question at a time. Include your proposed answer so Ahmed can confirm or redirect rather than think from scratch.
+Not: "Should I proceed?" / "Is this the right approach?"
