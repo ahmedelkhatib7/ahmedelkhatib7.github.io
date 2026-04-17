@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Environment decisions in Power Platform are irreversible. Before a single line of code — understand what environments are, where they came from, and what to get right from day one." />
 <title>Environment Strategy — Before You Write a Single Line of Code | Khatib365</title>
-<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -409,19 +409,19 @@
 <body>
 
 <nav class="site-nav" id="siteNav">
-  <a href="../" class="site-nav-brand">Khatib<span>365</span></a>
+  <a href="/index.html" class="site-nav-brand">Khatib<span>365</span></a>
   <div class="site-nav-links">
-    <a href="../#about" class="site-nav-link">About</a>
-    <a href="index.html" class="site-nav-link active">Writing</a>
-    <a href="../#skills" class="site-nav-link">Skills</a>
-    <a href="../#contact" class="site-nav-link">Contact</a>
+    <a href="/index.html#about" class="site-nav-link">About</a>
+    <a href="/blog/index.html" class="site-nav-link active">Writing</a>
+    <a href="/index.html#skills" class="site-nav-link">Skills</a>
+    <a href="/index.html#contact" class="site-nav-link">Contact</a>
   </div>
 </nav>
 
 <div class="post-breadcrumb">
-  <a href="../">Home</a>
+  <a href="/index.html">Home</a>
   <span class="bc-sep">/</span>
-  <a href="index.html">Writing</a>
+  <a href="/blog/index.html">Writing</a>
   <span class="bc-sep">/</span>
   <span>Post 01 — Environment Strategy</span>
 </div>
@@ -752,12 +752,12 @@
   <p>Every software project — regardless of language, stack, or platform — moves through the same lifecycle. It doesn't matter if you're building a nuclear plant control system in C++ or a canvas app in Power Platform. The phases are the same.</p>
 
   <figure class="post-figure post-figure--screenshot">
-    <img src="../assets/screenshots/post01/sdlc-how-it-should-work.jpg" alt="The SDLC — Plan, Build, Test, Deploy, Maintain phases in sequence" class="post-screenshot" loading="lazy"/>
+    <img src="/assets/screenshots/post01/sdlc-how-it-should-work.jpg" alt="The SDLC — Plan, Build, Test, Deploy, Maintain phases in sequence" class="post-screenshot" loading="lazy"/>
     <p class="figure-caption">Fig. — The SDLC as it should work. Clean. Logical. Everyone agrees this is how it works.</p>
   </figure>
 
   <figure class="post-figure post-figure--screenshot">
-    <img src="../assets/screenshots/post01/mr-yolo-sdlc.jpg" alt="Mr. YOLO's version of the SDLC — deployment is where well-built solutions go to die" class="post-screenshot" loading="lazy"/>
+    <img src="/assets/screenshots/post01/mr-yolo-sdlc.jpg" alt="Mr. YOLO's version of the SDLC — deployment is where well-built solutions go to die" class="post-screenshot" loading="lazy"/>
     <p class="figure-caption">Fig. — Mr. YOLO's version. Deployment is where well-built solutions go to die.</p>
   </figure>
 
@@ -1079,12 +1079,12 @@
   </div>
 
   <figure class="post-figure post-figure--screenshot">
-    <img src="../assets/screenshots/post01/managed-vs-unmanaged-environments.jpg" alt="Managed vs Unmanaged Environments comparison — governance controls and restrictions" class="post-screenshot" loading="lazy"/>
+    <img src="/assets/screenshots/post01/managed-vs-unmanaged-environments.jpg" alt="Managed vs Unmanaged Environments comparison — governance controls and restrictions" class="post-screenshot" loading="lazy"/>
     <p class="figure-caption">Fig. — Managed vs Unmanaged. Microsoft doesn't trust you either. And that's actually a good thing.</p>
   </figure>
 
   <figure class="post-figure post-figure--screenshot">
-    <img src="../assets/screenshots/post01/managed-environments-benefits.jpg" alt="Managed Environments benefits — solution checker enforcement, sharing limits, pipelines, analytics" class="post-screenshot" loading="lazy"/>
+    <img src="/assets/screenshots/post01/managed-environments-benefits.jpg" alt="Managed Environments benefits — solution checker enforcement, sharing limits, pipelines, analytics" class="post-screenshot" loading="lazy"/>
     <p class="figure-caption">Fig. — What Managed Environments actually give you.</p>
   </figure>
 
@@ -1093,7 +1093,7 @@
   <h3>Environment Groups</h3>
 
   <figure class="post-figure post-figure--screenshot">
-    <img src="../assets/screenshots/post01/environment-groups.jpg" alt="Environment Groups in the Power Platform Admin Center — folder-like grouping for governance inheritance" class="post-screenshot" loading="lazy"/>
+    <img src="/assets/screenshots/post01/environment-groups.jpg" alt="Environment Groups in the Power Platform Admin Center — folder-like grouping for governance inheritance" class="post-screenshot" loading="lazy"/>
     <p class="figure-caption">Fig. — Environment Groups. Folders for your tenant.</p>
   </figure>
 
@@ -1115,17 +1115,17 @@
   <p>Before we get into the specific mistakes, here's what bad looks like at different maturity levels — so you can recognize where you or your team currently sits.</p>
 
   <figure class="post-figure post-figure--screenshot">
-    <img src="../assets/screenshots/post01/maturity-level-0.jpg" alt="Maturity Level 0 — one environment, everyone develops here, no deployment boundary" class="post-screenshot" loading="lazy"/>
+    <img src="/assets/screenshots/post01/maturity-level-0.jpg" alt="Maturity Level 0 — one environment, everyone develops here, no deployment boundary" class="post-screenshot" loading="lazy"/>
     <p class="figure-caption">Fig. — Maturity Level 0 — The Wild West. One environment. Everyone develops here. Chaos reigns.</p>
   </figure>
 
   <figure class="post-figure post-figure--screenshot">
-    <img src="../assets/screenshots/post01/maturity-level-1.jpg" alt="Maturity Level 1 — manual export/import between environments, no pipeline" class="post-screenshot" loading="lazy"/>
+    <img src="/assets/screenshots/post01/maturity-level-1.jpg" alt="Maturity Level 1 — manual export/import between environments, no pipeline" class="post-screenshot" loading="lazy"/>
     <p class="figure-caption">Fig. — Maturity Level 1 — The Awakening. Manual export/import. Bridge is made of hope and prayer.</p>
   </figure>
 
   <figure class="post-figure post-figure--screenshot">
-    <img src="../assets/screenshots/post01/maturity-level-2.jpg" alt="Maturity Level 2 — changes always move upward through environments, never backwards" class="post-screenshot" loading="lazy"/>
+    <img src="/assets/screenshots/post01/maturity-level-2.jpg" alt="Maturity Level 2 — changes always move upward through environments, never backwards" class="post-screenshot" loading="lazy"/>
     <p class="figure-caption">Fig. — Maturity Level 2 — Getting Serious. Changes always move up. Never backwards. This is the minimum acceptable baseline.</p>
   </figure>
 
@@ -1173,7 +1173,7 @@
     </div>
 
     <figure class="post-figure post-figure--screenshot">
-      <img src="../assets/screenshots/post01/security-group.png" alt="Power Platform Admin Center — Security group field during environment creation" class="post-screenshot" loading="lazy"/>
+      <img src="/assets/screenshots/post01/security-group.png" alt="Power Platform Admin Center — Security group field during environment creation" class="post-screenshot" loading="lazy"/>
       <p class="figure-caption">Fig. 8 — The security group field in Admin Center. Create the group in Entra ID first, then assign it here at creation time.</p>
     </figure>
 
@@ -1191,7 +1191,7 @@
     <p><strong>You cannot enable Dynamics 365 apps on an existing environment that was created without this option.</strong> You have to create a new environment, migrate everything, and update every integration. I've seen projects delayed by weeks because of this single skipped toggle.</p>
 
     <figure class="post-figure post-figure--screenshot">
-      <img src="../assets/screenshots/post01/enable-dynamics-apps.png" alt="Power Platform Admin Center — Enable Dynamics 365 apps toggle during environment creation" class="post-screenshot" loading="lazy"/>
+      <img src="/assets/screenshots/post01/enable-dynamics-apps.png" alt="Power Platform Admin Center — Enable Dynamics 365 apps toggle during environment creation" class="post-screenshot" loading="lazy"/>
       <p class="figure-caption">Fig. 9 — The toggle is off by default and cannot be changed after environment creation.</p>
     </figure>
 
@@ -1222,7 +1222,7 @@
     </div>
 
     <figure class="post-figure post-figure--screenshot">
-      <img src="../assets/screenshots/post01/org-url.png" alt="Power Platform Admin Center — Organization URL field during environment creation" class="post-screenshot" loading="lazy"/>
+      <img src="/assets/screenshots/post01/org-url.png" alt="Power Platform Admin Center — Organization URL field during environment creation" class="post-screenshot" loading="lazy"/>
       <p class="figure-caption">Fig. 10 — The org URL field in Admin Center. Set it manually at creation time.</p>
     </figure>
 
@@ -1374,7 +1374,7 @@
   <div class="series-nav">
     <div>
       <div class="series-nav-label">Previous</div>
-      <a href="post00-mr-yolo.html" class="series-nav-link">Post 00 — Meet Mr. YOLO</a>
+      <a href="/blog/post00-mr-yolo.html" class="series-nav-link">Post 00 — Meet Mr. YOLO</a>
     </div>
     <div style="text-align:right">
       <div class="series-nav-label">Next in series</div>
@@ -1387,7 +1387,7 @@
 
   <!-- Author -->
   <div class="author-block">
-    <img src="../assets/photo.jpg" alt="Ahmed El-Khatib" style="width:52px;height:52px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--border2);flex-shrink:0;" />
+    <img src="/assets/photo.jpg" alt="Ahmed El-Khatib" style="width:52px;height:52px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--border2);flex-shrink:0;" />
     <div>
       <div class="author-name">Ahmed El-Khatib</div>
       <div class="author-title">Power Platform Lead · Khatib365</div>
