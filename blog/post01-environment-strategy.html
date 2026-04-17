@@ -754,12 +754,12 @@
 
   <figure class="post-figure post-figure--screenshot">
     <img src="/assets/screenshots/post01/sdlc-how-it-should-work.jpg" alt="The SDLC — Plan, Build, Test, Deploy, Maintain phases in sequence" class="post-screenshot" loading="lazy"/>
-    <p class="figure-caption">Fig. — The SDLC as it should work. Clean. Logical. Everyone agrees this is how it works.</p>
+    <p class="figure-caption">Fig. 3 — The SDLC as it should work. Clean. Logical. Everyone agrees this is how it works.</p>
   </figure>
 
   <figure class="post-figure post-figure--screenshot">
     <img src="/assets/screenshots/post01/mr-yolo-sdlc.jpg" alt="Mr. YOLO's version of the SDLC — deployment is where well-built solutions go to die" class="post-screenshot" loading="lazy"/>
-    <p class="figure-caption">Fig. — Mr. YOLO's version. Deployment is where well-built solutions go to die.</p>
+    <p class="figure-caption">Fig. 4 — Mr. YOLO's version. Deployment is where well-built solutions go to die.</p>
   </figure>
 
   <p><strong>Plan</strong> — Requirements, architecture, decisions. This is where environment strategy belongs. Not after the first sprint. Not "once we know what we're building." Before anything else. The decisions made here are largely irreversible.</p>
@@ -821,7 +821,7 @@
       <text x="534" y="136" text-anchor="middle" font-size="10" fill="#7a6f60" font-family="inherit">What it costs to run</text>
       <text x="534" y="150" text-anchor="middle" font-size="10" fill="#7a6f60" font-family="inherit">Capacity · Premium</text>
     </svg>
-    <p class="figure-caption">Fig. 4 — A Power Platform environment is three boundaries in one: security, deployment, and licensing — all decisions made at creation time.</p>
+    <p class="figure-caption">Fig. 5 — A Power Platform environment is three boundaries in one: security, deployment, and licensing — all decisions made at creation time.</p>
   </div>
 
   <p>A <strong>security boundary</strong> — who can access this environment, what they can do, and what data they can see. Controlled by security groups and Dataverse security roles.</p>
@@ -909,7 +909,7 @@
       <rect x="430" y="246" width="160" height="28" rx="6" fill="#1e5c35"/>
       <text x="510" y="264" text-anchor="middle" font-size="11" font-weight="500" fill="#fff" font-family="inherit">Production →</text>
     </svg>
-    <p class="figure-caption">Fig. 5 — Single vs. multiple dev environments. Both converge at Test/SIT — that's where integration is validated for the first time, regardless of how many dev environments feed into it.</p>
+    <p class="figure-caption">Fig. 6 — Single vs. multiple dev environments. Both converge at Test/SIT — that's where integration is validated for the first time, regardless of how many dev environments feed into it.</p>
   </div>
 
   <h3>When multiple dev environments are actually justified</h3>
@@ -1068,7 +1068,7 @@
     <text x="60" y="285" font-size="11" fill="#a89880" font-family="inherit">Deployment flows left to right only — no exceptions</text>
     <text x="60" y="303" font-size="11" fill="#a89880" font-family="inherit">Amber = optional, only needed when external system integrations are in scope</text>
   </svg>
-  <p class="figure-caption">Fig. 6 — Recommended environment topology. Dev → Test → UAT → Pre-Prod → Production. Arrows flow left to right only.</p>
+  <p class="figure-caption">Fig. 7 — Recommended environment topology. Dev → Test → UAT → Pre-Prod → Production. Arrows flow left to right only.</p>
   </div>
 
   <div class="callout warn">
@@ -1081,12 +1081,12 @@
 
   <figure class="post-figure post-figure--screenshot">
     <img src="/assets/screenshots/post01/managed-vs-unmanaged-environments.jpg" alt="Managed vs Unmanaged Environments comparison — governance controls and restrictions" class="post-screenshot" loading="lazy"/>
-    <p class="figure-caption">Fig. — Managed vs Unmanaged. Microsoft doesn't trust you either. And that's actually a good thing.</p>
+    <p class="figure-caption">Fig. 8 — Managed vs Unmanaged. Microsoft doesn't trust you either. And that's actually a good thing.</p>
   </figure>
 
   <figure class="post-figure post-figure--screenshot">
     <img src="/assets/screenshots/post01/managed-environments-benefits.jpg" alt="Managed Environments benefits — solution checker enforcement, sharing limits, pipelines, analytics" class="post-screenshot" loading="lazy"/>
-    <p class="figure-caption">Fig. — What Managed Environments actually give you.</p>
+    <p class="figure-caption">Fig. 9 — What Managed Environments actually give you.</p>
   </figure>
 
   <p>For projects that integrate with external systems — Dynamics 365 F&O, third-party ERPs, legacy APIs, Azure services — you'll also want a dedicated <strong>Integration / Staging</strong> environment between Dev and Test. This gives you a stable, isolated target for integration testing that doesn't pollute your main test environment with data sync noise, incomplete reference data, or webhook misfires.</p>
@@ -1095,7 +1095,7 @@
 
   <figure class="post-figure post-figure--screenshot">
     <img src="/assets/screenshots/post01/environment-groups.jpg" alt="Environment Groups in the Power Platform Admin Center — folder-like grouping for governance inheritance" class="post-screenshot" loading="lazy"/>
-    <p class="figure-caption">Fig. — Environment Groups. Folders for your tenant.</p>
+    <p class="figure-caption">Fig. 10 — Environment Groups. Folders for your tenant.</p>
   </figure>
 
 
@@ -1117,17 +1117,17 @@
 
   <figure class="post-figure post-figure--screenshot">
     <img src="/assets/screenshots/post01/maturity-level-0.jpg" alt="Maturity Level 0 — one environment, everyone develops here, no deployment boundary" class="post-screenshot" loading="lazy"/>
-    <p class="figure-caption">Fig. — Maturity Level 0 — The Wild West. One environment. Everyone develops here. Chaos reigns.</p>
+    <p class="figure-caption">Fig. 11 — Maturity Level 0 — The Wild West. One environment. Everyone develops here. Chaos reigns.</p>
   </figure>
 
   <figure class="post-figure post-figure--screenshot">
     <img src="/assets/screenshots/post01/maturity-level-1.jpg" alt="Maturity Level 1 — manual export/import between environments, no pipeline" class="post-screenshot" loading="lazy"/>
-    <p class="figure-caption">Fig. — Maturity Level 1 — The Awakening. Manual export/import. Bridge is made of hope and prayer.</p>
+    <p class="figure-caption">Fig. 12 — Maturity Level 1 — The Awakening. Manual export/import. Bridge is made of hope and prayer.</p>
   </figure>
 
   <figure class="post-figure post-figure--screenshot">
     <img src="/assets/screenshots/post01/maturity-level-2.jpg" alt="Maturity Level 2 — changes always move upward through environments, never backwards" class="post-screenshot" loading="lazy"/>
-    <p class="figure-caption">Fig. — Maturity Level 2 — Getting Serious. Changes always move up. Never backwards. This is the minimum acceptable baseline.</p>
+    <p class="figure-caption">Fig. 13 — Maturity Level 2 — Getting Serious. Changes always move up. Never backwards. This is the minimum acceptable baseline.</p>
   </figure>
 
   <!-- Mistake 1 -->
@@ -1170,12 +1170,12 @@
       <text x="512" y="226" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#b03030" font-family="inherit">executives — no boundary at all</text>
       <text x="40" y="265" font-size="11" fill="#a89880" font-family="inherit">Naming convention: PP-[Project]-[Env]-[Role] · Create groups in Entra ID before creating the environment</text>
     </svg>
-    <p class="figure-caption">Fig. 7 — Without a security group, the environment has no access boundary. Every licensed user in the tenant can walk in.</p>
+    <p class="figure-caption">Fig. 14 — Without a security group, the environment has no access boundary. Every licensed user in the tenant can walk in.</p>
     </div>
 
     <figure class="post-figure post-figure--screenshot">
       <img src="/assets/screenshots/post01/security-group.png" alt="Power Platform Admin Center — Security group field during environment creation" class="post-screenshot" loading="lazy"/>
-      <p class="figure-caption">Fig. 8 — The security group field in Admin Center. Create the group in Entra ID first, then assign it here at creation time.</p>
+      <p class="figure-caption">Fig. 15 — The security group field in Admin Center. Create the group in Entra ID first, then assign it here at creation time.</p>
     </figure>
 
     <div class="callout ok">
@@ -1193,7 +1193,7 @@
 
     <figure class="post-figure post-figure--screenshot">
       <img src="/assets/screenshots/post01/enable-dynamics-apps.png" alt="Power Platform Admin Center — Enable Dynamics 365 apps toggle during environment creation" class="post-screenshot" loading="lazy"/>
-      <p class="figure-caption">Fig. 9 — The toggle is off by default and cannot be changed after environment creation.</p>
+      <p class="figure-caption">Fig. 16 — The toggle is off by default and cannot be changed after environment creation.</p>
     </figure>
 
     <div class="callout warn">
@@ -1224,7 +1224,7 @@
 
     <figure class="post-figure post-figure--screenshot">
       <img src="/assets/screenshots/post01/org-url.png" alt="Power Platform Admin Center — Organization URL field during environment creation" class="post-screenshot" loading="lazy"/>
-      <p class="figure-caption">Fig. 10 — The org URL field in Admin Center. Set it manually at creation time.</p>
+      <p class="figure-caption">Fig. 17 — The org URL field in Admin Center. Set it manually at creation time.</p>
     </figure>
 
     <div class="fix-label">✓ The fix</div>
