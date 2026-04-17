@@ -11,6 +11,7 @@ The quality of this work directly reflects Ahmed's professional reputation. Trea
 ## The Site
 
 - **Stack**: Static HTML + CSS only. No frameworks, no build tools, no npm, no bundlers.
+- **Styles**: Blog posts embed a full `<style>` block inline in `<head>` — there is no shared blog stylesheet. The homepage (`index.html`) links to `/css/style.css` and `/css/blog.css`. Do not try to extract blog styles to an external file.
 - **Hosting**: GitHub Pages — everything must work as plain files in the browser.
 - **Repo**: You have full access. Read the existing files before writing anything new.
 
@@ -57,11 +58,18 @@ khatib365.github.io/
 │       │   └── security-group.png
 │       └── post02/                     → Images for Post 02 (create when needed)
 │
-├── css/                                → Global stylesheets
-│   └── *.css
+├── css/                                → Global stylesheets (used by homepage only)
+│   ├── style.css
+│   └── blog.css
 │
-└── js/                                 → Global JavaScript
-    └── *.js
+├── js/                                 → Global JavaScript (used by homepage only)
+│   ├── main.js
+│   └── blog.js
+│
+└── docs/                               → Reference docs for AI / collaborators
+    ├── visual-identity.md             → Fonts, color tokens, CSS rules, image styling
+    ├── post-template.md               → Required structure for every blog post
+    └── series-roadmap.md              → Series table, linking rules, Mr. YOLO brief
 ```
 
 ---
@@ -79,12 +87,13 @@ khatib365.github.io/
 
 Before writing a single line of HTML, read the existing `post01-environment-strategy.html` and the homepage `index.html` in full. The visual identity is:
 
-- **Fonts**: Cormorant Garamond (display/headings) + Jost (body) + JetBrains Mono (code)
-- **Colors**:
-  - Background: `#FAF6EF` (parchment)
-  - Ink: `#1C1814` / `#3D3530`
-  - Accent: `#A0522D` (terracotta) / `#B87333` (copper) / `#C9A84C` (gold)
-  - Border: `#DDD0BC`
+- **Fonts**: Cormorant Garamond (display/headings) + Jost (body) + Fira Code (code/mono)
+- **Colors** (CSS custom properties — exact values from `post01-environment-strategy.html`):
+  - `--bg: #FAF7F1` (parchment) · `--surface: #F4EFE6` · `--surface2: #ECE4D5`
+  - `--ink: #1C1812` · `--ink-soft: #453D31` · `--ink-mid: #7A6F60` · `--ink-light: #B5A99A`
+  - `--copper: #9C5A2E` · `--copper-l: #C47A4A` · `--copper-pal: #F5EBE0`
+  - `--border: #E0D5C4` · `--border2: #D4C8B4`
+  - See `docs/visual-identity.md` for the full `:root` block including state/callout colors.
 - **Tone**: Craftsman. Warm but authoritative. Editorial without being academic.
 - **Every new page must be visually indistinguishable from the existing pages.** Match spacing, typography, nav, breadcrumb, footer — exactly.
 
@@ -231,7 +240,7 @@ Three images must be embedded in Post 00. They are located at:
 
 ### Image styling rules
 - Wrap every image in a `<figure>` with a `<figcaption>` underneath
-- `<figcaption>` uses the same muted style as existing figure captions on the site (`font-size: 0.82rem`, `color: var(--ink-faint)`, `font-style: italic`, centered)
+- `<figcaption>` uses the same muted style as existing figure captions on the site (`font-size: 0.82rem`, `color: var(--ink-light)`, `font-style: italic`, centered)
 - Images are `width: 100%`, `border-radius: 4px`, `display: block`
 - Add `loading="lazy"` to all three
 - These images have a dark navy background — add a subtle `1px solid var(--border)` around them so they don't bleed into the parchment page background
