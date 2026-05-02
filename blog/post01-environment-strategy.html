@@ -945,10 +945,48 @@
   <h3>Deployment Boundary</h3>
   <p>Every environment has a specific role in the deployment chain. Solutions flow in one direction only, left to right, and every environment in the pipeline receives only managed solutions imported through Power Platform Pipelines, never manual changes.</p>
 
-  <figure class="post-figure post-figure--screenshot">
-    <img src="/assets/screenshots/post01/ppac-pipeline-stages.svg" alt="Power Platform Admin Center: Pipeline stages showing Dev, Test, UAT, Production deployment flow" class="post-screenshot" loading="lazy"/>
-    <p class="figure-caption">Fig. 5b. A pipeline in the Admin Center. Each stage is an environment. Deployment only flows forward.</p>
-  </figure>
+  <div class="post-figure">
+    <svg width="100%" viewBox="0 0 720 102" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr-pipeline" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#c8bfb0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+
+      <!-- Dev -->
+      <rect x="75" y="18" width="120" height="56" rx="8" fill="#ede8f5" stroke="#9b84cc" stroke-width="0.5"/>
+      <text x="135" y="43" text-anchor="middle" font-size="14" font-weight="500" fill="#4a3580" font-family="inherit">Dev</text>
+      <text x="135" y="62" text-anchor="middle" font-size="10" fill="#7a68aa" font-family="inherit">Unmanaged solutions</text>
+
+      <!-- Arrow 1 -->
+      <line x1="197" y1="46" x2="224" y2="46" stroke="#c8bfb0" stroke-width="1.5" marker-end="url(#arr-pipeline)" fill="none"/>
+
+      <!-- Test -->
+      <rect x="226" y="18" width="120" height="56" rx="8" fill="#f1eeea" stroke="#c8bfb0" stroke-width="0.5"/>
+      <text x="286" y="43" text-anchor="middle" font-size="14" font-weight="500" fill="#4a3d30" font-family="inherit">Test</text>
+      <text x="286" y="62" text-anchor="middle" font-size="10" fill="#8a7060" font-family="inherit">Managed solutions only</text>
+
+      <!-- Arrow 2 -->
+      <line x1="348" y1="46" x2="374" y2="46" stroke="#c8bfb0" stroke-width="1.5" marker-end="url(#arr-pipeline)" fill="none"/>
+
+      <!-- UAT -->
+      <rect x="376" y="18" width="120" height="56" rx="8" fill="#f1eeea" stroke="#c8bfb0" stroke-width="0.5"/>
+      <text x="436" y="43" text-anchor="middle" font-size="14" font-weight="500" fill="#4a3d30" font-family="inherit">UAT</text>
+      <text x="436" y="62" text-anchor="middle" font-size="10" fill="#8a7060" font-family="inherit">Managed solutions only</text>
+
+      <!-- Arrow 3 -->
+      <line x1="498" y1="46" x2="524" y2="46" stroke="#c8bfb0" stroke-width="1.5" marker-end="url(#arr-pipeline)" fill="none"/>
+
+      <!-- Production -->
+      <rect x="526" y="18" width="120" height="56" rx="8" fill="#e4f0ea" stroke="#5a9e72" stroke-width="0.5"/>
+      <text x="586" y="43" text-anchor="middle" font-size="14" font-weight="500" fill="#1e5c35" font-family="inherit">Production</text>
+      <text x="586" y="62" text-anchor="middle" font-size="10" fill="#3a7a50" font-family="inherit">Managed solutions only</text>
+
+      <!-- Legend -->
+      <text x="360" y="94" text-anchor="middle" font-size="10" fill="#b5a99a" font-family="inherit">Solutions flow left to right only · no exceptions · no manual changes in any stage</text>
+    </svg>
+    <p class="figure-caption">Fig. 5b. A deployment pipeline — each stage is an environment. Solutions flow forward only, never backward.</p>
+  </div>
 
   <p>And the critical part: <strong>most of the decisions that define these three boundaries are made at environment creation time and cannot be changed later.</strong> You can add Dataverse to an existing environment after the fact, but you cannot enable Dynamics 365 apps if that toggle wasn't set when the database was first provisioned. You can't change the region. These aren't settings, they're architecture choices baked into the environment at birth.</p>
 
@@ -1112,11 +1150,11 @@
       </tr>
       <tr>
         <td class="td-env">Developer</td>
-        <td>✅ Always</td>
+        <td>✅ By default</td>
         <td>Optional</td>
+        <td>✅</td>
         <td><span class="cross">✗</span></td>
-        <td><span class="cross">✗</span></td>
-        <td>Personal sandbox per maker, backed by the Power Apps Developer Plan. Does not consume tenant capacity. Building and previewing is free; running apps and flows in other environments requires a premium license. Never use as a shared team environment.</td>
+        <td>Personal sandbox per maker, backed by the Power Apps Developer Plan. Does not consume tenant capacity. Building and previewing is free; running apps and flows in other environments requires a premium license. Can be reset. Never use as a shared team environment.</td>
       </tr>
       <tr>
         <td class="td-env">Sandbox</td>
@@ -1124,7 +1162,7 @@
         <td>Optional</td>
         <td>✅ Yes (wipes everything)</td>
         <td><span class="cross">✗</span></td>
-        <td>Short-lived spikes and experiments only. The reset capability is a trap: it destroys all data and customizations with no recovery path. Do not use for Dev, Test, UAT, or anything in your deployment pipeline.</td>
+        <td>Microsoft's standard type for Dev, Test, and UAT environments in an ALM pipeline. Can be reset, which is useful for refreshing a test environment but wipes everything instantly with no recovery path if triggered carelessly. No SLA. This post recommends Production-type instead; see the note below.</td>
       </tr>
       <tr>
         <td class="td-env">Production</td>
@@ -1132,7 +1170,7 @@
         <td>Optional</td>
         <td><span class="cross">✗</span></td>
         <td>✅ Full SLA</td>
-        <td>The correct type for every environment in your ALM pipeline: Dev, Test, UAT, Pre-Prod, and Production alike. Cannot be reset. Full backup, point-in-time restore, and Microsoft SLA.</td>
+        <td>Required for your production environment. This post also recommends it for Test, UAT, and Pre-Prod — an opinionated stance that trades flexibility for stability: no reset risk, full backup and point-in-time restore, and SLA coverage at every stage. Microsoft's own ALM guidance uses Sandbox for pre-production.</td>
       </tr>
       <tr>
         <td class="td-env">Trial</td>
@@ -1146,8 +1184,10 @@
   </table>
 
   <div class="callout warn">
-    <div class="callout-label">The sandbox misconception</div>
-    <p>Most teams use Sandbox environments for their Dev and Test environments because the name implies "non-production." That's exactly wrong. Sandbox environments can be reset, which wipes all data and customizations with no recovery path. They also have no SLA. Use Production-type environments for every environment in your deployment pipeline. Sandbox type is for short-lived experiments only.</p>
+    <div class="callout-label">Why this post recommends Production-type for your whole pipeline</div>
+    <p>Microsoft's official ALM guidance uses Sandbox environments for Dev, Test, and UAT — and that's a perfectly valid choice. Sandbox is purpose-built for non-production work and supports reset, which can be genuinely useful for refreshing test data between test cycles.</p>
+    <p>This post takes a more conservative stance: use Production-type environments for every stage in your pipeline, including Dev, Test, and UAT. The reason is reset risk. A Sandbox environment can be wiped by any admin in the Power Platform Admin Center in seconds — one toggle, one confirm. There is no recovery path. On a client-facing project where six months of test data and configuration sits in that environment, that risk isn't worth carrying. Production-type also adds SLA coverage, automatic daily backups, and point-in-time restore to every stage of your pipeline.</p>
+    <p>Know that this is an opinionated recommendation, not universal Microsoft guidance. If your team understands the reset risk and has strict access controls on the Admin Center, Sandbox is a legitimate choice for pre-production stages.</p>
   </div>
 
 
