@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Environment decisions in Power Platform are irreversible. Before a single line of code — understand what environments are, where they came from, and what to get right from day one." />
-<title>Environment Strategy — Before You Write a Single Line of Code | Khatib365</title>
+<meta name="description" content="Environment decisions in Power Platform are irreversible. Before a single line of code: understand what environments are, where they came from, and what to get right from day one." />
+<title>Environment Strategy: Before You Write a Single Line of Code | Khatib365</title>
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -470,7 +470,7 @@
   <span class="bc-sep">/</span>
   <a href="/blog/index.html">Writing</a>
   <span class="bc-sep">/</span>
-  <span>Post 01 — Environment Strategy</span>
+  <span>Post 01: Environment Strategy</span>
 </div>
 
 <script>
@@ -492,7 +492,7 @@
   <header class="blog-header">
     <div class="series-tag">Power Platform Deployment Series · Post 01</div>
     <h1 class="blog-title">Before You Write a Single Line of Code, Get Your Environments Right</h1>
-    <p class="blog-subtitle">Most Power Platform projects don't fail because of bad code. They fail because of decisions made in the first five minutes — when nobody was paying attention, and nobody forced anyone to think.</p>
+    <p class="blog-subtitle">Most Power Platform projects don't fail because of bad code. They fail because of decisions made in the first five minutes, when nobody was paying attention, and nobody forced anyone to think.</p>
     <div class="meta">
       <img src="/assets/photo.jpg" alt="Ahmed El-Khatib" style="width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:center top;flex-shrink:0;">
       <span class="meta-item">Ahmed El-Khatib</span>
@@ -510,17 +510,17 @@
       <div class="toc-card">
         <div class="toc-label">In this post</div>
         <nav class="toc-nav">
-          <a href="#section-01" class="toc-link">§ 01 — A History of Environments</a>
-          <a href="#section-02" class="toc-link">§ 02 — PP in the Software World</a>
-          <a href="#section-03" class="toc-link">§ 03 — What Is an Environment</a>
-          <a href="#section-04" class="toc-link">§ 04 — Single vs. Multiple Dev</a>
-          <a href="#section-05" class="toc-link">§ 05 — Toolkit Overview</a>
-          <a href="#section-06" class="toc-link">§ 06 — Architecture Decision</a>
-          <a href="#section-07" class="toc-link">§ 07 — Topology</a>
-          <a href="#section-08" class="toc-link">§ 08 — The Four Mistakes</a>
-          <a href="#section-09" class="toc-link">§ 09 — DLP Policy</a>
-          <a href="#section-10" class="toc-link">§ 10 — Pre-Start Checklist</a>
-          <a href="#section-11" class="toc-link">§ 11 — What's Next</a>
+          <a href="#section-01" class="toc-link">§ 01 · A History of Environments</a>
+          <a href="#section-02" class="toc-link">§ 02 · PP in the Software World</a>
+          <a href="#section-03" class="toc-link">§ 03 · What Is an Environment</a>
+          <a href="#section-04" class="toc-link">§ 04 · Single vs. Multiple Dev</a>
+          <a href="#section-05" class="toc-link">§ 05 · Toolkit Overview</a>
+          <a href="#section-06" class="toc-link">§ 06 · Architecture Decision</a>
+          <a href="#section-07" class="toc-link">§ 07 · Topology</a>
+          <a href="#section-08" class="toc-link">§ 08 · The Four Mistakes</a>
+          <a href="#section-09" class="toc-link">§ 09 · DLP Policy</a>
+          <a href="#section-10" class="toc-link">§ 10 · Pre-Start Checklist</a>
+          <a href="#section-11" class="toc-link">§ 11 · What's Next</a>
         </nav>
       </div>
 
@@ -529,7 +529,7 @@
   <!-- ═══════════════════════════════════════════════ -->
 
 
-  <p>You've been on this project for months. Requirements workshops, design sessions, sprint reviews. The client has seen the app evolve week by week. They've given feedback, you've incorporated it. Then came UAT — business users testing real scenarios, raising issues, you fixing them, another round, sign-off. Weeks of that.</p>
+  <p>You've been on this project for months. Requirements workshops, design sessions, sprint reviews. The client has seen the app evolve week by week. They've given feedback, you've incorporated it. Then came UAT: business users testing real scenarios, raising issues, you fixing them, another round, sign-off. Weeks of that.</p>
 
   <p>And then the email arrives. <em>"We're ready to go live."</em></p>
 
@@ -537,17 +537,17 @@
 
   <p>The UAT environment has no security group. Which means every licensed user in the tenant has had access to it for six months. Including the client's CEO, who logged in three weeks ago during a particularly rough sprint and saw screens nobody was ready to show him. You found out about it in a very uncomfortable call.</p>
 
-  <p>The client just asked about adding Dynamics 365 Sales to the solution. You go back to the environment settings and find the toggle that was never enabled at creation time — the one that can't be turned on now. The one that means recreating the environment from scratch, migrating everything, and updating every integration. Weeks of work. No new functionality delivered. Go-live pushed.</p>
+  <p>The client just asked about adding Dynamics 365 Sales to the solution. You go back to the environment settings and find the toggle that was never enabled at creation time, the one that can't be turned on now. The one that means recreating the environment from scratch, migrating everything, and updating every integration. Weeks of work. No new functionality delivered. Go-live pushed.</p>
 
-  <p>Six months into the project, an integration team comes onboard. They ask for the environment URL. You send it over: <code>org2032013.crm4.dynamics.com</code>. Auto-generated on day one, never changed. It's now referenced in three integrations, two client-facing documents, and the support team's ticketing system. Changing it is straightforward in the Admin Center — but every integration that references the old URL breaks the moment you do. Every bookmark, every API config, every piece of documentation needs updating. The URL is easy to change. The blast radius isn't.</p>
+  <p>Six months into the project, an integration team comes onboard. They ask for the environment URL. You send it over: <code>org2032013.crm4.dynamics.com</code>. Auto-generated on day one, never changed. It's now referenced in three integrations, two client-facing documents, and the support team's ticketing system. Changing it is straightforward in the Admin Center, but every integration that references the old URL breaks the moment you do. Every bookmark, every API config, every piece of documentation needs updating. The URL is easy to change. The blast radius is not.</p>
 
   <p>And there's no DLP policy on any of the environments. A maker connected Dataverse to his personal Gmail on week two of the project. Nobody noticed. The data has been flowing for five months.</p>
 
-  <p>None of this happened because anyone was careless. It happened because the platform didn't force any of it. No warning when you skipped the security group. No red light when the URL was auto-generated. No compiler error when you built in the wrong environment. And if your employer didn't define a framework — nobody did.</p>
+  <p>None of this happened because anyone was careless. It happened because the platform didn't force any of it. No warning when you skipped the security group. No red light when the URL was auto-generated. No compiler error when you built in the wrong environment. And if your employer didn't define a framework, nobody did.</p>
 
-  <p>How the solution was deployed between these environments — the pipelines, the managed solutions, the version strategy — that's a separate conversation, and we'll get there in a later post. What we're fixing here is what should have been decided before a single line of code was written.</p>
+  <p>How the solution was deployed between these environments, the pipelines, the managed solutions, the version strategy, that's a separate conversation, and we'll get there in a later post. What we're fixing here is what should have been decided before a single line of code was written.</p>
 
-  <p>But to understand why these decisions matter, we need to take a step back. Further back than Power Platform. Further back than Dynamics 365. Back to where environments came from — and how we ended up here.</p>
+  <p>But to understand why these decisions matter, we need to take a step back. Further back than Power Platform. Further back than Dynamics 365. Back to where environments came from, and how we ended up here.</p>
 
   <div class="callout">
     <div class="callout-label">What this post covers</div>
@@ -565,11 +565,11 @@
     <div class="divider-line"></div>
   </div>
 
-  <h2 id="section-01">A Brief History of Environments — From the Server Room to the Cloud</h2>
+  <h2 id="section-01">A Brief History of Environments</h2>
 
   <p>The Power Platform Admin Center in 2026 gives you everything you need to govern environments properly. Security groups. DLP policies. Managed Environments. Environment Routing. Pipelines. The full toolkit.</p>
 
-  <p>None of this is new. The capability to create multiple environments, restrict access, and deploy properly has existed in some form since the early days of Dynamics CRM. The tooling got easier over time — but easier was never the problem.</p>
+  <p>None of this is new. The capability to create multiple environments, restrict access, and deploy properly has existed in some form since the early days of Dynamics CRM. The tooling got easier over time, but easier was never the problem.</p>
 
   <p>The problem was always the engineer. The habit. The culture of skipping governance because nobody forced it.</p>
 
@@ -605,10 +605,10 @@
       <!-- "You are here" marker -->
       <text x="630" y="90" text-anchor="middle" font-size="9" fill="#9c5a2e" font-family="inherit">▲ you are here</text>
     </svg>
-    <p class="figure-caption">Fig. 1 — The Microsoft Dynamics / Power Platform environment era timeline. The tooling grew up. The practices didn't always follow.</p>
+    <p class="figure-caption">Fig. 1. The Microsoft Dynamics / Power Platform environment era timeline. The tooling grew up. The practices didn't always follow.</p>
   </div>
 
-  <h3>Era 1 — On-Premise (pre-2011)</h3>
+  <h3>Era 1: On-Premise (pre-2011)</h3>
 
   <div class="era-label">What "environment" meant then</div>
   <div class="era-mockup era-onprem">
@@ -616,7 +616,7 @@
       <div class="era-mockup-dot" style="background:#ff5f57"></div>
       <div class="era-mockup-dot" style="background:#febc2e"></div>
       <div class="era-mockup-dot" style="background:#28c840"></div>
-      <span class="era-mockup-title">Microsoft Dynamics CRM — Deployment Manager</span>
+      <span class="era-mockup-title">Microsoft Dynamics CRM: Deployment Manager</span>
     </div>
     <div class="era-mockup-body">
       <span style="color:#8b949e">C:\&gt;</span> CRMDeploymentManager.exe<br/>
@@ -631,16 +631,16 @@
     </div>
   </div>
 
-  <p>Multiple organizations existed in the Deployment Manager. You could have a Dev org, a Test org, a Production org — all on the same server. The capability was there. But creating an org meant provisioning a SQL database, configuring IIS, setting up Active Directory groups. It was IT-level work, not developer work. So most teams didn't bother. One org. Everyone in it. Including production.</p>
+  <p>Multiple organizations existed in the Deployment Manager. You could have a Dev org, a Test org, a Production org, all on the same server. The capability was there. But creating an org meant provisioning a SQL database, configuring IIS, setting up Active Directory groups. It was IT-level work, not developer work. So most teams didn't bother. One org. Everyone in it. Including production.</p>
 
   <p>The technology wasn't the blocker. The pain of doing it right was the excuse for not doing it.</p>
 
-  <h3>Era 2 — CRM Online: First Steps to the Cloud (2011–2015)</h3>
+  <h3>Era 2: CRM Online, First Steps to the Cloud (2011–2015)</h3>
 
   <div class="era-label">What "environment" meant then</div>
   <div class="era-mockup era-online">
     <div class="era-mockup-bar">
-      <span class="era-mockup-title">Microsoft Online Services — Dynamics CRM Administration</span>
+      <span class="era-mockup-title">Microsoft Online Services: Dynamics CRM Administration</span>
     </div>
     <div class="era-mockup-body">
       <div style="border-bottom:1px solid #edebe9;padding-bottom:12px;margin-bottom:12px;">
@@ -657,16 +657,16 @@
     </div>
   </div>
 
-  <p>Microsoft removed the server. No more SQL Server to provision. No more IIS to configure. Sandbox instances appeared — free, ready to use, no IT ticket required. The excuse of "it's too hard to set up a test environment" disappeared overnight.</p>
+  <p>Microsoft removed the server. No more SQL Server to provision. No more IIS to configure. Sandbox instances appeared: free, ready to use, no IT ticket required. The excuse of "it's too hard to set up a test environment" disappeared overnight.</p>
 
   <p>The engineers kept working the same way. One org. Export, import, pray. The tooling changed. The habits didn't.</p>
 
-  <h3>Era 3 — Dynamics 365: The Platform Starts Maturing (2016–2018)</h3>
+  <h3>Era 3: Dynamics 365, The Platform Starts Maturing (2016–2018)</h3>
 
   <div class="era-label">What "environment" meant then</div>
   <div class="era-mockup era-d365">
     <div class="era-mockup-bar">
-      <span class="era-mockup-title">Dynamics 365 Administration Center — Instances</span>
+      <span class="era-mockup-title">Dynamics 365 Administration Center: Instances</span>
     </div>
     <div class="era-mockup-body">
       <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px;font-size:11px;color:#605e5c;border-bottom:1px solid #edebe9;padding-bottom:6px;margin-bottom:8px;">
@@ -684,16 +684,16 @@
     </div>
   </div>
 
-  <p>Multiple instances in the Admin Center. Proper labels — Dev, Test, Production. The topology existed as a concept that anyone could implement. Solutions were maturing. The idea of a proper deployment pipeline was in the conversation.</p>
+  <p>Multiple instances in the Admin Center. Proper labels: Dev, Test, Production. The topology existed as a concept that anyone could implement. Solutions were maturing. The idea of a proper deployment pipeline was in the conversation.</p>
 
   <p>Most teams still deployed by hand. Still skipped the test environment when the sprint was running late. Still made "just this once" exceptions that became permanent habits. The tools were there. The discipline wasn't enforced.</p>
 
-  <h3>Era 4 — Power Platform: The Framework Exists, Nobody Uses It (2019–2022)</h3>
+  <h3>Era 4: Power Platform, The Framework Exists, Nobody Uses It (2019–2022)</h3>
 
   <div class="era-label">What "environment" meant then</div>
   <div class="era-mockup era-pp-early">
     <div class="era-mockup-bar">
-      <span class="era-mockup-title">Power Platform Admin Center — Environments</span>
+      <span class="era-mockup-title">Power Platform Admin Center: Environments</span>
     </div>
     <div class="era-mockup-body">
       <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px;font-size:11px;color:#605e5c;border-bottom:1px solid #edebe9;padding-bottom:6px;margin-bottom:8px;">
@@ -712,15 +712,15 @@
     </div>
   </div>
 
-  <p>DLP policies. Security groups. Managed Environments. The full governance framework arrived. Not as a third-party tool, not as a consultant's custom solution — built into the platform, available to everyone, free to configure.</p>
+  <p>DLP policies. Security groups. Managed Environments. The full governance framework arrived. Not as a third-party tool, not as a consultant's custom solution, built into the platform, available to everyone, free to configure.</p>
 
   <p>Optional. So most teams skipped it. The default environment was right there. Easier to start. Nobody said no. Nobody enforced anything. The framework existed. The culture didn't.</p>
 
-  <h3>Era 5 — Modern Power Platform: No Excuses Left (2023–2026)</h3>
+  <h3>Era 5: Modern Power Platform, No Excuses Left (2023–2026)</h3>
 
   <p>Environment Routing. Environment Groups. Pipelines. Managed Capacity. There is now no technical barrier to doing this properly. None. The platform has eliminated every legitimate excuse.</p>
 
-  <p>If your team is still building in the default environment in 2026, the technology is not the problem. The engineer is the problem. The culture is the problem. The absence of a framework — enforced by someone, owned by someone — is the problem.</p>
+  <p>If your team is still building in the default environment in 2026, the technology is not the problem. The engineer is the problem. The culture is the problem. The absence of a framework, enforced by someone, owned by someone, is the problem.</p>
 
   <p>That's what this series fixes.</p>
 
@@ -738,9 +738,9 @@
 
   <h2 id="section-02">Power Platform in the Software World</h2>
 
-  <p>Before we talk about environment strategy, we need a shared mental model. Because the reason most teams get environments wrong isn't technical — it's conceptual. They don't have a clear picture of what kind of software Power Platform actually is, and what that means for how they should work with it.</p>
+  <p>Before we talk about environment strategy, we need a shared mental model. Because the reason most teams get environments wrong isn't technical, it's conceptual. They don't have a clear picture of what kind of software Power Platform actually is, and what that means for how they should work with it.</p>
 
-  <h3>Cloud Development — The Three Layers</h3>
+  <h3>Cloud Development: The Three Layers</h3>
 
   <p>When we talk about cloud software, everything sits in one of three layers. Understanding which layer your platform lives in tells you exactly where your responsibilities begin and end.</p>
 
@@ -755,16 +755,16 @@
 
       <!-- IaaS layer -->
       <rect x="40" y="240" width="600" height="72" rx="8" fill="#f1eeea" stroke="#c8bfb0" stroke-width="0.5"/>
-      <text x="60" y="268" font-size="13" font-weight="500" fill="#4a3d30" font-family="inherit">IaaS — Infrastructure as a Service</text>
+      <text x="60" y="268" font-size="13" font-weight="500" fill="#4a3d30" font-family="inherit">IaaS: Infrastructure as a Service</text>
       <text x="60" y="288" font-size="11" fill="#7a6f60" font-family="inherit">You manage: OS, runtime, middleware, apps, data</text>
-      <text x="60" y="304" font-size="11" fill="#a89880" font-family="inherit">e.g. Azure VMs, AWS EC2 — the "raw server" model</text>
+      <text x="60" y="304" font-size="11" fill="#a89880" font-family="inherit">e.g. Azure VMs, AWS EC2, the "raw server" model</text>
       <rect x="520" y="252" width="100" height="48" rx="6" fill="#ede8f5" stroke="#9b84cc" stroke-width="0.5"/>
       <text x="570" y="274" text-anchor="middle" font-size="11" fill="#4a3580" font-family="inherit">On-Premise</text>
       <text x="570" y="290" text-anchor="middle" font-size="10" fill="#7a68aa" font-family="inherit">CRM pre-2011</text>
 
       <!-- PaaS layer -->
       <rect x="40" y="156" width="600" height="72" rx="8" fill="#e8f0ea" stroke="#8ab88a" stroke-width="0.5"/>
-      <text x="60" y="184" font-size="13" font-weight="500" fill="#1e5c35" font-family="inherit">PaaS — Platform as a Service</text>
+      <text x="60" y="184" font-size="13" font-weight="500" fill="#1e5c35" font-family="inherit">PaaS: Platform as a Service</text>
       <text x="60" y="204" font-size="11" fill="#3a7a50" font-family="inherit">You manage: apps and data only</text>
       <text x="60" y="220" font-size="11" fill="#6aaa80" font-family="inherit">e.g. Azure App Service, Azure Functions, Azure Logic Apps</text>
       <rect x="520" y="168" width="100" height="48" rx="6" fill="#e4f0ea" stroke="#5a9e72" stroke-width="0.5"/>
@@ -773,7 +773,7 @@
 
       <!-- SaaS layer — highlighted -->
       <rect x="40" y="56" width="600" height="88" rx="8" fill="#f5ebe0" stroke="#9c5a2e" stroke-width="1.5"/>
-      <text x="60" y="84" font-size="13" font-weight="500" fill="#7a3e10" font-family="inherit">SaaS — Software as a Service</text>
+      <text x="60" y="84" font-size="13" font-weight="500" fill="#7a3e10" font-family="inherit">SaaS: Software as a Service</text>
       <text x="60" y="104" font-size="11" fill="#9c5a2e" font-family="inherit">You manage: your solution, your data, your configuration</text>
       <text x="60" y="120" font-size="11" fill="#c47a4a" font-family="inherit">Everything else is Microsoft's responsibility</text>
       <rect x="460" y="68" width="160" height="64" rx="6" fill="#9c5a2e"/>
@@ -784,38 +784,38 @@
       <!-- Responsibility arrow -->
       <text x="22" y="100" font-size="10" fill="#a89880" font-family="inherit" transform="rotate(-90, 22, 180)">← Your responsibility grows</text>
     </svg>
-    <p class="figure-caption">Fig. 2 — The three cloud layers. Power Platform sits at SaaS — Microsoft owns the infrastructure, platform, and runtime. You own the solution on top of it.</p>
+    <p class="figure-caption">Fig. 2. The three cloud layers. Power Platform sits at SaaS: Microsoft owns the infrastructure, platform, and runtime. You own the solution on top of it.</p>
   </div>
 
-  <p>Here's what SaaS doesn't mean: it doesn't mean "no discipline required." It means the discipline <em>shifts</em>. You're no longer responsible for the infrastructure. You're entirely responsible for the solution you build on top of it — how it's structured, how it's governed, how it moves from development to production. That responsibility doesn't disappear. It just looks different.</p>
+  <p>Here's what SaaS doesn't mean: it doesn't mean "no discipline required." It means the discipline <em>shifts</em>. You're no longer responsible for the infrastructure. You're entirely responsible for the solution you build on top of it: how it's structured, how it's governed, how it moves from development to production. That responsibility doesn't disappear. It just looks different.</p>
 
   <p>And in Power Platform, that discipline starts with environments.</p>
 
-  <h3>The Software Development Lifecycle — And Where Environments Live In It</h3>
+  <h3>The Software Development Lifecycle</h3>
 
-  <p>Every software project — regardless of language, stack, or platform — moves through the same lifecycle. It doesn't matter if you're building a nuclear plant control system in C++ or a canvas app in Power Platform. The phases are the same.</p>
+  <p>Every software project, regardless of language, stack, or platform, moves through the same lifecycle. It doesn't matter if you're building a nuclear plant control system in C++ or a canvas app in Power Platform. The phases are the same.</p>
 
   <figure class="post-figure post-figure--screenshot">
-    <img src="/assets/screenshots/post01/sdlc-how-it-should-work.jpg" alt="The SDLC — Plan, Build, Test, Deploy, Maintain phases in sequence" class="post-screenshot" loading="lazy"/>
-    <p class="figure-caption">Fig. 3 — The SDLC as it should work. Clean. Logical. Everyone agrees this is how it works.</p>
+    <img src="/assets/screenshots/post01/sdlc-how-it-should-work.jpg" alt="The SDLC: Plan, Build, Test, Deploy, Maintain phases in sequence" class="post-screenshot" loading="lazy"/>
+    <p class="figure-caption">Fig. 3. The SDLC as it should work. Clean. Logical. Everyone agrees this is how it works.</p>
   </figure>
 
   <figure class="post-figure post-figure--screenshot">
-    <img src="/assets/screenshots/post01/mr-yolo-sdlc.jpg" alt="Mr. YOLO's version of the SDLC — deployment is where well-built solutions go to die" class="post-screenshot" loading="lazy"/>
-    <p class="figure-caption">Fig. 4 — Mr. YOLO's version. Deployment is where well-built solutions go to die.</p>
+    <img src="/assets/screenshots/post01/mr-yolo-sdlc.jpg" alt="Mr. YOLO's version of the SDLC: deployment is where well-built solutions go to die" class="post-screenshot" loading="lazy"/>
+    <p class="figure-caption">Fig. 4. Mr. YOLO's version. Deployment is where well-built solutions go to die.</p>
   </figure>
 
-  <p><strong>Plan</strong> — Requirements, architecture, decisions. This is where environment strategy belongs. Not after the first sprint. Not "once we know what we're building." Before anything else. The decisions made here are largely irreversible.</p>
+  <p><strong>Plan</strong>: Requirements, architecture, decisions. This is where environment strategy belongs. Not after the first sprint. Not "once we know what we're building." Before anything else. The decisions made here are largely irreversible.</p>
 
-  <p><strong>Build</strong> — Development. Your dev environment is the workspace. This is where months of work happen — sprints, code reviews, demos, iterations.</p>
+  <p><strong>Build</strong>: Development. Your dev environment is the workspace. This is where months of work happen: sprints, code reviews, demos, iterations.</p>
 
-  <p><strong>Test</strong> — System integration testing, UAT, sign-off. Your test and UAT environments live here. Business users are in the system. The client is forming opinions about the product.</p>
+  <p><strong>Test</strong>: System integration testing, UAT, sign-off. Your test and UAT environments live here. Business users are in the system. The client is forming opinions about the product.</p>
 
-  <p><strong>Deploy</strong> — Moving the solution to pre-production and production. This is where environment mistakes surface. The wrong URL. The missing security group. The toggle that can't be enabled. All of it shows up here, after months of work, when there's no time to fix it cleanly.</p>
+  <p><strong>Deploy</strong>: Moving the solution to pre-production and production. This is where environment mistakes surface. The wrong URL. The missing security group. The toggle that can't be enabled. All of it shows up here, after months of work, when there's no time to fix it cleanly.</p>
 
-  <p><strong>Maintain</strong> — Live operation. Monitoring, patching, hotfixes, new features. Your production environment lives here permanently. Every configuration decision you made in Plan is now load-bearing.</p>
+  <p><strong>Maintain</strong>: Live operation. Monitoring, patching, hotfixes, new features. Your production environment lives here permanently. Every configuration decision you made in Plan is now load-bearing.</p>
 
-  <p>The insight is this: <strong>we're fixing the Deploy phase. But the decisions that break Deploy were made — or not made — in Plan.</strong> That's why this post exists before any of the pipeline or deployment posts. You cannot fix deployment problems with deployment tools if the environments themselves were set up wrong.</p>
+  <p>The insight is this: <strong>we're fixing the Deploy phase. But the decisions that break Deploy were made, or not made, in Plan.</strong> That's why this post exists before any of the pipeline or deployment posts. You cannot fix deployment problems with deployment tools if the environments themselves were set up wrong.</p>
 
 
   <!-- ═══════════════════════════════════════════════ -->
@@ -832,11 +832,11 @@
 
   <p>Before we talk about environment strategy in Power Platform, we need a clear answer to a question most developers have never been asked to articulate: what is an environment?</p>
 
-  <p>Think about a developer's physical workspace. They have a desk where they do their work — messy, in-progress, half-broken things everywhere, nobody else should touch this. Then there's a meeting room where they present — cleaned up, structured, ready for other people to see. Then there's the actual product that ships to customers — stable, tested, locked down.</p>
+  <p>Think about a developer's physical workspace. They have a desk where they do their work, messy, in-progress, half-broken things everywhere, nobody else should touch this. Then there's a meeting room where they present, cleaned up, structured, ready for other people to see. Then there's the actual product that ships to customers, stable, tested, locked down.</p>
 
   <p>An environment in software is the same idea, applied to a running application. It's an isolated container where your software lives at a specific stage of its lifecycle. You don't build in the same place you show clients. You don't test in the same place you run live transactions. You don't let everyone access everything at every stage.</p>
 
-  <p>In Power Platform, an environment is all of that — plus three things at once:</p>
+  <p>In Power Platform, an environment is all of that, plus three things at once:</p>
 
   <!-- Environment triple boundary diagram -->
   <div class="post-figure">
@@ -864,7 +864,7 @@
       <text x="534" y="136" text-anchor="middle" font-size="10" fill="#7a6f60" font-family="inherit">What it costs to run</text>
       <text x="534" y="150" text-anchor="middle" font-size="10" fill="#7a6f60" font-family="inherit">Capacity · Premium</text>
     </svg>
-    <p class="figure-caption">Fig. 5 — A Power Platform environment is three boundaries in one: security, deployment, and licensing — all decisions made at creation time.</p>
+    <p class="figure-caption">Fig. 5. A Power Platform environment is three boundaries in one: security, deployment, and licensing. All decisions made at creation time.</p>
   </div>
 
   <h3>Security Boundary</h3>
@@ -874,24 +874,24 @@
     <div class="ead-step">
       <div class="ead-icon">🏢</div>
       <div class="ead-label">Entra ID Security Group</div>
-      <div class="ead-sub">Who can enter the environment at all — created in Entra ID, assigned at environment creation</div>
+      <div class="ead-sub">Who can enter the environment at all. Created in Entra ID, assigned at environment creation.</div>
     </div>
     <div class="ead-arrow">→</div>
     <div class="ead-step highlight">
       <div class="ead-icon">🔒</div>
       <div class="ead-label">Dataverse Security Roles</div>
-      <div class="ead-sub">What they can do inside — System Admin, Basic User, or custom roles with fine-grained table permissions</div>
+      <div class="ead-sub">What they can do inside: System Admin, Basic User, or custom roles with fine-grained table permissions.</div>
     </div>
     <div class="ead-arrow">→</div>
     <div class="ead-step">
       <div class="ead-icon">🗂️</div>
       <div class="ead-label">Row &amp; Column Security</div>
-      <div class="ead-sub">What data they see — field-level security profiles and row ownership rules within Dataverse tables</div>
+      <div class="ead-sub">What data they see: field-level security profiles and row ownership rules within Dataverse tables.</div>
     </div>
   </div>
 
   <h3>Licensing Boundary</h3>
-  <p>What an environment can do — and what it costs — depends on the licenses of the users and the environment's own settings.</p>
+  <p>What an environment can do, and what it costs, depends on the licenses of the users and the environment's own settings.</p>
 
   <table class="license-table">
     <thead>
@@ -943,16 +943,16 @@
   </table>
 
   <h3>Deployment Boundary</h3>
-  <p>Every environment has a specific role in the deployment chain. Solutions flow in one direction only — left to right — and every environment in the pipeline receives only managed solutions imported through Power Platform Pipelines, never manual changes.</p>
+  <p>Every environment has a specific role in the deployment chain. Solutions flow in one direction only, left to right, and every environment in the pipeline receives only managed solutions imported through Power Platform Pipelines, never manual changes.</p>
 
   <figure class="post-figure post-figure--screenshot">
-    <img src="/assets/screenshots/post01/ppac-pipeline-stages.svg" alt="Power Platform Admin Center — Pipeline stages showing Dev, Test, UAT, Production deployment flow" class="post-screenshot" loading="lazy"/>
-    <p class="figure-caption">Fig. 5b — A pipeline in the Admin Center. Each stage is an environment. Deployment only flows forward.</p>
+    <img src="/assets/screenshots/post01/ppac-pipeline-stages.svg" alt="Power Platform Admin Center: Pipeline stages showing Dev, Test, UAT, Production deployment flow" class="post-screenshot" loading="lazy"/>
+    <p class="figure-caption">Fig. 5b. A pipeline in the Admin Center. Each stage is an environment. Deployment only flows forward.</p>
   </figure>
 
-  <p>And the critical part: <strong>most of the decisions that define these three boundaries are made at environment creation time and cannot be changed later.</strong> You can add Dataverse to an existing environment after the fact — but you cannot enable Dynamics 365 apps if that toggle wasn't set when the database was first provisioned. You can't change the region. These aren't settings — they're architecture choices baked into the environment at birth.</p>
+  <p>And the critical part: <strong>most of the decisions that define these three boundaries are made at environment creation time and cannot be changed later.</strong> You can add Dataverse to an existing environment after the fact, but you cannot enable Dynamics 365 apps if that toggle wasn't set when the database was first provisioned. You can't change the region. These aren't settings, they're architecture choices baked into the environment at birth.</p>
 
-  <p>This is why environment strategy is an architecture decision. Not a configuration task. Not something you sort out in the first sprint. An architecture decision — made before anything else.</p>
+  <p>This is why environment strategy is an architecture decision. Not a configuration task. Not something you sort out in the first sprint. An architecture decision, made before anything else.</p>
 
 
   <!-- ═══════════════════════════════════════════════ -->
@@ -965,17 +965,17 @@
     <div class="divider-line"></div>
   </div>
 
-  <h2 id="section-04">Single vs. Multiple Dev Environments — When Does It Matter?</h2>
+  <h2 id="section-04">Single vs. Multiple Dev Environments</h2>
 
   <p>The first environment question every project needs to answer is: how many dev environments do we actually need? There are three models, and which one you pick depends on team size, governance maturity, and whether your workstreams can safely share a space.</p>
 
-  <h3>Model 1 — Shared dev environment</h3>
+  <h3>Model 1: Shared dev environment</h3>
   <p>One environment, all developers inside it, solutions as the isolation mechanism. This is the default and the right answer for most projects. Small team, clear ownership of components, low risk of developers breaking each other's work. Everything converges at Test/SIT for the first time before moving up the pipeline.</p>
 
-  <h3>Model 2 — Personal Developer Environments (PDEs)</h3>
-  <p>Microsoft's newer governance model: each maker gets their own private developer environment, provisioned automatically, locked to their identity. Makers work in isolation, then promote through the shared pipeline when ready. PDEs don't consume tenant capacity — they're provisioned from the Power Apps Developer Plan and governed centrally via Managed Environments. This is the right choice for tenants with many makers, mixed skill levels, or strict governance requirements where shared dev environments create too much noise.</p>
+  <h3>Model 2: Personal Developer Environments (PDEs)</h3>
+  <p>Microsoft's newer governance model: each maker gets their own private developer environment, provisioned automatically, locked to their identity. Makers work in isolation, then promote through the shared pipeline when ready. PDEs don't consume tenant capacity, they're provisioned from the Power Apps Developer Plan and governed centrally via Managed Environments. This is the right choice for tenants with many makers, mixed skill levels, or strict governance requirements where shared dev environments create too much noise.</p>
 
-  <h3>Model 3 — Multiple shared dev environments</h3>
+  <h3>Model 3: Multiple shared dev environments</h3>
   <p>Two or more team-scoped dev environments, each owned by a distinct workstream, all converging at a shared Test/SIT. Use this when two teams are moving at genuinely different speeds on genuinely independent work that cannot safely share a dev environment without breaking each other.</p>
 
   <!-- Single vs Multiple diagram -->
@@ -1015,11 +1015,11 @@
       <text x="510" y="38" text-anchor="middle" font-size="10" fill="#b5a99a" font-family="inherit">Parallel workstreams · Different lifecycles</text>
 
       <rect x="360" y="50" width="140" height="56" rx="8" fill="#ede8f5" stroke="#9b84cc" stroke-width="0.5"/>
-      <text x="430" y="74" text-anchor="middle" font-size="12" font-weight="500" fill="#4a3580" font-family="inherit">Dev — Team A</text>
+      <text x="430" y="74" text-anchor="middle" font-size="12" font-weight="500" fill="#4a3580" font-family="inherit">Dev / Team A</text>
       <text x="430" y="92" text-anchor="middle" font-size="10" fill="#7a68aa" font-family="inherit">Canvas App + Dataverse</text>
 
       <rect x="520" y="50" width="140" height="56" rx="8" fill="#ede8f5" stroke="#9b84cc" stroke-width="0.5"/>
-      <text x="590" y="74" text-anchor="middle" font-size="12" font-weight="500" fill="#4a3580" font-family="inherit">Dev — Team B</text>
+      <text x="590" y="74" text-anchor="middle" font-size="12" font-weight="500" fill="#4a3580" font-family="inherit">Dev / Team B</text>
       <text x="590" y="92" text-anchor="middle" font-size="10" fill="#7a68aa" font-family="inherit">Parallel workstream</text>
 
       <line class="flow-arrow" x1="430" y1="108" x2="490" y2="154" stroke="#9b84cc" stroke-width="1.5" marker-end="url(#arr-devenv)" fill="none"/>
@@ -1034,18 +1034,18 @@
       <rect x="430" y="246" width="160" height="28" rx="6" fill="#1e5c35"/>
       <text x="510" y="264" text-anchor="middle" font-size="11" font-weight="500" fill="#fff" font-family="inherit">Production →</text>
     </svg>
-    <p class="figure-caption">Fig. 6 — Single vs. multiple shared dev environments. Both converge at Test/SIT — that's where integration is validated for the first time.</p>
+    <p class="figure-caption">Fig. 6. Single vs. multiple shared dev environments. Both converge at Test/SIT, that's where integration is validated for the first time.</p>
   </div>
 
   <h3>When multiple shared dev environments are actually justified</h3>
 
-  <p><strong>Parallel workstreams with different rhythms.</strong> Two teams moving at genuinely different speeds on genuinely independent pieces of work. Team A owns the canvas app and Dataverse model. Team B owns an integration layer — external APIs, data sync, event-driven flows. Team B's half-wired integrations constantly break Team A's app testing in a shared environment. Give each team their own dev environment; they converge at Test/SIT where the full solution is assembled and validated for the first time.</p>
+  <p><strong>Parallel workstreams with different rhythms.</strong> Two teams moving at genuinely different speeds on genuinely independent pieces of work. Team A owns the canvas app and Dataverse model. Team B owns an integration layer: external APIs, data sync, event-driven flows. Team B's half-wired integrations constantly break Team A's app testing in a shared environment. Give each team their own dev environment; they converge at Test/SIT where the full solution is assembled and validated for the first time.</p>
 
-  <p><strong>Base product + consumer project built simultaneously.</strong> You're building a reusable managed solution that other projects will consume. A second team is building the first consuming project on top of it at the same time. They can't share dev because the base layer is actively changing under the consuming layer. The base gets its own dev environment, the consumer gets theirs, and they meet at Test where the import chain — base first, consumer second — is validated end to end.</p>
+  <p><strong>Base product + consumer project built simultaneously.</strong> You're building a reusable managed solution that other projects will consume. A second team is building the first consuming project on top of it at the same time. They can't share dev because the base layer is actively changing under the consuming layer. The base gets its own dev environment, the consumer gets theirs, and they meet at Test where the import chain, base first then consumer, is validated end to end.</p>
 
-  <p><strong>Hotfix while feature development is in flight.</strong> Production breaks. You need a clean patch. But your dev environment has half-finished features that can't ship yet. If you only have one dev environment you're stuck — you can't build a clean hotfix without contaminating it with incomplete work. A hotfix track environment is the only clean answer. Not always planned upfront, but worth anticipating on long-running projects.</p>
+  <p><strong>Hotfix while feature development is in flight.</strong> Production breaks. You need a clean patch. But your dev environment has half-finished features that can't ship yet. If you only have one dev environment you're stuck, you can't build a clean hotfix without contaminating it with incomplete work. A hotfix track environment is the only clean answer. Not always planned upfront, but worth anticipating on long-running projects.</p>
 
-  <p>The pattern across all three: <strong>multiple dev environments exist to protect different lifecycles from each other.</strong> They're not about team size. They're about isolation when two workstreams genuinely can't share the same space without breaking each other. If that problem doesn't exist — and on most projects it doesn't — one shared dev environment is the right answer.</p>
+  <p>The pattern across all three: <strong>multiple dev environments exist to protect different lifecycles from each other.</strong> They're not about team size. They're about isolation when two workstreams genuinely can't share the same space without breaking each other. If that problem doesn't exist, and on most projects it doesn't, one shared dev environment is the right answer.</p>
 
 
   <!-- ═══════════════════════════════════════════════ -->
@@ -1060,14 +1060,14 @@
 
   <h2 id="section-05">Your Environment Strategy Toolkit in Power Platform</h2>
 
-  <p>Now that we understand what environments are and why they matter, let's look at the four platform features that define how you architect and govern them. These aren't advanced features — they're the baseline. Every serious Power Platform project uses all four.</p>
+  <p>Now that we understand what environments are and why they matter, let's look at the four platform features that define how you architect and govern them. These aren't advanced features, they're the baseline. Every serious Power Platform project uses all four.</p>
 
   <div class="callout">
     <div class="callout-label">Four features, one goal</div>
-    <p><strong>Managed Environments</strong> — unlocks governance capabilities and is required for pipelines. <strong>Security Groups</strong> — controls who can access each environment. <strong>Environment Routing</strong> — prevents makers from landing in the default environment. <strong>Managed Capacity</strong> — gives you visibility and control over storage and consumption across environments. Together, these four features are your environment governance framework.</p>
+    <p><strong>Managed Environments</strong>: unlocks governance capabilities and is required for pipelines. <strong>Security Groups</strong>: controls who can access each environment. <strong>Environment Routing</strong>: prevents makers from landing in the default environment. <strong>Managed Capacity</strong>: gives you visibility and control over storage and consumption across environments. Together, these four features are your environment governance framework.</p>
   </div>
 
-  <p>We'll go deeper on each of these as we encounter them in the sections below — Managed Environments in the topology section, Security Groups in Mistake 02, Environment Routing in Mistake 01, and Managed Capacity in the checklist. For now, know that these four exist, and that a project without all four configured is a project with governance gaps.</p>
+  <p>We'll go deeper on each of these as we encounter them in the sections below: Managed Environments in the topology section, Security Groups in Mistake 02, Environment Routing in Mistake 01, and Managed Capacity in the checklist. For now, know that these four exist, and that a project without all four configured is a project with governance gaps.</p>
 
 
   <!-- ═══════════════════════════════════════════════ -->
@@ -1082,9 +1082,9 @@
 
   <h2 id="section-06">Why Environments Are an Architecture Decision</h2>
 
-  <p>Most developers treat environments like parking spaces — you just grab one and start. But in Power Platform, <strong>every environment is a deployment boundary, a security boundary, and a licensing boundary all at once.</strong></p>
+  <p>Most developers treat environments like parking spaces, you just grab one and start. But in Power Platform, <strong>every environment is a deployment boundary, a security boundary, and a licensing boundary all at once.</strong></p>
 
-  <p>The choices you make when creating an environment are largely irreversible. You can't move a production Dataverse database to a different environment. You can't add Dynamics 365 apps to an environment that wasn't created with that option enabled. You can't change the region. These aren't settings you tune later — they're architecture decisions baked in at creation time.</p>
+  <p>The choices you make when creating an environment are largely irreversible. You can't move a production Dataverse database to a different environment. You can't add Dynamics 365 apps to an environment that wasn't created with that option enabled. You can't change the region. These aren't settings you tune later, they're architecture decisions baked in at creation time.</p>
 
   <p>So let's talk about what those decisions actually are.</p>
 
@@ -1108,7 +1108,7 @@
         <td><span class="cross">✗</span></td>
         <td><span class="cross">✗</span></td>
         <td><span class="cross">✗</span></td>
-        <td>Personal maker experiments only. Shared across your entire tenant — never use for any team project.</td>
+        <td>Personal maker experiments only. Shared across your entire tenant. Never use for any team project.</td>
       </tr>
       <tr>
         <td class="td-env">Developer</td>
@@ -1116,15 +1116,15 @@
         <td>Optional</td>
         <td><span class="cross">✗</span></td>
         <td><span class="cross">✗</span></td>
-        <td>Personal sandbox per maker — backed by the Power Apps Developer Plan. Does not consume tenant capacity. Building and previewing is free; running apps and flows in other environments requires a premium license. Never use as a shared team environment.</td>
+        <td>Personal sandbox per maker, backed by the Power Apps Developer Plan. Does not consume tenant capacity. Building and previewing is free; running apps and flows in other environments requires a premium license. Never use as a shared team environment.</td>
       </tr>
       <tr>
         <td class="td-env">Sandbox</td>
         <td>Optional</td>
         <td>Optional</td>
-        <td>✅ Yes — wipes everything</td>
+        <td>✅ Yes (wipes everything)</td>
         <td><span class="cross">✗</span></td>
-        <td>Short-lived spikes and experiments only. The reset capability is a trap — it destroys all data and customizations with no recovery path. Do not use for Dev, Test, UAT, or anything in your deployment pipeline.</td>
+        <td>Short-lived spikes and experiments only. The reset capability is a trap: it destroys all data and customizations with no recovery path. Do not use for Dev, Test, UAT, or anything in your deployment pipeline.</td>
       </tr>
       <tr>
         <td class="td-env">Production</td>
@@ -1132,7 +1132,7 @@
         <td>Optional</td>
         <td><span class="cross">✗</span></td>
         <td>✅ Full SLA</td>
-        <td>The correct type for every environment in your ALM pipeline — Dev, Test, UAT, Pre-Prod, and Production alike. Cannot be reset. Full backup, point-in-time restore, and Microsoft SLA.</td>
+        <td>The correct type for every environment in your ALM pipeline: Dev, Test, UAT, Pre-Prod, and Production alike. Cannot be reset. Full backup, point-in-time restore, and Microsoft SLA.</td>
       </tr>
       <tr>
         <td class="td-env">Trial</td>
@@ -1147,7 +1147,7 @@
 
   <div class="callout warn">
     <div class="callout-label">The sandbox misconception</div>
-    <p>Most teams use Sandbox environments for their Dev and Test environments because the name implies "non-production." That's exactly wrong. Sandbox environments can be reset — which wipes all data and customizations with no recovery path. They also have no SLA. Use Production-type environments for every environment in your deployment pipeline. Sandbox type is for short-lived experiments only.</p>
+    <p>Most teams use Sandbox environments for their Dev and Test environments because the name implies "non-production." That's exactly wrong. Sandbox environments can be reset, which wipes all data and customizations with no recovery path. They also have no SLA. Use Production-type environments for every environment in your deployment pipeline. Sandbox type is for short-lived experiments only.</p>
   </div>
 
 
@@ -1163,7 +1163,7 @@
 
   <h2 id="section-07">The Environment Topology That Actually Works</h2>
 
-  <p>For any serious Power Platform project, here's the minimum environment layout I recommend. Everything to the left is unmanaged — developers work there freely. Everything to the right receives only managed solutions, deployed through pipelines.</p>
+  <p>For any serious Power Platform project, here's the minimum environment layout I recommend. Everything to the left is unmanaged, developers work there freely. Everything to the right receives only managed solutions, deployed through pipelines.</p>
 
   <div class="post-figure">
   <svg width="100%" viewBox="0 0 720 230" xmlns="http://www.w3.org/2000/svg">
@@ -1179,7 +1179,7 @@
 
     <!-- Zone: Managed -->
     <rect x="178" y="24" width="522" height="118" rx="12" fill="#f7f4f1" stroke="#e0d9cc" stroke-width="0.5"/>
-    <text x="439" y="42" text-anchor="middle" font-size="9" fill="#b5a99a" font-family="inherit" letter-spacing=".08em">MANAGED — SOLUTIONS ONLY</text>
+    <text x="439" y="42" text-anchor="middle" font-size="9" fill="#b5a99a" font-family="inherit" letter-spacing=".08em">MANAGED SOLUTIONS ONLY</text>
 
     <!-- Zone divider -->
     <line x1="174" y1="30" x2="174" y2="136" stroke="#c8bfb0" stroke-width="0.5" stroke-dasharray="3 3"/>
@@ -1224,41 +1224,41 @@
     <!-- Legend -->
     <text x="20" y="222" font-size="10" fill="#b5a99a" font-family="inherit">Amber = optional · Deployment flows left to right only, no exceptions</text>
   </svg>
-  <p class="figure-caption">Fig. 7 — Recommended environment topology. Dev is unmanaged; Test through Prod receive managed solutions only via pipeline.</p>
+  <p class="figure-caption">Fig. 7. Recommended environment topology. Dev is unmanaged; Test through Prod receive managed solutions only via pipeline.</p>
   </div>
 
   <div class="callout warn">
     <div class="callout-label">If you're connecting to Dynamics 365 F&amp;O</div>
-    <p>Finance &amp; Operations integration adds three hard constraints that must be decided before any environment is created. First, the Power Platform environment must be a <strong>Linked Environment</strong> — configured from the F&amp;O side, this binds a single Power Platform environment to a specific F&amp;O instance. Second, a Linked Environment must be a <strong>Managed Environment</strong> — not a recommendation, a prerequisite. Third, any environment used for F&amp;O-connected development must have the <strong>Dynamics 365 apps toggle enabled at creation time</strong> — this is irreversible. Miss it and you are recreating the environment from scratch, migrating everything, and updating every integration.</p>
+    <p>Finance &amp; Operations integration adds three hard constraints that must be decided before any environment is created. First, the Power Platform environment must be a <strong>Linked Environment</strong>: configured from the F&amp;O side, this binds a single Power Platform environment to a specific F&amp;O instance. Second, a Linked Environment must be a <strong>Managed Environment</strong>: not a recommendation, a prerequisite. Third, any environment used for F&amp;O-connected development must have the <strong>Dynamics 365 apps toggle enabled at creation time</strong>: this is irreversible. Miss it and you are recreating the environment from scratch, migrating everything, and updating every integration.</p>
   </div>
 
   <div class="callout warn">
-    <div class="callout-label">Managed Environments — What It Is and Why It Matters</div>
-    <p>Managed Environments is a premium governance capability that unlocks features you need for any serious project: solution checker enforcement as a deployment gate, sharing limits on canvas apps, maker welcome content, environment-level analytics, and — critically — the ability to use Power Platform Pipelines.</p>
-    <p>As of 2026, Pipelines require all target environments to be Managed Environments. This isn't a soft recommendation — if your Test, UAT, Pre-Prod, or Production environments aren't managed, you can't use pipelines to deploy to them. Plan for this upfront.</p>
-    <p>What Managed Environments does NOT automatically do: it doesn't turn itself on. You enable it per environment, in the Power Platform Admin Center, under each environment's settings. Users running apps or flows in Managed Environments must hold premium licenses — Power Apps Premium, Power Automate Premium, or qualifying Dynamics 365 licenses. This is enforced per user and is not automatically covered by standard or developer licenses. Microsoft began enforcement in June 2026.</p>
+    <div class="callout-label">Managed Environments: What It Is and Why It Matters</div>
+    <p>Managed Environments is a premium governance capability that unlocks features you need for any serious project: solution checker enforcement as a deployment gate, sharing limits on canvas apps, maker welcome content, environment-level analytics, and critically, the ability to use Power Platform Pipelines.</p>
+    <p>As of 2026, Pipelines require all target environments to be Managed Environments. This isn't a soft recommendation: if your Test, UAT, Pre-Prod, or Production environments aren't managed, you can't use pipelines to deploy to them. Plan for this upfront.</p>
+    <p>What Managed Environments does NOT automatically do: it doesn't turn itself on. You enable it per environment, in the Power Platform Admin Center, under each environment's settings. Users running apps or flows in Managed Environments must hold premium licenses: Power Apps Premium, Power Automate Premium, or qualifying Dynamics 365 licenses. This is enforced per user and is not automatically covered by standard or developer licenses. Microsoft began enforcement in June 2026.</p>
     <p>If you're using Environment Groups, all environments assigned to a group inherit the group's Managed Environments rules automatically. This is the cleanest way to ensure consistent governance without configuring each environment by hand.</p>
   </div>
 
   <figure class="post-figure post-figure--screenshot">
     <img src="/assets/screenshots/post01/managed-vs-unmanaged-environments.jpg" alt="Managed vs Unmanaged Environments comparison in Power Platform Admin Center" class="post-screenshot" loading="lazy"/>
-    <p class="figure-caption">Fig. 8 — Managed vs Unmanaged. Microsoft doesn't trust you either. And that's actually a good thing.</p>
+    <p class="figure-caption">Fig. 8. Managed vs Unmanaged. Microsoft doesn't trust you either. And that's actually a good thing.</p>
   </figure>
 
   <figure class="post-figure post-figure--screenshot">
-    <img src="/assets/screenshots/post01/managed-environments-benefits.jpg" alt="Managed Environments settings panel — solution checker enforcement, sharing limits, pipelines, analytics" class="post-screenshot" loading="lazy"/>
-    <p class="figure-caption">Fig. 9 — What Managed Environments actually give you.</p>
+    <img src="/assets/screenshots/post01/managed-environments-benefits.jpg" alt="Managed Environments settings panel: solution checker enforcement, sharing limits, pipelines, analytics" class="post-screenshot" loading="lazy"/>
+    <p class="figure-caption">Fig. 9. What Managed Environments actually give you.</p>
   </figure>
 
-  <p>For projects that integrate with external systems — third-party ERPs, legacy APIs, Azure services, or Dynamics 365 apps — consider adding a dedicated <strong>Integration / Staging</strong> environment between Dev and Test. This gives you a stable, isolated target for integration testing that doesn't pollute your main test environment with data sync noise, incomplete reference data, or webhook misfires.</p>
+  <p>For projects that integrate with external systems, third-party ERPs, legacy APIs, Azure services, or Dynamics 365 apps, consider adding a dedicated <strong>Integration / Staging</strong> environment between Dev and Test. This gives you a stable, isolated target for integration testing that doesn't pollute your main test environment with data sync noise, incomplete reference data, or webhook misfires.</p>
 
   <h3>Environment Groups</h3>
 
-  <p>Environment Groups let you assign multiple environments to a shared governance container. Managed Environments rules defined at the group level are inherited by every member environment automatically — no per-environment configuration required. The recommended split: one group for your delivery pipeline (Test + UAT + Pre-Prod + Prod), one for your development environments.</p>
+  <p>Environment Groups let you assign multiple environments to a shared governance container. Managed Environments rules defined at the group level are inherited by every member environment automatically, no per-environment configuration required. The recommended split: one group for your delivery pipeline (Test + UAT + Pre-Prod + Prod), one for your development environments.</p>
 
   <figure class="post-figure post-figure--screenshot">
-    <img src="/assets/screenshots/post01/environment-groups.jpg" alt="Environment Groups in Power Platform Admin Center — governance inheritance across grouped environments" class="post-screenshot" loading="lazy"/>
-    <p class="figure-caption">Fig. 10 — Environment Groups. Folders for your tenant. Governance rules set once, inherited everywhere.</p>
+    <img src="/assets/screenshots/post01/environment-groups.jpg" alt="Environment Groups in Power Platform Admin Center: governance inheritance across grouped environments" class="post-screenshot" loading="lazy"/>
+    <p class="figure-caption">Fig. 10. Environment Groups. Folders for your tenant. Governance rules set once, inherited everywhere.</p>
   </figure>
 
 
@@ -1276,21 +1276,21 @@
 
   <p>Every one of these I've seen on real projects. Some I've made myself. I'm documenting them here so you don't have to learn them the same way.</p>
 
-  <p>Before we get into the specific mistakes, here's what bad looks like at different maturity levels — so you can recognize where you or your team currently sits.</p>
+  <p>Before we get into the specific mistakes, here's what bad looks like at different maturity levels, so you can recognize where you or your team currently sits.</p>
 
   <figure class="post-figure post-figure--screenshot">
-    <img src="/assets/screenshots/post01/maturity-level-0.jpg" alt="Maturity Level 0 — one environment, everyone in it, no deployment boundary" class="post-screenshot" loading="lazy"/>
-    <p class="figure-caption">Fig. 11 — Maturity Level 0. The Wild West. One environment. Everyone develops here. Chaos reigns.</p>
+    <img src="/assets/screenshots/post01/maturity-level-0.jpg" alt="Maturity Level 0: one environment, everyone in it, no deployment boundary" class="post-screenshot" loading="lazy"/>
+    <p class="figure-caption">Fig. 11. Maturity Level 0. The Wild West. One environment. Everyone develops here. Chaos reigns.</p>
   </figure>
 
   <figure class="post-figure post-figure--screenshot">
-    <img src="/assets/screenshots/post01/maturity-level-1.jpg" alt="Maturity Level 1 — manual export/import between environments, no pipeline" class="post-screenshot" loading="lazy"/>
-    <p class="figure-caption">Fig. 12 — Maturity Level 1. The Awakening. Manual export/import. Bridge is made of hope and prayer.</p>
+    <img src="/assets/screenshots/post01/maturity-level-1.jpg" alt="Maturity Level 1: manual export/import between environments, no pipeline" class="post-screenshot" loading="lazy"/>
+    <p class="figure-caption">Fig. 12. Maturity Level 1. The Awakening. Manual export/import. Bridge is made of hope and prayer.</p>
   </figure>
 
   <figure class="post-figure post-figure--screenshot">
-    <img src="/assets/screenshots/post01/maturity-level-2.jpg" alt="Maturity Level 2 — changes always move upward through environments, never backwards" class="post-screenshot" loading="lazy"/>
-    <p class="figure-caption">Fig. 13 — Maturity Level 2. Getting Serious. Changes always move up. Never backwards. This is the minimum acceptable baseline.</p>
+    <img src="/assets/screenshots/post01/maturity-level-2.jpg" alt="Maturity Level 2: changes always move upward through environments, never backwards" class="post-screenshot" loading="lazy"/>
+    <p class="figure-caption">Fig. 13. Maturity Level 2. Getting Serious. Changes always move up. Never backwards. This is the minimum acceptable baseline.</p>
   </figure>
 
   <!-- Mistake 1 -->
@@ -1298,17 +1298,17 @@
     <div class="mistake-number">Mistake 01</div>
     <div class="mistake-title">Building in the Default Environment</div>
     <p>The default environment is always there, always accessible, and always a trap. It's shared across your entire tenant. Every licensed user can see it. There are no security groups, no deployment boundaries, and no clean way to move what you build out of it later.</p>
-    <p>I've seen teams build entire applications in the default environment because it was "just a proof of concept" — and then the client loved it and wanted it in production. The migration is painful. Budget two to three weeks you didn't plan for, on work that produces nothing new.</p>
+    <p>I've seen teams build entire applications in the default environment because it was "just a proof of concept," and then the client loved it and wanted it in production. The migration is painful. Budget two to three weeks you didn't plan for, on work that produces nothing new.</p>
     <div class="fix-label">✓ The fix</div>
     <p>Create a dedicated environment for every project from day one. Reserve the default environment for individual, personal experimentation only, and enforce what can and cannot be built there with a DLP policy.</p>
-    <p>For tenants with multiple makers, the better answer is <strong>Environment Routing</strong> — a tenant-level setting that automatically redirects any maker who visits the Power Apps or Power Automate portal into their own personal developer environment, instead of the default. The default environment stops being a dumping ground by default, without relying on everyone reading a governance policy and doing the right thing. Enable it in the Power Platform Admin Center under Tenant Settings.</p>
+    <p>For tenants with multiple makers, the better answer is <strong>Environment Routing</strong>:a tenant-level setting that automatically redirects any maker who visits the Power Apps or Power Automate portal into their own personal developer environment, instead of the default. The default environment stops being a dumping ground by default, without relying on everyone reading a governance policy and doing the right thing. Enable it in the Power Platform Admin Center under Tenant Settings.</p>
   </div>
 
   <!-- Mistake 2 -->
   <div class="mistake-card">
     <div class="mistake-number">Mistake 02</div>
     <div class="mistake-title">No Security Group on the Environment</div>
-    <p>When you create an environment without assigning a security group, <strong>every licensed user in your tenant can access it.</strong> Developers stumble into UAT. Users access test environments with incomplete configurations. The client's CEO logs in to a sprint-in-progress. There's no boundary — because you didn't create one.</p>
+    <p>When you create an environment without assigning a security group, <strong>every licensed user in your tenant can access it.</strong> Developers stumble into UAT. Users access test environments with incomplete configurations. The client's CEO logs in to a sprint-in-progress. There's no boundary, because you didn't create one.</p>
 
     <div class="post-figure">
     <svg width="100%" viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg">
@@ -1330,20 +1330,20 @@
       <text x="512" y="140" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#b03030" font-family="inherit">All licensed tenant users</text>
       <text x="512" y="156" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#b03030" font-family="inherit">can access this environment</text>
       <text x="512" y="210" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#b03030" font-family="inherit">Developers, business users,</text>
-      <text x="512" y="226" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#b03030" font-family="inherit">executives — no boundary at all</text>
+      <text x="512" y="226" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#b03030" font-family="inherit">executives, no boundary at all</text>
       <text x="40" y="265" font-size="11" fill="#a89880" font-family="inherit">Naming convention: PP-[Project]-[Env]-[Role] · Create groups in Entra ID before creating the environment</text>
     </svg>
-    <p class="figure-caption">Fig. 14 — Without a security group, the environment has no access boundary. Every licensed user in the tenant can walk in.</p>
+    <p class="figure-caption">Fig. 14. Without a security group, the environment has no access boundary. Every licensed user in the tenant can walk in.</p>
     </div>
 
     <figure class="post-figure post-figure--screenshot">
-      <img src="/assets/screenshots/post01/security-group.png" alt="Power Platform Admin Center — Security group field during environment creation" class="post-screenshot" loading="lazy"/>
-      <p class="figure-caption">Fig. 15 — The security group field in Admin Center. Create the group in Entra ID first, then assign it here at creation time.</p>
+      <img src="/assets/screenshots/post01/security-group.png" alt="Power Platform Admin Center: Security group field during environment creation" class="post-screenshot" loading="lazy"/>
+      <p class="figure-caption">Fig. 15. The security group field in Admin Center. Create the group in Entra ID first, then assign it here at creation time.</p>
     </figure>
 
     <div class="callout ok">
-      <div class="callout-label">The fix — 5 minutes upfront, hours saved at go-live</div>
-      <p>Before you create the environment, create the security groups in Entra ID. Name them consistently — <code>PP-[Project]-[Env]-[Role]</code> — e.g. <code>PP-Contoso-UAT-Users</code>. Assign them at environment creation time. If you skip this and add a security group later, every user currently in the environment without a proper license or role assignment gets removed — an unplanned access-restoration exercise mid-project.</p>
+      <div class="callout-label">The fix: 5 minutes upfront, hours saved at go-live</div>
+      <p>Before you create the environment, create the security groups in Entra ID. Name them consistently: <code>PP-[Project]-[Env]-[Role]</code>, e.g. <code>PP-Contoso-UAT-Users</code>. Assign them at environment creation time. If you skip this and add a security group later, every user currently in the environment without a proper license or role assignment gets removed, an unplanned access-restoration exercise mid-project.</p>
     </div>
   </div>
 
@@ -1355,14 +1355,14 @@
     <p><strong>You cannot enable Dynamics 365 apps on an existing environment that was created without this option.</strong> You have to create a new environment, migrate everything, and update every integration. I've seen projects delayed by weeks because of this single skipped toggle.</p>
 
     <figure class="post-figure post-figure--screenshot">
-      <img src="/assets/screenshots/post01/enable-dynamics-apps.png" alt="Power Platform Admin Center — Enable Dynamics 365 apps toggle during environment creation" class="post-screenshot" loading="lazy"/>
-      <p class="figure-caption">Fig. 16 — The toggle is off by default and cannot be changed after environment creation.</p>
+      <img src="/assets/screenshots/post01/enable-dynamics-apps.png" alt="Power Platform Admin Center: Enable Dynamics 365 apps toggle during environment creation" class="post-screenshot" loading="lazy"/>
+      <p class="figure-caption">Fig. 16. The toggle is off by default and cannot be changed after environment creation.</p>
     </figure>
 
     <div class="callout warn">
       <div class="callout-label">What I saw on a real project</div>
-      <p>A client was six months into a Power Apps build when the business decided to add Dynamics 365 Sales. The environment had been created without the toggle enabled. We spent two weeks planning and executing a migration — recreating the environment, re-importing every solution, updating every integration endpoint, reassigning security roles. Two weeks of engineering time, no new functionality delivered, go-live pushed back a month. All for a checkbox that takes three seconds to enable at creation time.</p>
-      <p>Enable it if there is any chance — any chance at all — that Dynamics 365 apps will be needed. The cost at creation time is zero. The cost of not enabling it is measured in weeks.</p>
+      <p>A client was six months into a Power Apps build when the business decided to add Dynamics 365 Sales. The environment had been created without the toggle enabled. We spent two weeks planning and executing a migration: recreating the environment, re-importing every solution, updating every integration endpoint, reassigning security roles. Two weeks of engineering time, no new functionality delivered, go-live pushed back a month. All for a checkbox that takes three seconds to enable at creation time.</p>
+      <p>Enable it if there is any chance, any chance at all, that Dynamics 365 apps will be needed. The cost at creation time is zero. The cost of not enabling it is measured in weeks.</p>
     </div>
   </div>
 
@@ -1370,8 +1370,8 @@
   <div class="mistake-card">
     <div class="mistake-number">Mistake 04</div>
     <div class="mistake-title">Not Setting the Organization URL</div>
-    <p>When you create an environment, Power Platform auto-generates an organization URL — something like <code>org2032013.crm4.dynamics.com</code>. Nobody changes it because nobody notices it. And then it ends up in production: in API calls, in documentation, in client-facing URLs, in the browser bookmarks of every user on the project.</p>
-    <p>Six months into the project, someone asks for the environment URL. You send it over. They look at it and say — <em>"is this really what's going into the integration config? Into the client's documentation?"</em></p>
+    <p>When you create an environment, Power Platform auto-generates an organization URL, something like <code>org2032013.crm4.dynamics.com</code>. Nobody changes it because nobody notices it. And then it ends up in production: in API calls, in documentation, in client-facing URLs, in the browser bookmarks of every user on the project.</p>
+    <p>Six months into the project, someone asks for the environment URL. You send it over. They look at it and say: <em>"is this really what's going into the integration config? Into the client's documentation?"</em></p>
     <p>Changing it is possible from the Admin Center. But every integration that references the old URL breaks the moment you do. Every bookmark, every API config, every piece of documentation needs updating. The URL itself is easy to change. The blast radius isn't.</p>
 
     <div class="url-compare">
@@ -1386,12 +1386,12 @@
     </div>
 
     <figure class="post-figure post-figure--screenshot">
-      <img src="/assets/screenshots/post01/org-url.png" alt="Power Platform Admin Center — Organization URL field during environment creation" class="post-screenshot" loading="lazy"/>
-      <p class="figure-caption">Fig. 17 — The org URL field in Admin Center. Set it manually at creation time.</p>
+      <img src="/assets/screenshots/post01/org-url.png" alt="Power Platform Admin Center: Organization URL field during environment creation" class="post-screenshot" loading="lazy"/>
+      <p class="figure-caption">Fig. 17. The org URL field in Admin Center. Set it manually at creation time.</p>
     </figure>
 
     <div class="fix-label">✓ The fix</div>
-    <p>Always set the URL manually at creation time. Use a consistent naming convention: <code>[client]-[env]</code> — e.g. <code>contoso-dev</code>, <code>contoso-uat</code>, <code>contoso-prod</code>. Two minutes of work, permanent benefit.</p>
+    <p>Always set the URL manually at creation time. Use a consistent naming convention: <code>[client]-[env]</code>, e.g. <code>contoso-dev</code>, <code>contoso-uat</code>, <code>contoso-prod</code>. Two minutes of work, permanent benefit.</p>
   </div>
 
 
@@ -1408,7 +1408,7 @@
 
   <h2 id="section-09">The Fifth Mistake Nobody Talks About: No DLP Policy</h2>
 
-  <p>I said four mistakes. There's a fifth one I left off the numbered list because it doesn't happen at environment creation time — it happens in the two hours after. And by then, makers are already inside the environment, building things, connecting things, and moving data in directions you haven't thought about yet.</p>
+  <p>I said four mistakes. There's a fifth one I left off the numbered list because it doesn't happen at environment creation time, it happens in the two hours after. And by then, makers are already inside the environment, building things, connecting things, and moving data in directions you haven't thought about yet.</p>
 
   <p>Data Loss Prevention policies are as foundational as the environment itself. A DLP policy defines which connectors are available in an environment, which ones can work together, and which ones are blocked entirely. No DLP policy means makers can build flows that send your Dataverse customer records to a personal Gmail account, pull data into a public-facing HTTP endpoint, or connect internal systems to consumer services that have no place near your data.</p>
 
@@ -1416,20 +1416,20 @@
 
   <p>Every connector gets assigned to one of three buckets: Business, Non-Business, or Blocked. Connectors from different buckets can't be used together in the same app or flow. You configure policies at two levels:</p>
 
-  <p><strong>Tenant-level policy</strong> — applies to all environments. Use this for universal high-risk blocks: personal email, social media, consumer storage. This is your wall.</p>
+  <p><strong>Tenant-level policy</strong>: applies to all environments. Use this for universal high-risk blocks: personal email, social media, consumer storage. This is your wall.</p>
 
-  <p><strong>Environment-level policy</strong> — applies to a specific environment only. Use this to restrict further or allow specific connectors for a project's needs. Environment-level policies can only make things more restrictive than the tenant policy — they cannot grant permissions the tenant policy has blocked.</p>
+  <p><strong>Environment-level policy</strong>: applies to a specific environment only. Use this to restrict further or allow specific connectors for a project's needs. Environment-level policies can only make things more restrictive than the tenant policy, they cannot grant permissions the tenant policy has blocked.</p>
 
   <h3>What to do before you hand the environment to a maker</h3>
 
   <p>Define your DLP policy before a single maker has access to the environment. Starting position for most projects: put all Microsoft/Dataverse connectors in Business, move all third-party and consumer connectors to Blocked, then work with your integration requirements to move specific connectors to Business as needed. Lock the default group to Blocked so any new connector added by Microsoft lands in the restricted bucket until you explicitly approve it.</p>
 
-  <p>The default environment needs the most restrictive DLP policy in your tenant — it's accessible to everyone and is exactly where an untrained maker will go if Environment Routing isn't enabled.</p>
+  <p>The default environment needs the most restrictive DLP policy in your tenant, it's accessible to everyone and is exactly where an untrained maker will go if Environment Routing isn't enabled.</p>
 
   <p>DLP is a continuous process, not a setup-and-forget step. New connectors are added to the platform regularly. Make reviewing your DLP policies part of your project governance cadence.</p>
 
   <div class="callout">
-    <div class="callout-label">Beyond DLP — VNet integration</div>
+    <div class="callout-label">Beyond DLP: VNet integration</div>
     <p>DLP governs which connectors makers can use. <strong>VNet integration via Managed Environments</strong> goes further: it locks outbound Power Platform traffic to your own Azure Virtual Network instead of shared Microsoft infrastructure. You need this in regulated industries, when handling sensitive data, or when enterprise clients won't accept shared egress. A full breakdown of VNet setup and network security hardening is coming in a dedicated post in this series.</p>
   </div>
 
@@ -1455,18 +1455,18 @@
     </div>
 
     <div class="cl-phase">
-      <div class="cl-phase-label">Planning — Owner: Solution Architect / PP Lead</div>
+      <div class="cl-phase-label">Planning: Owner: Solution Architect / PP Lead</div>
       <div class="cl-item" onclick="clToggle(this)">
         <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div><div class="cl-text">Define your environment topology before any work starts</div><div class="cl-note">Dev, Test, UAT, Pre-Prod, Prod at minimum — add Integration/Staging for any project with external system dependencies</div></div>
+        <div><div class="cl-text">Define your environment topology before any work starts</div><div class="cl-note">Dev, Test, UAT, Pre-Prod, Prod at minimum. Add Integration/Staging for any project with external system dependencies.</div></div>
       </div>
       <div class="cl-item" onclick="clToggle(this)">
         <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div><div class="cl-text">Decide upfront if Dynamics 365 apps will ever be needed</div><div class="cl-note">If any doubt — enable it. You cannot turn it on after environment creation</div></div>
+        <div><div class="cl-text">Decide upfront if Dynamics 365 apps will ever be needed</div><div class="cl-note">If any doubt, enable it. You cannot turn it on after environment creation.</div></div>
       </div>
       <div class="cl-item" onclick="clToggle(this)">
         <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div><div class="cl-text">Agree on the org URL naming convention before creating anything</div><div class="cl-note">Use [client]-[env] — e.g. contoso-dev, contoso-uat, contoso-prod</div></div>
+        <div><div class="cl-text">Agree on the org URL naming convention before creating anything</div><div class="cl-note">Use [client]-[env], e.g. contoso-dev, contoso-uat, contoso-prod.</div></div>
       </div>
       <div class="cl-item" onclick="clToggle(this)">
         <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
@@ -1483,22 +1483,22 @@
     </div>
 
     <div class="cl-phase">
-      <div class="cl-phase-label">Security — Owner: Entra ID Admin + PP Admin</div>
+      <div class="cl-phase-label">Security: Owner: Entra ID Admin + PP Admin</div>
       <div class="cl-item" onclick="clToggle(this)">
         <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div><div class="cl-text">Create Entra ID security groups — one per environment per role, before creating any environment</div><div class="cl-note">Naming: PP-[Project]-[Env]-[Role] — e.g. PP-Contoso-Prod-Admins</div></div>
+        <div><div class="cl-text">Create Entra ID security groups, one per environment per role, before creating any environment</div><div class="cl-note">Naming: PP-[Project]-[Env]-[Role], e.g. PP-Contoso-Prod-Admins.</div></div>
       </div>
     </div>
 
     <div class="cl-phase">
-      <div class="cl-phase-label">Configuration — Owner: PP Admin, at environment creation time</div>
+      <div class="cl-phase-label">Configuration: Owner: PP Admin, at environment creation time</div>
       <div class="cl-item" onclick="clToggle(this)">
         <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div><div class="cl-text">Assign the security group at environment creation — not after</div><div class="cl-note">No security group means every licensed tenant user can access the environment</div></div>
+        <div><div class="cl-text">Assign the security group at environment creation, not after</div><div class="cl-note">No security group means every licensed tenant user can access the environment</div></div>
       </div>
       <div class="cl-item" onclick="clToggle(this)">
         <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div><div class="cl-text">Enable Managed Environments for all non-dev environments</div><div class="cl-note">Required for pipeline targets — also unlocks solution checker enforcement, sharing limits, and environment group membership</div></div>
+        <div><div class="cl-text">Enable Managed Environments for all non-dev environments</div><div class="cl-note">Required for pipeline targets. Also unlocks solution checker enforcement, sharing limits, and environment group membership.</div></div>
       </div>
       <div class="cl-item" onclick="clToggle(this)">
         <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
@@ -1507,17 +1507,17 @@
     </div>
 
     <div class="cl-phase">
-      <div class="cl-phase-label">Documentation — Owner: PP Lead, before development begins</div>
+      <div class="cl-phase-label">Documentation: Owner: PP Lead, before development begins</div>
       <div class="cl-item" onclick="clToggle(this)">
         <div class="cl-box"><svg class="cl-check" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div><div class="cl-text">Document all environment details in your project wiki</div><div class="cl-note">URL, region, purpose, security group, Dataverse capacity, DLP policies in effect — all of it, before a line of code</div></div>
+        <div><div class="cl-text">Document all environment details in your project wiki</div><div class="cl-note">URL, region, purpose, security group, Dataverse capacity, DLP policies in effect. All of it, before a line of code.</div></div>
       </div>
     </div>
   </div>
 
   <div class="callout ok">
     <div class="callout-label">The craft principle</div>
-    <p>A well-configured environment takes a few hours of deliberate work across a few people — architect, Entra admin, Power Platform admin. The decisions made in that window are largely permanent. A poorly-set environment doesn't just cost you time at go-live. It costs you credibility, client trust, and sometimes the project. This is where quality starts.</p>
+    <p>A well-configured environment takes a few hours of deliberate work across a few people: architect, Entra admin, Power Platform admin. The decisions made in that window are largely permanent. A poorly-set environment doesn't just cost you time at go-live. It costs you credibility, client trust, and sometimes the project. This is where quality starts.</p>
   </div>
 
 
@@ -1533,21 +1533,21 @@
 
   <h2 id="section-11">What's Next</h2>
 
-  <p>You now have environments that are configured correctly, secured, and ready for a team to work in. The next question is: what can they build — and what can they connect?</p>
+  <p>You now have environments that are configured correctly, secured, and ready for a team to work in. The next question is: what can they build, and what can they connect?</p>
 
   <p>In <strong>Post 02</strong>, we'll cover DLP policies in depth. What they are, how the connector buckets work, what a tenant-level policy should look like on day one, and the one configuration decision that will save you from a data breach you didn't know was happening. It's the logical next step after getting your environments right.</p>
 
-  <p>If you've seen environment setup go wrong in ways I haven't covered here — find me on LinkedIn.</p>
+  <p>If you've seen environment setup go wrong in ways I haven't covered here, find me on LinkedIn.</p>
 
   <!-- Series Nav -->
   <div class="series-nav">
     <div>
       <div class="series-nav-label">Previous</div>
-      <a href="/blog/post00-mr-yolo.html" class="series-nav-link">Post 00 — Meet Mr. YOLO</a>
+      <a href="/blog/post00-mr-yolo.html" class="series-nav-link">Post 00: Meet Mr. YOLO</a>
     </div>
     <div style="text-align:right">
       <div class="series-nav-label">Next in series</div>
-      <span class="series-nav-link" style="opacity:0.4;cursor:default;">Post 02 — DLP Policies (coming soon)</span>
+      <span class="series-nav-link" style="opacity:0.4;cursor:default;">Post 02: DLP Policies (coming soon)</span>
     </div>
   </div>
 
@@ -1560,7 +1560,7 @@
     <div>
       <div class="author-name">Ahmed El-Khatib</div>
       <div class="author-title">Power Platform Lead · Khatib365</div>
-      <p class="author-bio">Sharing what I know from the field — because I wish someone had written this down when I needed it.</p>
+      <p class="author-bio">Sharing what I know from the field, because I wish someone had written this down when I needed it.</p>
     </div>
   </div>
 
